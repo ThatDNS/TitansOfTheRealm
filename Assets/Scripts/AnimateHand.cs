@@ -7,10 +7,12 @@ public class AnimateHand : MonoBehaviour
 {
     public InputActionProperty pinchAnimationAction;
     public InputActionProperty gripAnimationAction;
-    
+
     private Animator animator = null;
-    public string gripStateName = "Grip";
-    public string triggerStateName = "Trigger";
+    
+    [SerializeField] private float smoothness = 5.0f;
+    [SerializeField] private string gripStateName = "Grip";
+    [SerializeField] private string triggerStateName = "Trigger";
     private int gripState;
     private int triggerState;
 
@@ -24,9 +26,12 @@ public class AnimateHand : MonoBehaviour
     private void Update()
     {
         float triggerValue = pinchAnimationAction.action.ReadValue<float>();
-        animator.SetFloat(triggerState, triggerValue);
-
         float gripValue = gripAnimationAction.action.ReadValue<float>();
-        animator.SetFloat(gripState, gripValue);
+
+        float smoothTriggerValue = Mathf.Lerp(animator.GetFloat(triggerState), triggerValue, Time.deltaTime * smoothness);
+        float smoothGripValue = Mathf.Lerp(animator.GetFloat(gripState), gripValue, Time.deltaTime * smoothness);
+
+        animator.SetFloat(triggerState, smoothTriggerValue);
+        animator.SetFloat(gripState, smoothGripValue);
     }
 }
