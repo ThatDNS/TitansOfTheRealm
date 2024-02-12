@@ -1668,6 +1668,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sessionName: TestRoom
+  warriorPrefab:
+    RawGuidValue: 2d16b7a51627f3b4a80023832303999a
 --- !u!1 &1174877035
 GameObject:
   m_ObjectHideFlags: 0
@@ -2578,7 +2580,7 @@ GameObject:
   - component: {fileID: 1266247129}
   - component: {fileID: 1266247130}
   m_Layer: 6
-  m_Name: XR Origin (XR Rig)
+  m_Name: Titan (VR)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

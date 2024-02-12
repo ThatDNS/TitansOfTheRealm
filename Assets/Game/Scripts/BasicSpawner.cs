@@ -10,6 +10,9 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
     private NetworkRunner _runner;
     public string sessionName = "TestRoom";
 
+    [SerializeField] NetworkPrefabRef warriorPrefab;
+    NetworkObject warriorObject = null;
+
     async void StartGame(GameMode mode)
     {
         // Create the Fusion runner and let it know that we will be providing user input
@@ -50,9 +53,42 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
     }
 
 
-    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player) { }
-    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player) { }
-    public void OnInput(NetworkRunner runner, NetworkInput input) { }
+    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
+    {
+        if (runner.IsServer)
+        {
+            // Spawn the warrior
+            warriorObject = runner.Spawn(warriorPrefab, new Vector3(0, 10, 0), Quaternion.identity, player);
+        }
+    }
+
+    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
+    {
+        if (warriorObject != null)
+        {
+            runner.Despawn(warriorObject);
+        }
+    }
+
+    public void OnInput(NetworkRunner runner, NetworkInput input)
+    {
+        var data = new NetworkInputData();
+
+        if (Input.GetKey(KeyCode.W))
+            data.direction += Vector3.forward;
+
+        if (Input.GetKey(KeyCode.S))
+            data.direction += Vector3.back;
+
+        if (Input.GetKey(KeyCode.A))
+            data.direction += Vector3.left;
+
+        if (Input.GetKey(KeyCode.D))
+            data.direction += Vector3.right;
+
+        input.Set(data);
+    }
+
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason) { }
     public void OnConnectedToServer(NetworkRunner runner) { }
