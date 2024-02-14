@@ -55,9 +55,10 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
-        if (runner.IsServer)
+        // player.PlayerId = 2 ensures that warrior gets spawned when the client connects
+        if (runner.IsServer && (player.PlayerId == 2))
         {
-            // Spawn the warrior
+            // Client spawns the warrior
             warriorObject = runner.Spawn(warriorPrefab, new Vector3(0, 10, 0), Quaternion.identity, player);
         }
     }
@@ -72,6 +73,7 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
+        Debug.Log("Doing on input stuff");
         var data = new NetworkInputData();
 
         if (Input.GetKey(KeyCode.W))
