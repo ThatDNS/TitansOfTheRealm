@@ -23,7 +23,7 @@ public class SettingsManager : Singleton<SettingsManager>
         base.Awake();
         if (audioMixer == null)
         {
-            audioMixer = Resources.Load<AudioMixer>("Audio/AudioMixer");
+            audioMixer = Resources.Load<AudioMixer>("AudioMixer");
         }
         LoadAllSettings();
     }
@@ -54,6 +54,7 @@ public class SettingsManager : Singleton<SettingsManager>
         LoadResolution();
         LoadQualityLevel();
         ApplySettings();
+
     }
 
     /// <summary>
@@ -78,6 +79,9 @@ public class SettingsManager : Singleton<SettingsManager>
         PlayerPrefs.SetFloat("musicVolume", music);
         PlayerPrefs.SetFloat("sfxVolume", sfx);
         PlayerPrefs.Save();
+        MasterVolume = master;
+        MusicVolume = music;
+        SfxVolume = sfx;
         ApplySettings();
     }
 
@@ -121,6 +125,7 @@ public class SettingsManager : Singleton<SettingsManager>
     {
         PlayerPrefs.SetInt("qualityLevel", qualityLevel);
         PlayerPrefs.Save();
+        QualityLevel = qualityLevel;
         ApplySettings();
     }
 

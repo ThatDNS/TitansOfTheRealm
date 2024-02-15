@@ -60,18 +60,34 @@ public class OptionsMenuUI : MonoBehaviour
         masterVolumeSlider.onValueChanged.AddListener(volume =>
         {
             SettingsManager.Instance.SaveAudioSettings(
-                volume, 
-                musicVolumeSlider.value, 
+                volume,
+                musicVolumeSlider.value,
                 sfxVolumeSlider.value
             );
         }); // Music Volume Slider // SFX Volume Slider
+        musicVolumeSlider.onValueChanged.AddListener(volume =>
+        {
+            SettingsManager.Instance.SaveAudioSettings(
+                masterVolumeSlider.value,
+                volume,
+                sfxVolumeSlider.value
+          );
+        });
+        sfxVolumeSlider.onValueChanged.AddListener(volume =>
+        {
+            SettingsManager.Instance.SaveAudioSettings(
+                               masterVolumeSlider.value,
+                                              musicVolumeSlider.value,
+                                                             volume
+                                                                        );
+        });
 
         // Assuming resolutionDropdown is correctly set up elsewhere
         resolutionDropwdon.onValueChanged.AddListener(index =>
         {
             SettingsManager.Instance.SaveResolution(
-                resolutions[index].width, 
-                resolutions[index].height, 
+                resolutions[index].width,
+                resolutions[index].height,
                 fullscreenToggle.isOn
             );
         });
@@ -99,8 +115,8 @@ public class OptionsMenuUI : MonoBehaviour
         {
             // Update sliders
             masterVolumeSlider.value = SettingsManager.Instance.MasterVolume;
-            musicVolumeSlider.value  = SettingsManager.Instance.MusicVolume;
-            sfxVolumeSlider.value    = SettingsManager.Instance.SfxVolume;
+            musicVolumeSlider.value = SettingsManager.Instance.MusicVolume;
+            sfxVolumeSlider.value = SettingsManager.Instance.SfxVolume;
 
             // Update toggle
             fullscreenToggle.isOn = SettingsManager.Instance.IsFullScreen;

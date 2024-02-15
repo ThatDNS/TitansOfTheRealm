@@ -92,10 +92,10 @@ public class GameSessionManager : MonoBehaviour
     {
         currentMatch.EndTime = DateTime.Now;
         currentMatch.Duration = currentMatch.EndTime - currentMatch.StartTime;
-        currentMatch.playerData = new Player.PlayerData
-        {
-            stones = player.GetStones()
-        };
+        //currentMatch.playerData = new Player.PlayerData
+        //{
+        //    stones = player.GetStones()
+        //};
     }
 
     #endregion
