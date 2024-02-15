@@ -41,11 +41,11 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
     {
         if (_runner == null)
         {
-            if (GUI.Button(new Rect(0, 0, 200, 40), "Host"))
+            if (GUI.Button(new Rect(5, 5, 200, 40), "Host (VR)"))
             {
                 StartGame(GameMode.Host);
             }
-            if (GUI.Button(new Rect(0, 40, 200, 40), "Join"))
+            if (GUI.Button(new Rect(5, 50, 200, 40), "Join (PC)"))
             {
                 StartGame(GameMode.Client);
             }
@@ -55,9 +55,10 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
-        if (runner.IsServer)
+        // player.PlayerId = 2 ensures that warrior gets spawned when the client connects
+        if (runner.IsServer && (player.PlayerId == 2))
         {
-            // Spawn the warrior
+            // Client spawns the warrior, as a result has input auth over it
             warriorObject = runner.Spawn(warriorPrefab, new Vector3(0, 10, 0), Quaternion.identity, player);
         }
     }
@@ -72,21 +73,20 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
-        var data = new NetworkInputData();
+        //if (helloExchanged)
+        //    return;
 
-        if (Input.GetKey(KeyCode.W))
-            data.direction += Vector3.forward;
+        //var data = new NetworkInputData();
 
-        if (Input.GetKey(KeyCode.S))
-            data.direction += Vector3.back;
+        //if (!runner.IsServer)
+        //{
+        //    //data.message = "1";
+        //    Debug.Log("I'm the client & sending '" + data.message + "' to the server.");
+        //}
 
-        if (Input.GetKey(KeyCode.A))
-            data.direction += Vector3.left;
-
-        if (Input.GetKey(KeyCode.D))
-            data.direction += Vector3.right;
-
-        input.Set(data);
+        //helloExchanged = true;
+        
+        //input.Set(data);
     }
 
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }
