@@ -9,7 +9,7 @@ public class Singleton<T> : MonoBehaviour where T : Component
 {
     // Static variable to hold the instance of the type T.
     private static T _instance;
-
+    private static bool _wasCreatedOnce = false;
     /// <summary>
     /// Public property to access the singleton instance.
     /// Creates an instance if one does not already exist.
@@ -18,6 +18,9 @@ public class Singleton<T> : MonoBehaviour where T : Component
     {
         get
         {
+            // if it was already destroyed, don't try to create a new one
+            if (_wasCreatedOnce) return _instance;
+
             // If _instance is null, find any object of type T in the scene.
             _instance ??= FindAnyObjectByType<T>();
             // If still null, create a new GameObject and add the component T to it.
@@ -28,6 +31,7 @@ public class Singleton<T> : MonoBehaviour where T : Component
                 go.name = typeof(T).Name;
                 _instance = go.AddComponent<T>();
             }
+            _wasCreatedOnce = true;
             // Return the instance.
             return _instance;
         }
@@ -42,6 +46,7 @@ public class Singleton<T> : MonoBehaviour where T : Component
         // Check if _instance is null (i.e., no instance already exists).
         if (_instance == null)
         {
+            _wasCreatedOnce = true;
             // Assign this instance to _instance and ensure it persists across scenes.
             _instance = this as T;
             DontDestroyOnLoad(gameObject);
