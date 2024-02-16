@@ -33,11 +33,11 @@ public class GameManager : Singleton<GameManager>
     {
         base.Awake();
         InitializeSessionManager();
-        InitializeStateMachine();
     }
 
     private void Start()
     {
+        InitializeStateMachine();
         _sessionStartTime = DateTime.Now;
     }
 
