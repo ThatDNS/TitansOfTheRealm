@@ -4,12 +4,37 @@ using UnityEngine;
 
 public class HandPresencePhysics : MonoBehaviour
 {
+    [Tooltip("VR Hand transform")]
     public Transform target;
+
     private Rigidbody rb;
+    private Collider[] handColliders;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        handColliders = GetComponentsInChildren<Collider>();
+    }
+
+    public void EnableHandCollider()
+    {
+        foreach (var collider in handColliders)
+        {
+            collider.enabled = true;
+        }
+    }
+
+    public void EnableHandColliderWithDelay(float delay)
+    {
+        Invoke("EnableHandCollider", delay);
+    }
+
+    public void DisableHandCollider()
+    {
+        foreach (var collider in handColliders)
+        {
+            collider.enabled = false;
+        }
     }
 
     private void FixedUpdate()
