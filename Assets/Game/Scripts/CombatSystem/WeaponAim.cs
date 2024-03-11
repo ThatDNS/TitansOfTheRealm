@@ -1,10 +1,5 @@
-using Fusion;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
-using static Cinemachine.CinemachineTargetGroup;
+
 
 public class WeaponAim : MonoBehaviour
 {
@@ -18,7 +13,14 @@ public class WeaponAim : MonoBehaviour
     protected Quaternion _initialRotation;
     protected GameObject _reticle;
     protected Vector3 _reticlePosition;
-    public Canvas _targetCanvas;
+    protected Vector3 _mousePosition;
+    protected Vector3 _lastMousePosition;
+    protected Vector3 _direction;
+
+    [Tooltip("the radius around the weapon rotation centre where the mouse will be ignored, to avoid glitches")]
+    public float MouseDeadZoneRadius = 0.5f;
+
+    private Canvas _targetCanvas;
     protected bool _initialized = false;
 
     [Tooltip("the gameobject to display as the aim's reticle/crosshair. Leave it blank if you don't want a reticle")]
@@ -26,6 +28,9 @@ public class WeaponAim : MonoBehaviour
 
     [Tooltip("if set to true, the reticle will replace the mouse pointer")]
     public bool ReplaceMousePointer = true;
+
+    [Tooltip("if set to false, the reticle won't be added and displayed")]
+    public bool DisplayReticle = true;
     /// <summary>
     /// On Start(), we trigger the initialization
     /// </summary>
@@ -81,4 +86,113 @@ public class WeaponAim : MonoBehaviour
 
 
     }
+    protected void GetCurrentAim()
+    {
+        if (_weapon.Owner == null)
+        {
+            return;
+        }
+        GetMouseAim();
+    }
+
+    public void GetMouseAim()
+    {
+        _mousePosition = Input.mousePosition;
+
+        Ray ray = _mainCamera.ScreenPointToRay(_mousePosition);
+        Debug.DrawRay(ray.origin, ray.direction);
+
+
+        _reticlePosition = _direction;
+
+        if (Vector3.Distance(_direction, transform.position) < MouseDeadZoneRadius)
+        {
+            _direction = _lastMousePosition;
+        }
+        else
+        {
+            _lastMousePosition = _direction;
+        }
+
+        _currentAim = _direction - _weapon.Owner.transform.position;
+    }
+
+    /// <summary>
+    /// Every frame, we compute the aim direction and rotate the weapon accordingly
+    /// </summary>
+    protected void Update()
+    {
+        HideMousePointer();
+        HideReticle();
+        GetCurrentAim();
+    }
+
+    private void FixedUpdate()
+    {
+        MoveTarget();
+        MoveReticle();
+    }
+
+
+    /// <summary>
+    /// Hides or show the mouse pointer based on the settings
+    /// </summary>
+    protected virtual void HideMousePointer()
+    {
+
+
+        if (ReplaceMousePointer)
+        {
+            Cursor.visible = false;
+        }
+        else
+        {
+            Cursor.visible = true;
+        }
+    }
+    /// <summary>
+    /// Removes any remaining reticle
+    /// </summary>
+    public virtual void RemoveReticle()
+    {
+        if (_reticle != null)
+        {
+            Destroy(_reticle.gameObject);
+        }
+    }
+
+    /// <summary>
+    /// Hides (or shows) the reticle based on the DisplayReticle setting
+    /// </summary>
+    protected virtual void HideReticle()
+    {
+        if (_reticle != null)
+        {
+            _reticle.gameObject.SetActive(DisplayReticle);
+        }
+    }
+    /// <summary>
+    /// On Destroy, we reinstate our cursor if needed
+    /// </summary>
+    protected void OnDestroy()
+    {
+        if (ReplaceMousePointer)
+        {
+            Cursor.visible = true;
+        }
+    }
+    protected  void MoveTarget()
+    {
+        if (_weapon.Owner == null)
+        {
+            return;
+        }
+
+
+
+
+
+    }
+}
+
 }

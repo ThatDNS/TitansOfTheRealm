@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1589323031959177436}
   - component: {fileID: 8339165160207466304}
+  - component: {fileID: 1489042252336512792}
   m_Layer: 0
   m_Name: RPG
   m_TagString: Untagged
@@ -49,6 +50,21 @@ MonoBehaviour:
   CurrentAmmoLoaded: 10
   CurrentAmmoAvailable: 100
   WeaponAttachmentOffset: {x: 0, y: 0, z: 0}
+--- !u!114 &1489042252336512792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1201410309868288321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 782a332f89db2914fb53f00ed3fab58d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetCanvas: {fileID: 0}
+  Reticle: {fileID: 1080204767020095304, guid: f5e6d0e7241a2a44eaa8018985c2e76d, type: 3}
+  ReplaceMousePointer: 1
 --- !u!1 &3194890412374850137
 GameObject:
   m_ObjectHideFlags: 0
