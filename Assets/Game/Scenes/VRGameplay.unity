@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 223976898}
   - component: {fileID: 223976897}
   m_Layer: 0
-  m_Name: Right Controller (new)
+  m_Name: Right Controller (direct)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1135,7 +1135,7 @@ GameObject:
   - component: {fileID: 1355907757}
   - component: {fileID: 1355907756}
   m_Layer: 0
-  m_Name: Left Controller (new)
+  m_Name: Left Controller (direct)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1340,6 +1340,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2473499695923052020, guid: c8cdf329f6b763f41990ef5c7259c807,
+        type: 3}
+      propertyPath: m_Name
+      value: Left Controller (ray)
       objectReference: {fileID: 0}
     - target: {fileID: 2473499695923052020, guid: c8cdf329f6b763f41990ef5c7259c807,
         type: 3}
