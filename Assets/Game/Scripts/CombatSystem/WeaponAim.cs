@@ -188,11 +188,5 @@ public class WeaponAim : MonoBehaviour
             return;
         }
 
-
-
-
-
     }
-}
-
 }
