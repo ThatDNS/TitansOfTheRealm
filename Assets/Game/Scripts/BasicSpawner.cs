@@ -52,6 +52,11 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
         }
     }
 
+    public void EnterGame(string gameMode)
+    {
+        if(gameMode=="Host"||gameMode=="host") StartGame(GameMode.Host);
+        if(gameMode=="Client"||gameMode=="client") StartGame(GameMode.Client);
+    }
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
