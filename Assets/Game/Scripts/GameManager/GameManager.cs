@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Manages overall game state and session timing. Inherits from Singleton to ensure only one instance exists.
@@ -15,6 +17,14 @@ public class GameManager : Singleton<GameManager>
 
     private Stack<IState<GameManager>> stateHistory = new Stack<IState<GameManager>>();
     private IState<GameManager> currentState;
+
+    [SerializeField]private Button button1;
+    [SerializeField]private Button button2;
+    [SerializeField]private Button button3;
+
+    [SerializeField] private TextMeshProUGUI TextBtn1;
+    [SerializeField] private TextMeshProUGUI TextBtn2;
+    [SerializeField] private TextMeshProUGUI TextBtn3;
 
     #endregion
 
@@ -32,12 +42,16 @@ public class GameManager : Singleton<GameManager>
     private new void Awake()
     {
         base.Awake();
-        InitializeSessionManager();
+        button1.onClick.AddListener(Button1Clicked);
+        button2.onClick.AddListener(Button2Clicked);
+        button3.onClick.AddListener(Button3Clicked);
+
     }
 
     private void Start()
     {
         InitializeStateMachine();
+        InitializeSessionManager();
         _sessionStartTime = DateTime.Now;
     }
 
@@ -161,6 +175,9 @@ public class GameManager : Singleton<GameManager>
     {
         if (currentState is GMMainMenuState)
         {
+            TextBtn1.text = "Play";
+            TextBtn2.text = "Options";
+            TextBtn3.text = "Exit";
             if (GUI.Button(new Rect(10, 310, 300, 100), "Play", myButtonStyle))
             {
                 ChangeState(new GMPlayState());
@@ -180,6 +197,8 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+
+
     /// <summary>
     /// Renders GUI elements for the Play state.
     /// </summary>
@@ -187,6 +206,10 @@ public class GameManager : Singleton<GameManager>
     {
         if (currentState is GMPlayState)
         {
+            TextBtn1.text = "Pause";
+            TextBtn2.text = "Options";
+            TextBtn3.text = "End Match";
+
             if (GUI.Button(new Rect(10, 310, 300, 100), "Pause", myButtonStyle))
             {
                 TransitionState(new GMPauseState(), true);
@@ -209,6 +232,9 @@ public class GameManager : Singleton<GameManager>
     {
         if (currentState is GMOptionsMenuState)
         {
+            TextBtn1.text = "  ";
+            TextBtn2.text = "  ";
+            TextBtn3.text = "  ";
             if (GUI.Button(new Rect(10, 810, 300, 100), "Save", myButtonStyle))
             {
                 // Save options logic
@@ -225,8 +251,12 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     private void RenderPauseStateGUI()
     {
+
         if (currentState is GMPauseState)
         {
+            TextBtn1.text = "Resume";
+            TextBtn2.text = "Main Menu";
+            TextBtn3.text = "  ";
             if (GUI.Button(new Rect(10, 310, 300, 100), "Resume", myButtonStyle))
             {
                 ResumePreviousState();
@@ -237,6 +267,62 @@ public class GameManager : Singleton<GameManager>
             }
         }
     }
+    private void Button1Clicked()
+    {
+        if (currentState is GMMainMenuState)
+        {
+            ChangeState(new GMPlayState());
+        }
+        else if(currentState is GMPlayState)
+        {
+            TransitionState(new GMPauseState(), true);
+        }
+        else if(currentState is GMOptionsMenuState)
+        {
+            //TODO
+        }
+        else if(currentState is GMPauseState)
+        {
+            ResumePreviousState();
+        }
+    }
+
+    private void Button2Clicked()
+    {
+        if (currentState is GMMainMenuState)
+        {
+            TransitionState(new GMOptionsMenuState(), true);
+        }
+        else if (currentState is GMPlayState)
+        {
+            TransitionState(new GMOptionsMenuState(), true);
+        }
+        else if (currentState is GMOptionsMenuState)
+        {
+            ResumePreviousState();
+        }
+        else if(currentState is GMPauseState)
+        {
+            ResumePreviousState();
+        }
+    }
+
+    private void Button3Clicked()
+    {
+        if (currentState is GMMainMenuState)
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
+        }
+        else if((currentState is GMPlayState ) )
+        {
+            ChangeState(new GMMainMenuState());
+        }
+    }
+
 
     /// <summary>
     /// Displays the name of the current state in the GUI.
