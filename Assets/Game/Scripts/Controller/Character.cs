@@ -18,6 +18,7 @@ public class Character : MonoBehaviour
     private Vector2 moveInput;
 
 
+    public Canvas MainCanvas;
     public enum CharacterTypes { Warrior, Titan}
     [Tooltip("Is the Warrior or Titan ?")]
     public CharacterTypes CharacterType = CharacterTypes.Warrior;

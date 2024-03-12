@@ -22,6 +22,11 @@ public class CharacterHandleWeapon : MonoBehaviour
 
     protected Character _character;
 
+
+    private void Awake()
+    {
+        _character=gameObject.GetComponent<Character>();
+    }
     public virtual void ChangeWeapon(Weapon newWeapon)
     {
         // if the character already has a weapon, we make it stop shooting

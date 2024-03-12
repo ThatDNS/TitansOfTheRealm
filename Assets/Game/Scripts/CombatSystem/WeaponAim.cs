@@ -6,22 +6,22 @@ public class WeaponAim : MonoBehaviour
 
 
 
-    protected Camera _mainCamera;
-    protected Weapon _weapon;
-    protected Vector3 _currentAim = Vector3.zero;
-    protected Vector3 _currentAimAbsolute = Vector3.zero;
-    protected Quaternion _initialRotation;
-    protected GameObject _reticle;
-    protected Vector3 _reticlePosition;
-    protected Vector3 _mousePosition;
-    protected Vector3 _lastMousePosition;
-    protected Vector3 _direction;
+    private Camera _mainCamera;
+    [SerializeField]private Weapon _weapon;
+    private Vector3 _currentAim = Vector3.zero;
+    private Vector3 _currentAimAbsolute = Vector3.zero;
+    private Quaternion _initialRotation;
+    [SerializeField]private GameObject _reticle;
+    private Vector3 _reticlePosition;
+    private Vector3 _mousePosition;
+    private Vector3 _lastMousePosition;
+    private Vector3 _direction;
 
     [Tooltip("the radius around the weapon rotation centre where the mouse will be ignored, to avoid glitches")]
     public float MouseDeadZoneRadius = 0.5f;
 
-    private Canvas _targetCanvas;
-    protected bool _initialized = false;
+    public Canvas _targetCanvas;
+    private bool _initialized = false;
 
     [Tooltip("the gameobject to display as the aim's reticle/crosshair. Leave it blank if you don't want a reticle")]
     public GameObject Reticle;
@@ -34,7 +34,7 @@ public class WeaponAim : MonoBehaviour
     /// <summary>
     /// On Start(), we trigger the initialization
     /// </summary>
-    protected void Start()
+    private void Start()
     {
         Initialization();
     }
@@ -46,7 +46,7 @@ public class WeaponAim : MonoBehaviour
         _weapon = GetComponent<Weapon>();
         _mainCamera = Camera.main;
 
-
+        _targetCanvas= _weapon.Owner.GetComponent<Character>().MainCanvas;
         _initialRotation = transform.rotation;
         InitializeReticle();
         _initialized = true;
@@ -66,7 +66,7 @@ public class WeaponAim : MonoBehaviour
             Destroy(_reticle);
         }
 
-        _reticle = (GameObject)Instantiate(Reticle);
+        _reticle = Instantiate(Reticle);
         _reticle.transform.SetParent(_targetCanvas.transform);
         _reticle.transform.localScale = Vector3.one;
         if (_reticle.gameObject.GetComponent<UIFollowMouse>() != null)
@@ -78,7 +78,7 @@ public class WeaponAim : MonoBehaviour
     /// <summary>
     /// Every frame, moves the reticle if it's been told to follow the pointer
     /// </summary>
-    protected void MoveReticle()
+    private void MoveReticle()
     {
         if (_reticle == null) { return; }
 
@@ -86,7 +86,7 @@ public class WeaponAim : MonoBehaviour
 
 
     }
-    protected void GetCurrentAim()
+    private void GetCurrentAim()
     {
         if (_weapon.Owner == null)
         {
@@ -120,7 +120,7 @@ public class WeaponAim : MonoBehaviour
     /// <summary>
     /// Every frame, we compute the aim direction and rotate the weapon accordingly
     /// </summary>
-    protected void Update()
+    private void Update()
     {
         HideMousePointer();
         HideReticle();
@@ -137,7 +137,7 @@ public class WeaponAim : MonoBehaviour
     /// <summary>
     /// Hides or show the mouse pointer based on the settings
     /// </summary>
-    protected virtual void HideMousePointer()
+    private  void HideMousePointer()
     {
 
 
@@ -164,7 +164,7 @@ public class WeaponAim : MonoBehaviour
     /// <summary>
     /// Hides (or shows) the reticle based on the DisplayReticle setting
     /// </summary>
-    protected virtual void HideReticle()
+    private  void HideReticle()
     {
         if (_reticle != null)
         {
@@ -174,19 +174,26 @@ public class WeaponAim : MonoBehaviour
     /// <summary>
     /// On Destroy, we reinstate our cursor if needed
     /// </summary>
-    protected void OnDestroy()
+    private void OnDestroy()
     {
         if (ReplaceMousePointer)
         {
             Cursor.visible = true;
         }
     }
-    protected  void MoveTarget()
+    private  void MoveTarget()
     {
         if (_weapon.Owner == null)
         {
             return;
         }
+
+        Vector2 mouseDelta = new Vector2(_mousePosition.x - _lastMousePosition.x, _mousePosition.y - _lastMousePosition.y);
+        _lastMousePosition = _mousePosition;
+
+        float sensitivity = 0.1f; // Adjust this sensitivity as needed.
+        Vector2 rotationAmount = mouseDelta * sensitivity;
+        _mainCamera.transform.Rotate(Vector3.left, rotationAmount.y);
 
     }
 }

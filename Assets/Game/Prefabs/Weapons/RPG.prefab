@@ -62,9 +62,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 782a332f89db2914fb53f00ed3fab58d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _targetCanvas: {fileID: 0}
+  MouseDeadZoneRadius: 0.5
   Reticle: {fileID: 1080204767020095304, guid: f5e6d0e7241a2a44eaa8018985c2e76d, type: 3}
   ReplaceMousePointer: 1
+  DisplayReticle: 1
 --- !u!1 &3194890412374850137
 GameObject:
   m_ObjectHideFlags: 0

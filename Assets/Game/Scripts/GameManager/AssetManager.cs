@@ -64,6 +64,7 @@ public class AssetManager : Singleton<AssetManager>
         });
     }
 
+
     /// <summary>
     /// Unloads a previously loaded prefab.
     /// </summary>

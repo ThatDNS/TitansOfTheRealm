@@ -261,6 +261,7 @@ MonoBehaviour:
   groundCheckPoint: {fileID: 386874473}
   groundCheckDistance: 1
   isGrounded: 0
+  MainCanvas: {fileID: 1759672688}
   CharacterType: 0
 --- !u!54 &386874469
 Rigidbody:

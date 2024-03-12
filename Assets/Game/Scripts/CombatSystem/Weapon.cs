@@ -14,7 +14,7 @@ public class Weapon : MonoBehaviour
     public string WeaponName;
 
     /// the weapon's owner
-    public virtual Character Owner { get; protected set; }
+    public Character Owner;
 
     protected bool _triggerReleased = false;
     protected bool _reloading = false;
@@ -28,13 +28,13 @@ public class Weapon : MonoBehaviour
     public int CurrentAmmoAvailable;
 
     /// the weapon's owner's CharacterHandleWeapon component
-    public virtual CharacterHandleWeapon CharacterHandleWeapon { get; set; }
+    public CharacterHandleWeapon CharacterHandleWeapon;
     /// an offset that will be applied to the weapon once attached to the center of the WeaponAttachment transform.
     [Tooltip("an offset that will be applied to the weapon once attached to the center of the WeaponAttachment transform.")]
     public Vector3 WeaponAttachmentOffset = Vector3.zero;
 
 
-    public virtual void TurnWeaponOff()
+    public void TurnWeaponOff()
     {
 
         _triggerReleased = true;
@@ -55,7 +55,7 @@ public class Weapon : MonoBehaviour
     /// <summary>
     /// Initiates a reload
     /// </summary>
-    public virtual void InitiateReloadWeapon()
+    public void InitiateReloadWeapon()
     {
 
 
@@ -71,7 +71,7 @@ public class Weapon : MonoBehaviour
     /// <summary>
     /// Initialize this weapon.
     /// </summary>
-    public virtual void Initialization()
+    public void Initialization()
     {
         weaponState = WeaponStates.WeaponIdle;
     }
@@ -80,8 +80,9 @@ public class Weapon : MonoBehaviour
     /// Sets the weapon's owner
     /// </summary>
     /// <param name="newOwner">New owner.</param>
-    public virtual void SetOwner(Character newOwner, CharacterHandleWeapon handleWeapon)
+    public void SetOwner(Character newOwner, CharacterHandleWeapon handleWeapon)
     {
+        Debug.Log("Set new Owner");
         Owner = newOwner;
         if (Owner != null)
         {
