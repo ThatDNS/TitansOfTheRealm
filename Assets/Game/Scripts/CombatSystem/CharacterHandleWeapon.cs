@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.TextCore.Text;
 
 public class CharacterHandleWeapon : MonoBehaviour
@@ -22,10 +23,11 @@ public class CharacterHandleWeapon : MonoBehaviour
 
     protected Character _character;
 
-
     private void Awake()
     {
         _character=gameObject.GetComponent<Character>();
+
+   
     }
     public virtual void ChangeWeapon(Weapon newWeapon)
     {
@@ -74,7 +76,6 @@ public class CharacterHandleWeapon : MonoBehaviour
 
 
 
-
     /// <summary>
     /// Causes the character to stop shooting
     /// </summary>
@@ -87,13 +88,6 @@ public class CharacterHandleWeapon : MonoBehaviour
         }
 
         if (CurrentWeapon.weaponState == Weapon.WeaponStates.WeaponIdle)
-        {
-            return;
-        }
-
-        if ((CurrentWeapon.weaponState == Weapon.WeaponStates.WeaponReload)
-            || (CurrentWeapon.weaponState == Weapon.WeaponStates.WeaponReloadStart)
-            || (CurrentWeapon.weaponState == Weapon.WeaponStates.WeaponReloadStop))
         {
             return;
         }
@@ -116,6 +110,13 @@ public class CharacterHandleWeapon : MonoBehaviour
         ForceStop();
     }
 
+    /// <summary>
+    /// Causes the character to start shooting
+    /// </summary>
+    public virtual void ShootStart()
+    {
+        CurrentWeapon.WeaponInputStart();
+    }
     /// <summary>
     /// Forces the weapon to stop 
     /// </summary>

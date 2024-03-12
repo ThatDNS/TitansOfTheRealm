@@ -22,12 +22,13 @@ public class Character : MonoBehaviour
     public enum CharacterTypes { Warrior, Titan}
     [Tooltip("Is the Warrior or Titan ?")]
     public CharacterTypes CharacterType = CharacterTypes.Warrior;
-
+    private CharacterHandleWeapon handleWeapon;
 
     #region Monobehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        handleWeapon = GetComponent<CharacterHandleWeapon>();
 
         playerInputActions = new PlayerInputActions();
 
@@ -37,10 +38,14 @@ public class Character : MonoBehaviour
         playerInputActions.Player.Move.canceled += ctx => moveInput = Vector2.zero;
 
         playerInputActions.Player.Jump.performed += ctx => Jump();
+        playerInputActions.Player.Shoot.performed += ctx => Shoot();
 
 
     }
-
+    public PlayerInputActions GetInput()
+    {
+        return playerInputActions;
+    }
 
 
     private void OnEnable()
@@ -78,6 +83,11 @@ public class Character : MonoBehaviour
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
+    }
+    private void Shoot()
+    {
+        if (handleWeapon.CurrentWeapon == null) return;
+        handleWeapon.ShootStart();
     }
 
 

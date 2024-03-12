@@ -47,9 +47,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WeaponName: RPG
-  CurrentAmmoLoaded: 10
-  CurrentAmmoAvailable: 100
+  ProjectilesPerShot: 1
+  Owner: {fileID: 0}
+  CharacterHandleWeapon: {fileID: 0}
   WeaponAttachmentOffset: {x: 0, y: 0, z: 0}
+  WeaponState: 0
+  SpawnPosition: {x: 0, y: 0, z: 0}
+  ProjectileSpawnOffset: {x: 0, y: 0, z: 0}
+  weaponprojectile: {fileID: 1211584217967416726, guid: 2aeec98a6360d164085215294c822763,
+    type: 3}
+  DelayBeforeUse: 0.2
+  TimeBetweenUses: 1.5
 --- !u!114 &1489042252336512792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,7 +70,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 782a332f89db2914fb53f00ed3fab58d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _weapon: {fileID: 0}
+  _reticle: {fileID: 0}
   MouseDeadZoneRadius: 0.5
+  _targetCanvas: {fileID: 0}
   Reticle: {fileID: 1080204767020095304, guid: f5e6d0e7241a2a44eaa8018985c2e76d, type: 3}
   ReplaceMousePointer: 1
   DisplayReticle: 1
