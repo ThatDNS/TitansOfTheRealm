@@ -37,6 +37,11 @@ public class HandPresencePhysics : MonoBehaviour
         }
     }
 
+    public void ModifyTarget(Transform _target)
+    {
+        target = _target;
+    }
+
     private void FixedUpdate()
     {
         rb.velocity = (target.position - transform.position) / Time.fixedDeltaTime;
