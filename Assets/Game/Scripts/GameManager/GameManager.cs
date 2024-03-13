@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
@@ -53,6 +55,7 @@ public class GameManager : Singleton<GameManager>
         InitializeStateMachine();
         InitializeSessionManager();
         _sessionStartTime = DateTime.Now;
+        AudioManager.Instance.PlayMusic("OpenMusic");
     }
 
     private void OnApplicationQuit()
@@ -181,6 +184,7 @@ public class GameManager : Singleton<GameManager>
             if (GUI.Button(new Rect(10, 310, 300, 100), "Play", myButtonStyle))
             {
                 ChangeState(new GMPlayState());
+                
             }
             if (GUI.Button(new Rect(10, 425, 300, 100), "Options", myButtonStyle))
             {
@@ -272,6 +276,7 @@ public class GameManager : Singleton<GameManager>
         if (currentState is GMMainMenuState)
         {
             ChangeState(new GMPlayState());
+            SceneManager.LoadScene("Game");
         }
         else if(currentState is GMPlayState)
         {
