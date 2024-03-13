@@ -263,6 +263,7 @@ public class Health : MonoBehaviour
         // we prevent further damage
         DamageDisabled();
 
+        if(DestroyOnDeath) Destroy(gameObject);
         // we make it ignore the collisions from now on
         if (DisableCollisionsOnDeath)
         {
@@ -271,6 +272,7 @@ public class Health : MonoBehaviour
             {
                 _collider3D.enabled = false;
             }
+            
 
             if (DisableChildCollisionsOnDeath)
             {
@@ -280,6 +282,10 @@ public class Health : MonoBehaviour
                     collider.enabled = false;
                 }
             }
+        }
+        if(DisableModelOnDeath)
+        {
+            Model.gameObject.SetActive(false);
         }
     }
     /// <summary>

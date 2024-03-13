@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.XR.CoreUtils;
 using UnityEngine;
+using UnityEngine.UI;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class DamageOnTouch : MonoBehaviour
 {
 
     [Tooltip("the layers that will be damaged by this object")]
     public LayerMask TargetLayerMask;
+    
     /// the owner of the DamageOnTouch zone
     [Tooltip("the owner of the DamageOnTouch zone")]
     public GameObject Owner;
@@ -78,7 +82,6 @@ public class DamageOnTouch : MonoBehaviour
 
         if (_sphereCollider != null)
         {
-            DebugExtension.DebugWireSphere(_sphereCollider.center, _sphereCollider.radius);
             _sphereCollider.isTrigger = true;
         }
 
@@ -113,7 +116,7 @@ public class DamageOnTouch : MonoBehaviour
     /// Removes the object set in parameters from the ignore list
     /// </summary>
     /// <param name="ignoredGameObject">Ignored game object.</param>
-    public  void StopIgnoringObject(GameObject ignoredGameObject)
+    public void StopIgnoringObject(GameObject ignoredGameObject)
     {
         if (_ignoredGameObjects != null) _ignoredGameObjects.Remove(ignoredGameObject);
     }
@@ -123,10 +126,13 @@ public class DamageOnTouch : MonoBehaviour
     /// On trigger enter, we call our colliding endpoint
     /// </summary>
     /// <param name="collider"></param>
-    public  void OnTriggerEnter(Collider collider)
+    private void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject.layer != TargetLayerMask) return;
-        Colliding(collider.gameObject);
+        if ((TargetLayerMask.value & 1 << collider.gameObject.layer) == 1 << collider.gameObject.layer) 
+        {
+            Colliding(collider.gameObject);
+        }
+
     }
 
     /// <summary>
@@ -154,11 +160,7 @@ public class DamageOnTouch : MonoBehaviour
         else // if what we're colliding with can't be damaged
         {
             OnCollideWithNonDamageable();
-
         }
-
-
-
     }
 
     /// <summary>

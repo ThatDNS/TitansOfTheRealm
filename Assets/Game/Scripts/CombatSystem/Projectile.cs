@@ -5,7 +5,6 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public enum MovementVectors { Forward, Right, Up }
-    public MovementVectors MovementVector = MovementVectors.Forward;
 
     public float Speed = 0;
     public float Acceleration = 0;
@@ -77,7 +76,7 @@ public class Projectile : MonoBehaviour
         Speed = _initialSpeed;
         transform.localScale = _initialLocalScale;
         _shouldMove = true;
-        //_damageOnTouch?.InitializeFeedbacks();
+
 
         if (_collider != null)
         {
@@ -121,28 +120,6 @@ public class Projectile : MonoBehaviour
     {
         Direction = newDirection;       
         transform.rotation = newRotation;
-        
-
-        //if (_damageOnTouch != null)
-        //{
-        //    _damageOnTouch.SetKnockbackScriptDirection(newDirection);
-        //}
-
-        if (FaceMovement)
-        {
-            switch (MovementVector)
-            {
-                case MovementVectors.Forward:
-                    transform.forward = newDirection;
-                    break;
-                case MovementVectors.Right:
-                    transform.right = newDirection;
-                    break;
-                case MovementVectors.Up:
-                    transform.up = newDirection;
-                    break;
-            }
-        }
     }
 
     /// <summary>

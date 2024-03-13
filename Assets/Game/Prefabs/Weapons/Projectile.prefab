@@ -52,7 +52,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -70,9 +70,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83b45c54270c9824aaf48a2c34143974, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MovementVector: 0
-  Speed: 20
-  Acceleration: 5
+  Speed: 50
+  Acceleration: 20
   Direction: {x: -1, y: 0, z: 0}
   InitialInvulnerabilityDuration: 1
   DamageOwner: 0
@@ -92,14 +91,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TargetLayerMask:
     serializedVersion: 2
-    m_Bits: 320
+    m_Bits: 256
   Owner: {fileID: 0}
   MinDamageCaused: 10
   MaxDamageCaused: 10
-  DamageTakenEveryTime: 0
-  DamageTakenNonDamageable: 0
-  DamageTakenHealth: {fileID: 0}
-  DamageTakenDamageable: 0
+  DamageTakenEveryTime: 10
+  DamageTakenNonDamageable: 10
+  DamageTakenHealth: {fileID: 5845065679682595645}
+  DamageTakenDamageable: 10
   DamageTakenInvincibilityDuration: 0.5
 --- !u!54 &8962987620655327661
 Rigidbody:
@@ -140,7 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf49fd7df6a0a304db0eaecf9d0b6d82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Model: {fileID: 0}
+  Model: {fileID: 5104606358636955033}
   CurrentHealth: 0
   Invulnerable: 0
   InitialHealth: 10

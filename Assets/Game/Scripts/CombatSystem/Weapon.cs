@@ -204,16 +204,7 @@ public class Weapon : MonoBehaviour
 
         if (projectile != null)
         {
-
-            Quaternion spread = Quaternion.identity;
- 
-            projectile.SetDirection(spread * transform.forward, transform.rotation, true);
-
-
-            Vector3 newDirection = spread * transform.right;
-
-            projectile.SetDirection(newDirection, spread * transform.rotation, true);
-
+            projectile.SetDirection(transform.forward, transform.rotation, true);
         }
         return nextGameObject;
     }

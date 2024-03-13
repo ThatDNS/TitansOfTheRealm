@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -8,11 +9,12 @@ public class WeaponAim : MonoBehaviour
 
     private Camera _mainCamera;
     [SerializeField]private Weapon _weapon;
-    private Vector3 _currentAim = Vector3.zero;
-    private Vector3 _currentAimAbsolute = Vector3.zero;
-    private Quaternion _initialRotation;
+
+
+    protected Vector3 _weaponAimCurrentAim;
+
     [SerializeField]private GameObject _reticle;
-    private Vector3 _reticlePosition;
+
     private Vector3 _mousePosition;
     private Vector3 _lastMousePosition;
     private Vector3 _direction;
@@ -21,7 +23,7 @@ public class WeaponAim : MonoBehaviour
     public float MouseDeadZoneRadius = 0.5f;
 
     public Canvas _targetCanvas;
-    private bool _initialized = false;
+
 
     [Tooltip("the gameobject to display as the aim's reticle/crosshair. Leave it blank if you don't want a reticle")]
     public GameObject Reticle;
@@ -47,9 +49,9 @@ public class WeaponAim : MonoBehaviour
         _mainCamera = Camera.main;
 
         _targetCanvas= _weapon.Owner.GetComponent<Character>().MainCanvas;
-        _initialRotation = transform.rotation;
+
         InitializeReticle();
-        _initialized = true;
+
     }
 
     /// <summary>
@@ -82,7 +84,7 @@ public class WeaponAim : MonoBehaviour
     {
         if (_reticle == null) { return; }
 
-        _reticlePosition = _reticle.transform.position;
+  
 
 
     }
@@ -100,21 +102,12 @@ public class WeaponAim : MonoBehaviour
         _mousePosition = Input.mousePosition;
 
         Ray ray = _mainCamera.ScreenPointToRay(_mousePosition);
-        Debug.DrawRay(ray.origin, ray.direction);
+        DebugExtension.DebugArrow(ray.origin,ray.direction * 100, Color.red);
+        Vector3 target = ray.direction*100;
 
+        _direction = target;
 
-        _reticlePosition = _direction;
-
-        if (Vector3.Distance(_direction, transform.position) < MouseDeadZoneRadius)
-        {
-            _direction = _lastMousePosition;
-        }
-        else
-        {
-            _lastMousePosition = _direction;
-        }
-
-        _currentAim = _direction - _weapon.Owner.transform.position;
+        _weaponAimCurrentAim = _direction - _weapon.transform.position;
     }
 
     /// <summary>
@@ -125,11 +118,11 @@ public class WeaponAim : MonoBehaviour
         HideMousePointer();
         HideReticle();
         GetCurrentAim();
+        DetermineWeaponRotation(this.transform.position + _weaponAimCurrentAim);
     }
 
     private void FixedUpdate()
     {
-        MoveTarget();
         MoveReticle();
     }
 
@@ -181,19 +174,14 @@ public class WeaponAim : MonoBehaviour
             Cursor.visible = true;
         }
     }
-    private  void MoveTarget()
+
+    private Vector3 _aimAtDirection;
+    public Quaternion _aimAtQuaternion;
+    protected void DetermineWeaponRotation(Vector3 target)
     {
-        if (_weapon.Owner == null)
-        {
-            return;
-        }
-
-        Vector2 mouseDelta = new Vector2(_mousePosition.x - _lastMousePosition.x, _mousePosition.y - _lastMousePosition.y);
-        _lastMousePosition = _mousePosition;
-
-        float sensitivity = 0.1f; // Adjust this sensitivity as needed.
-        Vector2 rotationAmount = mouseDelta * sensitivity;
-        _mainCamera.transform.Rotate(Vector3.left, rotationAmount.y);
-
+        _aimAtDirection = target - transform.position;
+        _aimAtQuaternion = Quaternion.LookRotation(_aimAtDirection, Vector3.up);
+        transform.rotation = _aimAtQuaternion;
     }
+
 }
