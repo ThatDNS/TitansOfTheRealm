@@ -5,10 +5,12 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class Titan : MonoBehaviour
 {
-    [SerializeField] private GameObject leftRayController;
-    [SerializeField] private GameObject rightRayController;
-    [SerializeField] private GameObject leftDirectController;
-    [SerializeField] private GameObject rightDirectController;
+    [SerializeField] int moveSpeed = 2;
+    [SerializeField] int turnSpeed = 50;
+    [SerializeField] GameObject leftRayController;
+    [SerializeField] GameObject rightRayController;
+    [SerializeField] GameObject leftDirectController;
+    [SerializeField] GameObject rightDirectController;
 
     private ActionBasedContinuousMoveProvider _continuousMoveProvider;
     private ActionBasedContinuousTurnProvider _continuousTurnProvider;
@@ -19,28 +21,46 @@ public class Titan : MonoBehaviour
         _continuousTurnProvider = GetComponent<ActionBasedContinuousTurnProvider>();
 
         // Don't allow movements at the beginning
-        _continuousMoveProvider.enabled = false;
-        _continuousTurnProvider.enabled = false;
+        _continuousMoveProvider.moveSpeed = 0;
+        _continuousTurnProvider.turnSpeed = 0;
 
         // Enable ray points (to be able to interact with UI button)
-        leftRayController.SetActive(true);
-        rightRayController.SetActive(true);
-        leftDirectController.SetActive(false);
-        rightDirectController.SetActive(false);
+        SetActiveAllComponents(leftRayController, true);
+        SetActiveAllComponents(rightRayController, true);
+        SetActiveAllComponents(leftDirectController, false);
+        SetActiveAllComponents(rightDirectController, false);
     }
 
     public void AllowMovement()
     {
         Debug.Log("ALLOWING MOVEMENT!");
-        _continuousMoveProvider.enabled = true;
-        _continuousTurnProvider.enabled = true;
+        _continuousMoveProvider.moveSpeed = moveSpeed;
+        _continuousTurnProvider.turnSpeed = turnSpeed;
     }
 
     public void SwitchFromRayToDirectInteraction()
     {
-        leftRayController.SetActive(false);
-        rightRayController.SetActive(false);
-        leftDirectController.SetActive(true);
-        rightDirectController.SetActive(true);
+        SetActiveAllComponents(leftRayController, false);
+        SetActiveAllComponents(rightRayController, false);
+        SetActiveAllComponents(leftDirectController, true);
+        SetActiveAllComponents(rightDirectController, true);
+    }
+
+    // This is important as if we enable/disable the whole game objects containing ray controller or direct controller
+    // then there could be issues where (i think) the input system can't find them anymore and throw NullReferenceException.
+    // Alternative here is to disable/enable all components instead of the game object itself.
+    private void SetActiveAllComponents(GameObject obj, bool isActive)
+    {
+        foreach (Component component in obj.GetComponents<Component>())
+        {
+
+            if (component is Transform)
+                continue;
+
+            if (component is Behaviour behaviour)
+                behaviour.enabled = isActive;
+            if (component is Renderer renderer)
+                renderer.enabled = isActive;
+        }
     }
 }

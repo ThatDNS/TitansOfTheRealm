@@ -527,6 +527,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35d0e3457e0c0794babf6869c812eabc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 2
+  turnSpeed: 50
   leftRayController: {fileID: 1505548487}
   rightRayController: {fileID: 1505548486}
   leftDirectController: {fileID: 1355907753}
@@ -669,7 +671,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &223976895
 Transform:
   m_ObjectHideFlags: 0
@@ -4589,7 +4591,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1355907754
 Transform:
   m_ObjectHideFlags: 0
@@ -4977,7 +4979,7 @@ PrefabInstance:
     - target: {fileID: 137102397618071590, guid: c8cdf329f6b763f41990ef5c7259c807,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 535287097024396879, guid: c8cdf329f6b763f41990ef5c7259c807,
         type: 3}
@@ -4997,7 +4999,7 @@ PrefabInstance:
     - target: {fileID: 2473499695923052020, guid: c8cdf329f6b763f41990ef5c7259c807,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2485396351889676150, guid: c8cdf329f6b763f41990ef5c7259c807,
         type: 3}
