@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using static UnityEngine.ParticleSystem;
 using static Weapon;
 
@@ -42,7 +43,8 @@ public class Weapon : MonoBehaviour
     [Tooltip("the offset position at which the projectile will spawn")]
     public Vector3 ProjectileSpawnOffset = Vector3.zero;
 
-    public GameObject weaponprojectile;
+   // public GameObject weaponprojectile;
+    public AssetReference loadWeaponprojectile;
 
     /// the delay before use, that will be applied for every shot
     [Tooltip("the delay before use, that will be applied for every shot")]
@@ -199,15 +201,19 @@ public class Weapon : MonoBehaviour
         }
 
     }
-    private GameObject SpawnProjectile(Vector3 spawnPosition)
+    private void SpawnProjectile(Vector3 spawnPosition)
     {
 
-        GameObject nextGameObject = Instantiate(weaponprojectile);
+        AssetManager.Instance.Inst(loadWeaponprojectile, spawnPosition, Quaternion.identity, InitializeNextProjectile);
 
         // we position the object
-        nextGameObject.transform.position = spawnPosition;
+        //nextGameObject.transform.position = spawnPosition;
         // we set its direction
 
+    }
+
+    private void InitializeNextProjectile(GameObject nextGameObject)
+    {
         Projectile projectile = nextGameObject.GetComponent<Projectile>();
         if (projectile != null)
         {
@@ -224,8 +230,8 @@ public class Weapon : MonoBehaviour
         {
             projectile.SetDirection(transform.forward, transform.rotation, true);
         }
-        return nextGameObject;
     }
+
     /// <summary>
     /// On weapon stop, we switch to idle
     /// </summary>

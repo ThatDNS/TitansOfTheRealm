@@ -27,6 +27,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2aeec98a6360d164085215294c822763
+    m_Address: Assets/Game/Prefabs/Weapons/Projectile.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 030f53bcf46bc074eac1d213e34a42c5, type: 2}
   m_SchemaSet:
