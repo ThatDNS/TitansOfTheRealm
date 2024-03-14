@@ -11,17 +11,20 @@ public class GameController : MonoBehaviour
     };
 
     public GameMode gameMode;
-    [SerializeField] FixCamera _camera;
+    public Camera vrCamera;
+    public Camera pcCamera;
 
     private void Start()
     {
         if (gameMode == GameMode.PC)
         {
-            _camera.AttachToWarrior();
+            vrCamera.depth = 0;
+            pcCamera.depth = 1;
         }
         else
         {
-            _camera.AttachToTitan();
+            vrCamera.depth = 1;
+            pcCamera.depth = 0;
         }
     }
 }

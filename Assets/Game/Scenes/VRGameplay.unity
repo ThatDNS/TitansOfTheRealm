@@ -123,37 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &8635116
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8635117}
-  m_Layer: 0
-  m_Name: Camera Offset
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8635117
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8635116}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.25, z: -7.75}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 665186876}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &12254172
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2373,7 +2342,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6530499745945627317, guid: 2d16b7a51627f3b4a80023832303999a,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8635117}
+      addedObject: {fileID: 1978769175}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d16b7a51627f3b4a80023832303999a, type: 3}
 --- !u!4 &665186876 stripped
@@ -4774,6 +4743,11 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1505548483}
+    - target: {fileID: 5508557765449544220, guid: c8cdf329f6b763f41990ef5c7259c807,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6861073502563573245, guid: c8cdf329f6b763f41990ef5c7259c807,
         type: 3}
       propertyPath: m_Name
@@ -5946,7 +5920,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameMode: 1
-  _camera: {fileID: 1978769176}
+  vrCamera: {fileID: 1505548483}
+  pcCamera: {fileID: 1978769174}
 --- !u!1 &1742448044
 GameObject:
   m_ObjectHideFlags: 0
@@ -6599,7 +6574,6 @@ GameObject:
   - component: {fileID: 1978769175}
   - component: {fileID: 1978769174}
   - component: {fileID: 1978769172}
-  - component: {fileID: 1978769176}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -6687,7 +6661,7 @@ Camera:
   field of view: 60
   orthographic: 0
   orthographic size: 5
-  m_Depth: -1
+  m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -6710,27 +6684,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1978769171}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 2.4492166, y: 5.99, z: 19.4738}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 3.2499998, z: -7.750001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 665186876}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1978769176
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1978769171}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ac2c1a6c52b23b44bc24b0446c67abc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  titanCameraOffset: {fileID: 1515570906}
-  warriorCameraOffset: {fileID: 8635117}
 --- !u!1001 &2017519351
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7456,7 +7416,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 1160472248}
   - {fileID: 1051869198}
-  - {fileID: 1978769175}
   - {fileID: 1707602371}
   - {fileID: 1471672639}
   - {fileID: 1505548482}
