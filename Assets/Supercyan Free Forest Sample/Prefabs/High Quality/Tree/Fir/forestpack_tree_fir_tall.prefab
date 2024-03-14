@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1270880993198486453}
   - component: {fileID: 4765277708293148362}
   - component: {fileID: 6027089359365040827}
+  - component: {fileID: 7150017782706081350}
   - component: {fileID: 7352873753001921050}
   m_Layer: 0
   m_Name: forestpack_tree_fir_tall
@@ -277,6 +278,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e742c5ea38bba74d905a72c1303ca80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7150017782706081350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1210459693873458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncScale: 0
+  SyncParent: 0
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 0
 --- !u!114 &7352873753001921050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -293,7 +310,8 @@ MonoBehaviour:
   ObjectInterest: 1
   Flags: 262145
   NestedObjects: []
-  NetworkedBehaviours: []
+  NetworkedBehaviours:
+  - {fileID: 7150017782706081350}
 --- !u!1 &718157569100125009
 GameObject:
   m_ObjectHideFlags: 0
