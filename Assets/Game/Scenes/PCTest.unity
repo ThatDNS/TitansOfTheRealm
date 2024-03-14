@@ -829,10 +829,10 @@ MonoBehaviour:
   MaximumHealth: 10
   ResetHealthOnEnable: 1
   ImmuneToDamage: 0
-  DestroyOnDeath: 1
+  DestroyOnDeath: 0
   DelayBeforeDestruction: 0
-  DisableModelOnDeath: 1
-  DisableCollisionsOnDeath: 1
+  DisableModelOnDeath: 0
+  DisableCollisionsOnDeath: 0
   DisableChildCollisionsOnDeath: 0
 --- !u!1 &1464918314
 GameObject:

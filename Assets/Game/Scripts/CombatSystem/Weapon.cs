@@ -21,7 +21,7 @@ public class Weapon : MonoBehaviour
     public Character Owner;
 
     protected bool _triggerReleased = false;
-    protected bool _reloading = false;
+    
 
     protected Weapon _weapon;
 
@@ -50,11 +50,28 @@ public class Weapon : MonoBehaviour
     public float _delayBetweenUsesCounter=0.0f;
     public float TimeBetweenUses = 1.5f;
     private float _lastShootRequestAt = -float.MaxValue;
-
+    public int _MaxAmmo = 6;
+    private int _CurrentAmmo;
     private float _delayBeforeUseCounter = 0f;
+
+
+
+
+
+    /// <summary>
+    /// Initialize this weapon.
+    /// </summary>
+    public void Initialization()
+    {
+        weaponState = WeaponStates.WeaponIdle;
+        _CurrentAmmo = _MaxAmmo;
+    }
+
+
     /// <summary>
     /// Determines whether or not the weapon can fire
     /// </summary>
+    /// 
     public virtual IEnumerator ShootRequestCo()
     {
         if (Time.time - _lastShootRequestAt < TimeBetweenUses)
@@ -77,12 +94,13 @@ public class Weapon : MonoBehaviour
     public virtual void ShootRequest()
     {
         // if we have a weapon ammo component, we determine if we have enough ammunition to shoot
-        if (_reloading)
+        if (_CurrentAmmo <= 0)
         {
             return;
         }
+        _CurrentAmmo--;
+
         WeaponState=WeaponStates.WeaponUse;
-        
     }
 
     /// <summary>
@@ -224,13 +242,7 @@ public class Weapon : MonoBehaviour
     }
 
 
-    /// <summary>
-    /// Initialize this weapon.
-    /// </summary>
-    public void Initialization()
-    {
-        weaponState = WeaponStates.WeaponIdle;
-    }
+
 
     /// <summary>
     /// Sets the weapon's owner
@@ -251,7 +263,7 @@ public class Weapon : MonoBehaviour
     /// </summary>
     public void WeaponInputStart()
     {
-        if (_reloading)
+        if (_CurrentAmmo <= 0)
         {
             return;
         }
@@ -275,5 +287,14 @@ public class Weapon : MonoBehaviour
         _triggerReleased = true;
         WeaponState=WeaponStates.WeaponStop;
     }
+    public void DestroyWeapon()
+    {
 
+        Destroy(this.gameObject);
+    }
+
+    public int GetCurrentAmmo()
+    {
+        return _CurrentAmmo;
+    }
 }

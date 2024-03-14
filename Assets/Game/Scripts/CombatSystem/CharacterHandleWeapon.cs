@@ -23,6 +23,8 @@ public class CharacterHandleWeapon : MonoBehaviour
 
     protected Character _character;
 
+    protected WeaponAim _weaponAim;
+
     private void Awake()
     {
         _character=gameObject.GetComponent<Character>();
@@ -71,6 +73,7 @@ public class CharacterHandleWeapon : MonoBehaviour
 
         // we turn off the gun's emitters.
         CurrentWeapon.Initialization();
+        _weaponAim=CurrentWeapon.GetComponent<WeaponAim>();
 
     }
 
@@ -115,6 +118,11 @@ public class CharacterHandleWeapon : MonoBehaviour
     /// </summary>
     public virtual void ShootStart()
     {
+        if (CurrentWeapon.GetCurrentAmmo() <= 0) 
+        {
+            _weaponAim.RemoveReticle();
+            CurrentWeapon.DestroyWeapon();
+        }
         CurrentWeapon.WeaponInputStart();
     }
     /// <summary>
