@@ -6,7 +6,7 @@ using UnityEngine;
 public class ForestSpawner : NetworkBehaviour
 {
     [SerializeField] GameObject treeGO;
-    [SerializeField] int numTrees = 50;
+    [SerializeField] int numTrees = 5;
 
     private bool treesSpawned = false;
 

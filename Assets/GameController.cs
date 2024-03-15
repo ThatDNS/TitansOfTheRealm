@@ -33,13 +33,14 @@ public class GameController : NetworkBehaviour
         }
     }
 
-    public void SpawnPlayer()
+    public void SpawnPlayer(PlayerRef player)
     {
 
         if (gameMode == GameMode.PC)
         {
             // Spawn warrior
-            Runner.Spawn(warriorGO, new Vector3(2.45f, 2.75f, 11.75f), Quaternion.Euler(0f, 180f, 0f));
+            Runner.Spawn(warriorGO, new Vector3(2.45f, 2.75f, 11.75f), Quaternion.Euler(0f, 180f, 0f), player);
+            Debug.Log("Hmm this is PC -- WARRIOR GOES BURRR!");
         }
         else
         {

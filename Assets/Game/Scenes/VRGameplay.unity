@@ -4731,7 +4731,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treeGO: {fileID: 3357079733857606553, guid: 2e4d60446601ea94daa130a8c26abaee, type: 3}
-  numTrees: 50
+  numTrees: 5
 --- !u!1001 &1637825133
 PrefabInstance:
   m_ObjectHideFlags: 0
