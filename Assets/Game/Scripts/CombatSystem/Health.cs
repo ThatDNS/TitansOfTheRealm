@@ -209,7 +209,7 @@ public class Health : MonoBehaviour
     /// <param name="instigator">The object that caused the damage.</param>
     /// <param name="flickerDuration">The time (in seconds) the object should flicker after taking the damage - not used anymore, kept to not break retrocompatibility</param>
     /// <param name="invincibilityDuration">The duration of the short invincibility following the hit.</param>
-    public virtual void Damage(float damage, GameObject instigator, float flickerDuration, float invincibilityDuration, Vector3 damageDirection)
+    public virtual void Damage(float damage, GameObject instigator, float flickerDuration, float invincibilityDuration)
     {
         if (!CanTakeDamageThisFrame())
         {
@@ -225,7 +225,7 @@ public class Health : MonoBehaviour
        
 
         LastDamage = damage;
-        LastDamageDirection = damageDirection;
+
         if (OnHit != null)
         {
             OnHit();
@@ -263,6 +263,7 @@ public class Health : MonoBehaviour
         // we prevent further damage
         DamageDisabled();
 
+        if(DestroyOnDeath) Destroy(gameObject);
         // we make it ignore the collisions from now on
         if (DisableCollisionsOnDeath)
         {
@@ -271,6 +272,7 @@ public class Health : MonoBehaviour
             {
                 _collider3D.enabled = false;
             }
+            
 
             if (DisableChildCollisionsOnDeath)
             {
@@ -280,6 +282,10 @@ public class Health : MonoBehaviour
                     collider.enabled = false;
                 }
             }
+        }
+        if(DisableModelOnDeath)
+        {
+            Model.gameObject.SetActive(false);
         }
     }
     /// <summary>

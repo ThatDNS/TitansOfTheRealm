@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UIFollowMouse : MonoBehaviour
 {
-    public virtual Canvas TargetCanvas { get; set; }
+    public  Canvas TargetCanvas { get; set; }
     protected Vector2 _newPosition;
     protected Vector2 _mousePosition;
 

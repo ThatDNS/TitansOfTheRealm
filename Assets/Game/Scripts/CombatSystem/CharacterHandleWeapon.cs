@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.TextCore.Text;
 
 public class CharacterHandleWeapon : MonoBehaviour
@@ -22,6 +23,14 @@ public class CharacterHandleWeapon : MonoBehaviour
 
     protected Character _character;
 
+    protected WeaponAim _weaponAim;
+
+    private void Awake()
+    {
+        _character=gameObject.GetComponent<Character>();
+
+   
+    }
     public virtual void ChangeWeapon(Weapon newWeapon)
     {
         // if the character already has a weapon, we make it stop shooting
@@ -64,9 +73,9 @@ public class CharacterHandleWeapon : MonoBehaviour
 
         // we turn off the gun's emitters.
         CurrentWeapon.Initialization();
+        _weaponAim=CurrentWeapon.GetComponent<WeaponAim>();
 
     }
-
 
 
 
@@ -82,13 +91,6 @@ public class CharacterHandleWeapon : MonoBehaviour
         }
 
         if (CurrentWeapon.weaponState == Weapon.WeaponStates.WeaponIdle)
-        {
-            return;
-        }
-
-        if ((CurrentWeapon.weaponState == Weapon.WeaponStates.WeaponReload)
-            || (CurrentWeapon.weaponState == Weapon.WeaponStates.WeaponReloadStart)
-            || (CurrentWeapon.weaponState == Weapon.WeaponStates.WeaponReloadStop))
         {
             return;
         }
@@ -111,6 +113,18 @@ public class CharacterHandleWeapon : MonoBehaviour
         ForceStop();
     }
 
+    /// <summary>
+    /// Causes the character to start shooting
+    /// </summary>
+    public virtual void ShootStart()
+    {
+        if (CurrentWeapon.GetCurrentAmmo() <= 0) 
+        {
+            _weaponAim.RemoveReticle();
+            CurrentWeapon.DestroyWeapon();
+        }
+        CurrentWeapon.WeaponInputStart();
+    }
     /// <summary>
     /// Forces the weapon to stop 
     /// </summary>
