@@ -5,6 +5,17 @@ using UnityEngine;
 
 public class GameController : NetworkBehaviour//, IPlayerJoined
 {
+    [SerializeField] GameObject initialCamera;
+    [SerializeField] PlayerSpawner playerSpawner;
+
+    private void Update()
+    {
+        if (playerSpawner.playerSpawned && initialCamera.activeSelf)
+        {
+            // After a player has been spawned, we'll use the player camera and disable the initial camera
+            initialCamera.SetActive(false);
+        }
+    }
     //public enum GameMode
     //{
     //    PC,

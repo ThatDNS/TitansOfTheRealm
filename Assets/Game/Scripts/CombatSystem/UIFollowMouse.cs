@@ -12,8 +12,6 @@ public class UIFollowMouse : MonoBehaviour
     {
 #if !ENABLE_INPUT_SYSTEM || ENABLE_LEGACY_INPUT_MANAGER
         _mousePosition = Input.mousePosition;
-#else
-			_mousePosition = Mouse.current.position.ReadValue();
 #endif
         RectTransformUtility.ScreenPointToLocalPointInRectangle(TargetCanvas.transform as RectTransform, _mousePosition, TargetCanvas.worldCamera, out _newPosition);
         transform.position = TargetCanvas.transform.TransformPoint(_newPosition);

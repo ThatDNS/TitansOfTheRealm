@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 7211275669896668900}
   - component: {fileID: 5805021168106319930}
   - component: {fileID: 484969750108233694}
+  - component: {fileID: 4003233651213531891}
+  - component: {fileID: 3906124808628002177}
   m_Layer: 11
   m_Name: Right Hand with Physics
   m_TagString: Untagged
@@ -88,7 +90,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8860ed967ca23604189d3fa81faec8ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  titan: {fileID: 0}
+  titanHand: {fileID: 0}
+  titanHandType: 1
+--- !u!114 &4003233651213531891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8669694540293508723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 1094180519
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 484969750108233694}
+  - {fileID: 3906124808628002177}
+--- !u!114 &3906124808628002177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8669694540293508723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncScale: 0
+  SyncParent: 0
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 0
 --- !u!1001 &5458086872164644939
 PrefabInstance:
   m_ObjectHideFlags: 0

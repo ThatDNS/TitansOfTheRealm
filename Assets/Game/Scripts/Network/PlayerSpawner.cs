@@ -8,13 +8,23 @@ using UnityEngine.SceneManagement;
 
 public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
 {
-    public NetworkRunner _runner;
+    // TODO: Separate runner from PlayerSpawner
+    private NetworkRunner _runner;
+    
     public string sessionName = "GameRoom";
+    public bool playerSpawned = false;
 
     [SerializeField] GameMode _gameMode;
     [SerializeField] NetworkPrefabRef warriorPrefab;
+    [SerializeField] NetworkPrefabRef titanPrefab;
+    [SerializeField] NetworkPrefabRef titanLeftHand;
+    [SerializeField] NetworkPrefabRef titanRightHand;
+
     [SerializeField] ForestSpawner forestSpawner;
-    NetworkObject warriorObject = null;
+    NetworkObject warriorObj = null;
+    NetworkObject titanObj = null;
+    NetworkObject titanLeftHandObj = null;
+    NetworkObject titanRightHandObj = null;
 
     private void Awake()
     {
@@ -23,6 +33,7 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
 
     private void Start()
     {
+        playerSpawned = false;
         StartGame(_gameMode);
     }
 
@@ -51,19 +62,47 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
-        // player.PlayerId = 2 ensures that warrior gets spawned when the client connects
-        if (runner.IsServer && (player.PlayerId == 2))
+        if (_gameMode == GameMode.Client)
         {
-            warriorObject = runner.Spawn(warriorPrefab, new Vector3(2.45f, 2.75f, 11.75f), Quaternion.Euler(0f, 180f, 0f), player);
+            warriorObj = runner.Spawn(warriorPrefab, new Vector3(2.45f, 2.75f, 11.75f), Quaternion.Euler(0f, 180f, 0f), player);
         }
+        else
+        {
+            titanObj = runner.Spawn(titanPrefab, new Vector3(5.25f, -6, -15.75f), Quaternion.identity, player);
+            titanLeftHandObj = runner.Spawn(titanLeftHand, Vector3.zero, Quaternion.identity, player);
+            titanRightHandObj = runner.Spawn(titanRightHand, Vector3.zero, Quaternion.identity, player);
+            titanLeftHandObj.GetComponent<HandPresencePhysics>().titan = titanObj.transform;
+            titanLeftHandObj.GetComponent<HandPresencePhysics>().FindTitanHand();
+            titanRightHandObj.GetComponent<HandPresencePhysics>().titan = titanObj.transform;
+            titanRightHandObj.GetComponent<HandPresencePhysics>().FindTitanHand();
+        }
+        playerSpawned = true;
         forestSpawner.SpawnTrees(runner);
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
-        if (warriorObject != null)
+        if (_gameMode == GameMode.Client)
         {
-            runner.Despawn(warriorObject);
+            if (warriorObj != null)
+            {
+                runner.Despawn(warriorObj);
+            }
+        }
+        else
+        {
+            if (titanObj != null)
+            {
+                runner.Despawn(titanObj);
+            }
+            if (titanLeftHandObj != null)
+            {
+                runner.Despawn(titanLeftHandObj);
+            }
+            if (titanRightHandObj != null)
+            {
+                runner.Despawn(titanRightHandObj);
+            }
         }
     }
 
