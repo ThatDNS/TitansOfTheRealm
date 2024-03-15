@@ -70,7 +70,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83b45c54270c9824aaf48a2c34143974, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 50
+  Speed: 100
   Acceleration: 20
   Direction: {x: -1, y: 0, z: 0}
   InitialInvulnerabilityDuration: 1
