@@ -62,7 +62,10 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
-        if (_gameMode == GameMode.Client)
+        if (!runner.IsServer)
+            return;
+
+        if (player.PlayerId == 2)
         {
             warriorObj = runner.Spawn(warriorPrefab, new Vector3(2.45f, 2.75f, 11.75f), Quaternion.Euler(0f, 180f, 0f), player);
         }
@@ -82,7 +85,7 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
-        if (_gameMode == GameMode.Client)
+        if (player.PlayerId == 2)
         {
             if (warriorObj != null)
             {
