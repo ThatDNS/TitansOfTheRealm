@@ -137,10 +137,10 @@ GameObject:
   - component: {fileID: 4923260933654595140}
   - component: {fileID: 1510472757502649836}
   - component: {fileID: 767175873156665618}
-  - component: {fileID: 8153657813693211033}
-  - component: {fileID: 4879023455614063838}
   - component: {fileID: 6855104405694513719}
   - component: {fileID: 8814818966047991445}
+  - component: {fileID: 5396074656877595470}
+  - component: {fileID: 5693751045431201100}
   m_Layer: 0
   m_Name: Tall Tree
   m_TagString: Untagged
@@ -212,7 +212,48 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.5176362, y: 3.5331335, z: 0.6150175}
   m_Center: {x: 0.044371247, y: 1.6552377, z: -0.007930428}
---- !u!114 &8153657813693211033
+--- !u!114 &6855104405694513719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3357079733857606553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 2888120118
+  ObjectInterest: 0
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 8814818966047991445}
+  - {fileID: 5693751045431201100}
+--- !u!114 &8814818966047991445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3357079733857606553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a591d221a634417e9827eb58e17de84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncScale: 0
+  SyncParent: 1
+  _interpolationTarget: {fileID: 8185914022174550542}
+  UsePreciseRotation: 0
+  UseRenderSleepThresholds: 1
+  RenderThresholds:
+    UseEnergy: 1
+    Position: 0.01
+    Rotation: 0.01
+    Scale: 0.01
+--- !u!114 &5396074656877595470
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -263,8 +304,8 @@ MonoBehaviour:
   m_SelectEntered:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4879023455614063838}
-        m_TargetAssemblyTypeName: Tree, Assembly-CSharp
+      - m_Target: {fileID: 5693751045431201100}
+        m_TargetAssemblyTypeName: TallTree, Assembly-CSharp
         m_MethodName: UnFreezeRotation
         m_Mode: 1
         m_Arguments:
@@ -372,7 +413,7 @@ MonoBehaviour:
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
---- !u!114 &4879023455614063838
+--- !u!114 &5693751045431201100
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -384,44 +425,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e742c5ea38bba74d905a72c1303ca80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6855104405694513719
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3357079733857606553}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SortKey: 2888120118
-  ObjectInterest: 0
-  Flags: 262145
-  NestedObjects: []
-  NetworkedBehaviours:
-  - {fileID: 4879023455614063838}
-  - {fileID: 8814818966047991445}
---- !u!114 &8814818966047991445
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3357079733857606553}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a591d221a634417e9827eb58e17de84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SyncScale: 0
-  SyncParent: 1
-  _interpolationTarget: {fileID: 8185914022174550542}
-  UsePreciseRotation: 0
-  UseRenderSleepThresholds: 1
-  RenderThresholds:
-    UseEnergy: 1
-    Position: 0.01
-    Rotation: 0.01
-    Scale: 0.01

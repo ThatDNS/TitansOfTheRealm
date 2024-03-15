@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tree : NetworkBehaviour
+public class TallTree : NetworkBehaviour
 {
     private Rigidbody rb;
 
