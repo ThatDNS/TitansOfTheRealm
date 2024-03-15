@@ -7,13 +7,17 @@ public class Titan : MonoBehaviour
 {
     [SerializeField] int moveSpeed = 2;
     [SerializeField] int turnSpeed = 50;
+    [SerializeField] float minRayDistance = 1.0f;
+    [SerializeField] float maxRayDistance = 30.0f;
     [SerializeField] GameObject leftRayController;
     [SerializeField] GameObject rightRayController;
-    [SerializeField] GameObject leftDirectController;
-    [SerializeField] GameObject rightDirectController;
 
     private ActionBasedContinuousMoveProvider _continuousMoveProvider;
     private ActionBasedContinuousTurnProvider _continuousTurnProvider;
+    private XRRayInteractor _leftRayInteractor;
+    private XRRayInteractor _rightRayInteractor;
+    private XRInteractorLineVisual _leftRayInteractorLine;
+    private XRInteractorLineVisual _rightRayInteractorLine;
 
     private void Start()
     {
@@ -24,16 +28,17 @@ public class Titan : MonoBehaviour
         _continuousMoveProvider.moveSpeed = 0;
         _continuousTurnProvider.turnSpeed = 0;
 
-        // Enable ray points (to be able to interact with UI button)
-        SetActiveAllComponents(leftRayController, true);
-        SetActiveAllComponents(rightRayController, true);
-        SetActiveAllComponents(leftDirectController, false);
-        SetActiveAllComponents(rightDirectController, false);
+        // Extend ray points (to be able to interact with UI button)
+        _leftRayInteractor = leftRayController.GetComponent<XRRayInteractor>();
+        _rightRayInteractor = rightRayController.GetComponent<XRRayInteractor>();
+        _leftRayInteractorLine = leftRayController.GetComponent<XRInteractorLineVisual>();
+        _rightRayInteractorLine = rightRayController.GetComponent<XRInteractorLineVisual>();
+        _leftRayInteractor.maxRaycastDistance = maxRayDistance;
+        _rightRayInteractor.maxRaycastDistance = maxRayDistance;
 
-
-        // TEMPORARY
-        SwitchFromRayToDirectInteraction();
+        // TEMPORARY -- DO THIS ON "START GAME"
         AllowMovement();
+        UIToDirectTouchControls();
     }
 
     public void AllowMovement()
@@ -43,29 +48,16 @@ public class Titan : MonoBehaviour
         _continuousTurnProvider.turnSpeed = turnSpeed;
     }
 
-    public void SwitchFromRayToDirectInteraction()
+    /// <summary>
+    /// Shortens the ray controller's ray length to allow only close interactions.
+    /// </summary>
+    public void UIToDirectTouchControls()
     {
-        SetActiveAllComponents(leftRayController, false);
-        SetActiveAllComponents(rightRayController, false);
-        SetActiveAllComponents(leftDirectController, true);
-        SetActiveAllComponents(rightDirectController, true);
-    }
+        _leftRayInteractor.maxRaycastDistance = minRayDistance;
+        _rightRayInteractor.maxRaycastDistance = minRayDistance;
 
-    // This is important as if we enable/disable the whole game objects containing ray controller or direct controller
-    // then there could be issues where (i think) the input system can't find them anymore and throw NullReferenceException.
-    // Alternative here is to disable/enable all components instead of the game object itself.
-    private void SetActiveAllComponents(GameObject obj, bool isActive)
-    {
-        foreach (Component component in obj.GetComponents<Component>())
-        {
-
-            if (component is Transform)
-                continue;
-
-            if (component is Behaviour behaviour)
-                behaviour.enabled = isActive;
-            if (component is Renderer renderer)
-                renderer.enabled = isActive;
-        }
+        // Disable Line renderer
+        _leftRayInteractorLine.enabled = false;
+        _rightRayInteractorLine.enabled = false;
     }
 }

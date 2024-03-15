@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameController : NetworkBehaviour
+public class GameController : NetworkBehaviour, IPlayerJoined
 {
     public enum GameMode
     {
@@ -33,7 +33,7 @@ public class GameController : NetworkBehaviour
         }
     }
 
-    public void SpawnPlayer(PlayerRef player)
+    public void PlayerJoined(PlayerRef player)
     {
 
         if (gameMode == GameMode.PC)

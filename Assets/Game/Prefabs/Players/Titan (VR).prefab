@@ -473,10 +473,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 2
   turnSpeed: 50
+  minRayDistance: 1
+  maxRayDistance: 30
   leftRayController: {fileID: 2380894517057298127}
   rightRayController: {fileID: 8673053045745733297}
-  leftDirectController: {fileID: 4977817990940789392}
-  rightDirectController: {fileID: 4735705670504093822}
 --- !u!1 &2380894517057298127
 GameObject:
   m_ObjectHideFlags: 0
@@ -497,7 +497,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &111614833176778378
 Transform:
   m_ObjectHideFlags: 0
@@ -1132,14 +1132,14 @@ GameObject:
   - component: {fileID: 8365412296209071606}
   - component: {fileID: 6799789498631628760}
   - component: {fileID: 7409361439176114585}
-  - component: {fileID: 4745592043905201494}
+  - component: {fileID: 4591639754224982811}
   m_Layer: 0
-  m_Name: Right Controller (direct)
+  m_Name: Right Controller (direct -- not using)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8365412296209071606
 Transform:
   m_ObjectHideFlags: 0
@@ -1221,7 +1221,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: HandPresencePhysics, Assembly-CSharp
-        m_MethodName: DisableHandCollider
+        m_MethodName: DetectSelect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1233,19 +1233,7 @@ MonoBehaviour:
         m_CallState: 2
   m_SelectExited:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: HandPresencePhysics, Assembly-CSharp
-        m_MethodName: EnableHandColliderWithDelay
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0.5
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_StartingHoverFilters: []
   m_StartingSelectFilters: []
   m_OnHoverEntered:
@@ -1260,7 +1248,7 @@ MonoBehaviour:
   m_OnSelectExited:
     m_PersistentCalls:
       m_Calls: []
-  m_SelectActionTrigger: 1
+  m_SelectActionTrigger: 0
   m_HideControllerOnSelect: 0
   m_AllowHoveredActivate: 0
   m_TargetPriorityMode: 0
@@ -1301,7 +1289,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   m_PhysicsTriggerInteraction: 1
---- !u!135 &4745592043905201494
+--- !u!135 &4591639754224982811
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1335,12 +1323,12 @@ GameObject:
   - component: {fileID: 7206456232557124292}
   - component: {fileID: 8961157158997798981}
   m_Layer: 0
-  m_Name: Left Controller (direct)
+  m_Name: Left Controller (direct -- not using)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2206811585266319487
 Transform:
   m_ObjectHideFlags: 0
@@ -1422,7 +1410,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: HandPresencePhysics, Assembly-CSharp
-        m_MethodName: DisableHandCollider
+        m_MethodName: DetectSelect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1434,19 +1422,7 @@ MonoBehaviour:
         m_CallState: 2
   m_SelectExited:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: HandPresencePhysics, Assembly-CSharp
-        m_MethodName: EnableHandColliderWithDelay
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0.5
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_StartingHoverFilters: []
   m_StartingSelectFilters: []
   m_OnHoverEntered:
@@ -1579,7 +1555,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1620495815376020077
 Transform:
   m_ObjectHideFlags: 0
