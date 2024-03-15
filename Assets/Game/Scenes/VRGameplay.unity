@@ -4238,8 +4238,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1523935317}
-  - component: {fileID: 1523935316}
   - component: {fileID: 1523935318}
+  - component: {fileID: 1523935319}
   m_Layer: 0
   m_Name: Photon Networking
   m_TagString: Untagged
@@ -4247,21 +4247,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1523935316
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1523935315}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a5a20b3762166f498989d5cf00f90de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sessionName: TestRoom
-  warriorPrefab:
-    RawGuidValue: 2d16b7a51627f3b4a80023832303999a
 --- !u!4 &1523935317
 Transform:
   m_ObjectHideFlags: 0
@@ -4291,6 +4276,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _runner: {fileID: 1537523519}
   _gameMode: 4
+--- !u!114 &1523935319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1523935315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc50f6c3d6ceebe4a80642e3f7d6d43b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _runner: {fileID: 0}
+  sessionName: GameRoom
+  _gameMode: 4
+  warriorPrefab:
+    RawGuidValue: aec30cfd34aff7f4fa5e197ec6099699
+  forestSpawner: {fileID: 1610225494}
 --- !u!1001 &1534166788
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4371,7 +4374,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1537523518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5185,7 +5188,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1707602371
 Transform:
   m_ObjectHideFlags: 0
@@ -5213,10 +5216,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecb534398e288114f9856416816b2d5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameMode: 1
-  titanGO: {fileID: 2185334265275326129, guid: 1e39807a24119624b919c3d8a0d0fadf, type: 3}
-  warriorGO: {fileID: 8255171677533926719, guid: aec30cfd34aff7f4fa5e197ec6099699,
-    type: 3}
 --- !u!114 &1707602373
 MonoBehaviour:
   m_ObjectHideFlags: 0

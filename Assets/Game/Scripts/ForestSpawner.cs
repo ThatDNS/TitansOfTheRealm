@@ -15,7 +15,7 @@ public class ForestSpawner : NetworkBehaviour
         treesSpawned = false;
     }
 
-    public void SpawnTree()
+    public void SpawnTrees(NetworkRunner runner)
     {
         if (HasStateAuthority && !treesSpawned)
         {
@@ -26,7 +26,7 @@ public class ForestSpawner : NetworkBehaviour
             {
                 for (int j = 0; j < cols; ++j)
                 {
-                    Runner.Spawn(treeGO, new Vector3(-5.0f + i * 1.75f, 0, -5.0f + j * 1.75f));
+                    runner.Spawn(treeGO, new Vector3(-5.0f + i * 1.75f, 0, -5.0f + j * 1.75f));
                 }
             }
         }
