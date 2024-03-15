@@ -29,6 +29,11 @@ public class Titan : MonoBehaviour
         SetActiveAllComponents(rightRayController, true);
         SetActiveAllComponents(leftDirectController, false);
         SetActiveAllComponents(rightDirectController, false);
+
+
+        // TEMPORARY
+        SwitchFromRayToDirectInteraction();
+        AllowMovement();
     }
 
     public void AllowMovement()

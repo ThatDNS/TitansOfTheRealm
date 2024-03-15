@@ -6,12 +6,29 @@ using UnityEngine;
 public class ForestSpawner : NetworkBehaviour
 {
     [SerializeField] GameObject treeGO;
+    [SerializeField] int numTrees = 50;
+
+    private bool treesSpawned = false;
+
+    private void Start()
+    {
+        treesSpawned = false;
+    }
 
     public void SpawnTree()
     {
-        if (HasStateAuthority)
+        if (HasStateAuthority && !treesSpawned)
         {
-            Runner.Spawn(treeGO, new Vector3(3.462f, -3.364f, -2.834f));
+            treesSpawned = true;
+            int rows = (int) Mathf.Ceil(Mathf.Sqrt(numTrees));
+            int cols = rows;
+            for (int i = 0; i < rows; ++i)
+            {
+                for (int j = 0; j < cols; ++j)
+                {
+                    Runner.Spawn(treeGO, new Vector3(-5.0f + i * 1.75f, 0, -5.0f + j * 1.75f));
+                }
+            }
         }
     }
 }
