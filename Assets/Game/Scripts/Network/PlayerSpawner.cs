@@ -71,7 +71,7 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
         }
         else
         {
-            titanObj = runner.Spawn(titanPrefab, new Vector3(5.25f, -6, -15.75f), Quaternion.identity, player);
+            titanObj = runner.Spawn(titanPrefab, new Vector3(-3.43f, -7.96f, -8.71f), Quaternion.identity, player);
             titanLeftHandObj = runner.Spawn(titanLeftHand, Vector3.zero, Quaternion.identity, player);
             titanRightHandObj = runner.Spawn(titanRightHand, Vector3.zero, Quaternion.identity, player);
             titanLeftHandObj.GetComponent<HandPresencePhysics>().titan = titanObj.transform;
