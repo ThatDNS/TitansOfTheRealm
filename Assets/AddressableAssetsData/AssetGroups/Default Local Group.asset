@@ -17,16 +17,6 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 6a6fe134c4cd77548a6f3e9a2f5aa4a2
   m_SerializeEntries:
-  - m_GUID: f5e6d0e7241a2a44eaa8018985c2e76d
-    m_Address: Assets/Game/Prefabs/Weapons/Reticle.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9af1c1646db077c499c5f02d233a6241
-    m_Address: Assets/Game/Prefabs/Weapons/RPG.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2aeec98a6360d164085215294c822763
     m_Address: Assets/Game/Prefabs/Weapons/Projectile.prefab
     m_ReadOnly: 0
