@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - TitanBody
+  - TitanLeftHand
+  - TitanRightHand
   layers:
   - Default
   - TransparentFX
@@ -17,8 +20,6 @@ TagManager:
   - Item
   - Left Hand Physics
   - Right Hand Physics
-  - 
-  - 
   - 
   - 
   - 

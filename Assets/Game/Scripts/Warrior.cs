@@ -31,7 +31,7 @@ public class Warrior : NetworkBehaviour
     {
         if (Object.HasInputAuthority && !saidHello)
         {
-            RPC_SendMessage("Hello!");
+            //RPC_SendMessage("Hello!");
             saidHello = true;
         }
     }
