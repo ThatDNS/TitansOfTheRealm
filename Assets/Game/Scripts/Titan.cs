@@ -21,12 +21,12 @@ public class Titan : MonoBehaviour
 
     private void Start()
     {
-        _continuousMoveProvider = GetComponent<ActionBasedContinuousMoveProvider>();
-        _continuousTurnProvider = GetComponent<ActionBasedContinuousTurnProvider>();
+        //_continuousMoveProvider = GetComponent<ActionBasedContinuousMoveProvider>();
+        //_continuousTurnProvider = GetComponent<ActionBasedContinuousTurnProvider>();
 
-        // Don't allow movements at the beginning
-        _continuousMoveProvider.moveSpeed = 0;
-        _continuousTurnProvider.turnSpeed = 0;
+        //// Don't allow movements at the beginning
+        //_continuousMoveProvider.moveSpeed = 0;
+        //_continuousTurnProvider.turnSpeed = 0;
 
         // Extend ray points (to be able to interact with UI button)
         _leftRayInteractor = leftRayController.GetComponent<XRRayInteractor>();
@@ -37,7 +37,7 @@ public class Titan : MonoBehaviour
         _rightRayInteractor.maxRaycastDistance = maxRayDistance;
 
         // TEMPORARY -- DO THIS ON "START GAME"
-        AllowMovement();
+        //AllowMovement();
         UIToDirectTouchControls();
     }
 
@@ -60,4 +60,9 @@ public class Titan : MonoBehaviour
         _leftRayInteractorLine.enabled = false;
         _rightRayInteractorLine.enabled = false;
     }
+
+    //private void Update()
+    //{
+    //    transform.Translate(Vector3.forward * Time.deltaTime);
+    //}
 }

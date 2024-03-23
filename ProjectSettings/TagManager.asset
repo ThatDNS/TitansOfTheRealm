@@ -18,8 +18,8 @@ TagManager:
   - Interactable
   - Ground
   - Item
-  - Left Hand Physics
-  - Right Hand Physics
+  - Locomotion
+  - InvisibleForLocalPlayer
   - 
   - 
   - 
