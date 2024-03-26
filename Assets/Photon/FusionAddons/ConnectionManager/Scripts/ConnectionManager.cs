@@ -6,6 +6,12 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
+public enum PlayerType
+{
+    TITAN,
+    WARRIOR
+};
+
 namespace Fusion.Addons.ConnectionManagerAddon
 {
     /**
@@ -49,7 +55,9 @@ namespace Fusion.Addons.ConnectionManagerAddon
         public INetworkSceneManager sceneManager;
 
         [Header("Local user spawner")]
-        public NetworkObject userPrefab;
+        public PlayerType playerType;
+        public NetworkObject titanPrefab;
+        public NetworkObject warriorPrefab;
 
         [Header("Event")]
         public UnityEvent onWillConnect = new UnityEvent();
@@ -174,10 +182,10 @@ namespace Fusion.Addons.ConnectionManagerAddon
         #region Player spawn
         public void OnPlayerJoinedSharedMode(NetworkRunner runner, PlayerRef player)
         {
-            if (player == runner.LocalPlayer && userPrefab != null)
+            if (player == runner.LocalPlayer && titanPrefab != null)
             {
                 // Spawn the user prefab for the local user
-                NetworkObject networkPlayerObject = runner.Spawn(userPrefab, position: transform.position, rotation: transform.rotation, player, (runner, obj) => {
+                NetworkObject networkPlayerObject = runner.Spawn(titanPrefab, position: transform.position, rotation: transform.rotation, player, (runner, obj) => {
                 });
             }
         }
@@ -185,11 +193,12 @@ namespace Fusion.Addons.ConnectionManagerAddon
         public void OnPlayerJoinedHostMode(NetworkRunner runner, PlayerRef player)
         {
             // The user's prefab has to be spawned by the host
-            if (runner.IsServer && userPrefab != null)
+            if (runner.IsServer)
             {
                 Debug.Log($"OnPlayerJoined. PlayerId: {player.PlayerId}");
+                
                 // We make sure to give the input authority to the connecting player for their user's object
-                NetworkObject networkPlayerObject = runner.Spawn(userPrefab, position: transform.position, rotation: transform.rotation, inputAuthority: player, (runner, obj) => {
+                NetworkObject networkPlayerObject = runner.Spawn(titanPrefab, position: titanPrefab.transform.position, rotation: transform.rotation, inputAuthority: player, (runner, obj) => {
                 });
 
                 // Keep track of the player avatars so we can remove it when they disconnect

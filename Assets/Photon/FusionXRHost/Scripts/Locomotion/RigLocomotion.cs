@@ -102,7 +102,9 @@ namespace Fusion.XR.Host.Locomotion
         {
             timeStarted = Time.time;
             rotating = true;
-            yield return rig.FadedRotate(angle);
+            //yield return rig.FadedRotate(angle);
+            yield return new WaitForEndOfFrame();
+            rig.Rotate(angle);
             rotating = false;
         }
 
