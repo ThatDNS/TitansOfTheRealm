@@ -17,7 +17,7 @@ EditorBuildSettings:
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 4668ddd5d210b3a4bbfe06d8d2fa15a8,
       type: 2}
-    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 5f70ed8c27cb7224c98c9694602e0d11,
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 9f74dfca45bdb7d4caf767671a2060f2,
       type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 7aac7dfaa8236cf49be0b1c73a8983bb,
       type: 2}
