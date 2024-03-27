@@ -33,8 +33,8 @@ namespace Fusion.XR.Host.Rig
         private void Awake()
         {
             networkTransform = GetComponent<NetworkTransform>();
-            leftGrabber = leftHand.GetComponent<NetworkGrabber>();
-            rightGrabber = rightHand.GetComponent<NetworkGrabber>();
+            if (leftHand != null) leftGrabber = leftHand.GetComponent<NetworkGrabber>();
+            if (rightHand != null) rightGrabber = rightHand.GetComponent<NetworkGrabber>();
         }
 
         // As we are in host topology, we use the input authority to track which player is the local user
@@ -59,18 +59,18 @@ namespace Fusion.XR.Host.Rig
             {
                 transform.position = input.playAreaPosition;
                 transform.rotation = input.playAreaRotation;
-                leftHand.transform.position = input.leftHandPosition;
-                leftHand.transform.rotation = input.leftHandRotation;
-                rightHand.transform.position = input.rightHandPosition;
-                rightHand.transform.rotation = input.rightHandRotation;
-                headset.transform.position = input.headsetPosition;
-                headset.transform.rotation = input.headsetRotation;
+                if (leftHand != null) leftHand.transform.position = input.leftHandPosition;
+                if (leftHand != null) leftHand.transform.rotation = input.leftHandRotation;
+                if (rightHand != null) rightHand.transform.position = input.rightHandPosition;
+                if (rightHand != null) rightHand.transform.rotation = input.rightHandRotation;
+                if (headset != null) headset.transform.position = input.headsetPosition;
+                if (headset != null) headset.transform.rotation = input.headsetRotation;
                 // we update the hand pose info. It will trigger on network hands OnHandCommandChange on all clients, and update the hand representation accordingly
-                leftHand.HandCommand = input.leftHandCommand;
-                rightHand.HandCommand = input.rightHandCommand;
+                if (leftHand != null) leftHand.HandCommand = input.leftHandCommand;
+                if (rightHand != null) rightHand.HandCommand = input.rightHandCommand;
 
-                leftGrabber.GrabInfo = input.leftGrabInfo;
-                rightGrabber.GrabInfo = input.rightGrabInfo;
+                if (leftGrabber != null) leftGrabber.GrabInfo = input.leftGrabInfo;
+                if (rightGrabber != null) rightGrabber.GrabInfo = input.rightGrabInfo;
             }
         }
 
@@ -84,12 +84,12 @@ namespace Fusion.XR.Host.Rig
                 // To update the visual object, and not the actual networked position, we move the interpolation targets
                 transform.position = hardwareRig.transform.position;
                 transform.rotation = hardwareRig.transform.rotation;
-                leftHand.transform.position = hardwareRig.leftHand.transform.position;
-                leftHand.transform.rotation = hardwareRig.leftHand.transform.rotation;
-                rightHand.transform.position = hardwareRig.rightHand.transform.position;
-                rightHand.transform.rotation = hardwareRig.rightHand.transform.rotation;
-                headset.transform.position = hardwareRig.headset.transform.position;
-                headset.transform.rotation = hardwareRig.headset.transform.rotation;
+                if (leftHand != null) leftHand.transform.position = hardwareRig.leftHand.transform.position;
+                if (leftHand != null) leftHand.transform.rotation = hardwareRig.leftHand.transform.rotation;
+                if (rightHand != null) rightHand.transform.position = hardwareRig.rightHand.transform.position;
+                if (rightHand != null) rightHand.transform.rotation = hardwareRig.rightHand.transform.rotation;
+                if (headset != null) headset.transform.position = hardwareRig.headset.transform.position;
+                if (headset != null) headset.transform.rotation = hardwareRig.headset.transform.rotation;
             }
         }
     }

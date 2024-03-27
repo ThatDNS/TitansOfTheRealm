@@ -123,6 +123,7 @@ namespace Fusion.XR.Host.Locomotion
             {
                 var headsetPositionRelativeToRig = rig.transform.InverseTransformPoint(rig.headset.transform.position);
                 Vector3 newHeadsetPosition = position + headsetPositionRelativeToRig.y * rig.transform.up;
+                newHeadsetPosition.y = 3.0f;
                 if (!locomotionValidationHandler.CanMoveHeadset(newHeadsetPosition)) return;
             }
 

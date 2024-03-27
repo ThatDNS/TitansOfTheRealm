@@ -6,12 +6,6 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-public enum PlayerType
-{
-    TITAN,
-    WARRIOR
-};
-
 namespace Fusion.Addons.ConnectionManagerAddon
 {
     /**
@@ -55,7 +49,6 @@ namespace Fusion.Addons.ConnectionManagerAddon
         public INetworkSceneManager sceneManager;
 
         [Header("Local user spawner")]
-        public PlayerType playerType;
         public NetworkObject titanPrefab;
         public NetworkObject warriorPrefab;
 
@@ -196,9 +189,10 @@ namespace Fusion.Addons.ConnectionManagerAddon
             if (runner.IsServer)
             {
                 Debug.Log($"OnPlayerJoined. PlayerId: {player.PlayerId}");
-                
+
+                NetworkObject prefabToSpawn = (player.PlayerId == 1) ? titanPrefab : warriorPrefab;
                 // We make sure to give the input authority to the connecting player for their user's object
-                NetworkObject networkPlayerObject = runner.Spawn(titanPrefab, position: titanPrefab.transform.position, rotation: transform.rotation, inputAuthority: player, (runner, obj) => {
+                NetworkObject networkPlayerObject = runner.Spawn(prefabToSpawn, position: prefabToSpawn.transform.position, rotation: transform.rotation, inputAuthority: player, (runner, obj) => {
                 });
 
                 // Keep track of the player avatars so we can remove it when they disconnect

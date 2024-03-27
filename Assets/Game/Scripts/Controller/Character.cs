@@ -62,7 +62,7 @@ public class Character : MonoBehaviour
     {
         isGrounded = IsGrounded();
         Vector3 movement = new Vector3(moveInput.x, 0.0f, moveInput.y) * speed;
-        rb.MovePosition(rb.position + movement * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + transform.TransformDirection(movement) * Time.fixedDeltaTime);
     }
     #endregion
     private bool IsGrounded()

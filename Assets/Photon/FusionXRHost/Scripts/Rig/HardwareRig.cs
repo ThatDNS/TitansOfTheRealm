@@ -184,19 +184,28 @@ namespace Fusion.XR.Host.Rig
                 rigInput.headsetRotation = headsetInterpolationPose.rotation;
             } else
             {
-                rigInput.leftHandPosition = leftHand.transform.position;
-                rigInput.leftHandRotation = leftHand.transform.rotation;
-                rigInput.rightHandPosition = rightHand.transform.position;
-                rigInput.rightHandRotation = rightHand.transform.rotation;
-                rigInput.headsetPosition = headset.transform.position;
-                rigInput.headsetRotation = headset.transform.rotation;
+                if (leftHand != null)
+                {
+                    rigInput.leftHandPosition = leftHand.transform.position;
+                    rigInput.leftHandRotation = leftHand.transform.rotation;
+                }
+                if (rightHand != null)
+                {
+                    rigInput.rightHandPosition = rightHand.transform.position;
+                    rigInput.rightHandRotation = rightHand.transform.rotation;
+                }
+                if (headset != null)
+                {
+                    rigInput.headsetPosition = headset.transform.position;
+                    rigInput.headsetRotation = headset.transform.rotation;
+                }
             }
 
-            rigInput.leftHandCommand = leftHand.handCommand;
-            rigInput.rightHandCommand = rightHand.handCommand;
+            if (leftHand != null) rigInput.leftHandCommand = leftHand.handCommand;
+            if (rightHand != null) rigInput.rightHandCommand = rightHand.handCommand;
 
-            rigInput.leftGrabInfo = leftHand.grabber.GrabInfo;
-            rigInput.rightGrabInfo = rightHand.grabber.GrabInfo;
+            if (leftHand != null) rigInput.leftGrabInfo = leftHand.grabber.GrabInfo;
+            if (rightHand != null) rigInput.rightGrabInfo = rightHand.grabber.GrabInfo;
 
             input.Set(rigInput);
         }
