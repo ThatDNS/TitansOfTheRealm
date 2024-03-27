@@ -1777,7 +1777,7 @@ namespace Fusion.Editor {
       GameObject go = null;
 
       foreach(var c in components) {
-        var found = UnityEngine.Object.FindFirstObjectByType(c);
+        var found = UnityEngine.Object.FindObjectOfType(c);
         if (found)
           continue;
 
@@ -1796,7 +1796,7 @@ namespace Fusion.Editor {
         preferredGameObjectName = typeof(T).Name;
 
       T comp;
-      comp = UnityEngine.Object.FindFirstObjectByType<T>();
+      comp = UnityEngine.Object.FindObjectOfType<T>();
       if (comp == null) {
         // T was not found in scene, create a new gameobject and add T, as well as other required components
         if (onThisObject == null)
@@ -2091,7 +2091,6 @@ namespace Fusion.Editor {
   using System.Collections.Generic;
   using System.Linq;
   using UnityEditor;
-  using UnityEditor.Build;
   using UnityEditor.PackageManager;
   using UnityEngine;
   using Object = UnityEngine.Object;
@@ -2285,7 +2284,7 @@ namespace Fusion.Editor {
     }
     
     public static bool HasScriptingDefineSymbol(BuildTargetGroup group, string value) {
-      var defines = PlayerSettings.GetScriptingDefineSymbols(NamedBuildTarget.FromBuildTargetGroup(group)).Split(';');
+      var defines = PlayerSettings.GetScriptingDefineSymbolsForGroup(group).Split(';');
       return System.Array.IndexOf(defines, value) >= 0;
     }
     
@@ -2389,7 +2388,7 @@ namespace Fusion.Editor {
       EditorApplication.LockReloadAssemblies();
       try {
         foreach (var group in groups) {
-          var originalDefines = PlayerSettings.GetScriptingDefineSymbols(NamedBuildTarget.FromBuildTargetGroup(group));
+          var originalDefines = PlayerSettings.GetScriptingDefineSymbolsForGroup(group);
           var defines = originalDefines.Split(';').ToList();
 
           if (definesToRemove != null) {
@@ -2406,7 +2405,7 @@ namespace Fusion.Editor {
           }
 
           var newDefines = string.Join(";", defines);
-          PlayerSettings.SetScriptingDefineSymbols(NamedBuildTarget.FromBuildTargetGroup(group), newDefines);
+          PlayerSettings.SetScriptingDefineSymbolsForGroup(group, newDefines);
         }
       } finally {
         EditorApplication.UnlockReloadAssemblies();
@@ -2434,13 +2433,9 @@ namespace Fusion.Editor {
       public AssetEnumerator(string root, string label, Type type) {
 
         {
-          string searchFilter;
-          if (type == typeof(GameObject)) {
-            searchFilter = "t:prefab";
-          } else if (type != null) {
-            searchFilter = "t:" + type.FullName;
-          } else {
-            searchFilter = "";
+          string searchFilter = "";
+          if (type != null) {
+            searchFilter += "t:" + type.Name;
           }
 
           if (!string.IsNullOrEmpty(label)) {
@@ -3561,7 +3556,7 @@ namespace Fusion.Editor {
     protected void DrawScriptPropertyField() {
       FusionEditorGUI.ScriptPropertyField(this);
     }
-
+    
 #if ODIN_INSPECTOR && !FUSION_ODIN_DISABLED
     public new bool DrawDefaultInspector() {
       EditorGUI.BeginChangeCheck();
@@ -3570,9 +3565,6 @@ namespace Fusion.Editor {
     } 
 #else
     protected virtual void OnEnable() {
-    }
-
-    protected virtual void OnDisable() {
     }
 #endif
   }
@@ -4583,12 +4575,7 @@ namespace Fusion.Editor {
     public static string GetGlobalAssetPath<T>() where T : FusionGlobalScriptableObject<T> {
       return FindDefaultAssetPath(typeof(T), fallbackToSearchWithoutLabel: false);
     }
-    
-    public static bool TryGetGlobalAssetPath<T>(out string path) where T : FusionGlobalScriptableObject<T> {
-      path = FindDefaultAssetPath(typeof(T), fallbackToSearchWithoutLabel: false);
-      return !string.IsNullOrEmpty(path);
-    }
-      
+
     private static FusionGlobalScriptableObjectAttribute GetAttributeOrThrow(Type type) {
       var attribute = type.GetCustomAttribute<FusionGlobalScriptableObjectAttribute>();
       if (attribute == null) {
@@ -4619,11 +4606,19 @@ namespace Fusion.Editor {
       }
       
       // need to create a new asset
-      CreateDefaultAsset(typeof(T));
+      var obj = CreateDefaultAsset(typeof(T));
+      Debug.Assert(obj != null);
       return true;
     }
     
     private static FusionGlobalScriptableObject CreateDefaultAsset(Type type) {
+      const string InstanceFieldName = "s_instance";
+      
+      var instanceField = type.BaseType.GetField(InstanceFieldName, BindingFlags.Static | BindingFlags.NonPublic);
+      if (instanceField == null) {
+        throw new InvalidOperationException($"Type {type.FullName} needs to have a static field named {InstanceFieldName}");
+      }
+
       var attribute = GetAttributeOrThrow(type);
 
       var directoryPath = Path.GetDirectoryName(attribute.DefaultPath);
@@ -4643,13 +4638,16 @@ namespace Fusion.Editor {
         AssetDatabase.CreateAsset(instance, attribute.DefaultPath);
         AssetDatabase.SaveAssets();
 
-        SetGlobal(instance);
+        SetDefault(instance);
+
+        // set the instance right away, in case something tries to obtain it
+        instanceField.SetValue(null, instance);
 
         EditorUtility.SetDirty(instance);
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
         
-        FusionEditorLog.TraceImport($"Created new global {type.Name} instance at {attribute.DefaultPath}");
+        Debug.Log($"Created new global {type.Name} instance", instance);
         
         return instance;
       } else {
@@ -4674,8 +4672,7 @@ namespace Fusion.Editor {
           throw new InvalidOperationException($"Failed to load a newly created asset at '{attribute.DefaultPath}'");
         }
         
-        SetGlobal(instance);
-        FusionEditorLog.TraceImport($"Created new global {type.Name} instance at {attribute.DefaultPath}");
+        instanceField.SetValue(null, instance);
         return instance;
       }
     }
@@ -4684,7 +4681,7 @@ namespace Fusion.Editor {
       return Array.IndexOf(AssetDatabase.GetLabels(obj), GlobalAssetLabel) >= 0;
     }
 
-    private static bool SetGlobal(FusionGlobalScriptableObject obj) {
+    private static bool SetDefault(FusionGlobalScriptableObject obj) {
       var labels = AssetDatabase.GetLabels(obj);
       if (Array.IndexOf(labels, GlobalAssetLabel) >= 0) {
         return false;
@@ -5320,6 +5317,25 @@ namespace Fusion.Editor {
 
   static partial class ReflectionUtils {
     public const BindingFlags DefaultBindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance;
+
+    public static string GetShortAssemblyQualifiedName(this Type type) {
+      
+      var result = type.AssemblyQualifiedName;
+      if (result == null) {
+        throw new InvalidOperationException();
+      }
+
+      string RemoveSuffixStartingWith(string str, string part) {
+        var i = str.IndexOf(part, StringComparison.Ordinal);
+        return i >= 0 ? str.Substring(0, i) : str;
+      }
+
+      result = RemoveSuffixStartingWith(result, ", Version=");
+      result = RemoveSuffixStartingWith(result, ", Culture=");
+      result = RemoveSuffixStartingWith(result, ", PublicKeyToken=");
+
+      return result;
+    }
     
     public static Type GetUnityLeafType(this Type type) {
       if (type.HasElementType) {
@@ -6368,13 +6384,7 @@ namespace Fusion.Editor {
     [UnityEditor.InitializeOnLoad]
     public static class LayerMatrixGUI {
 
-      private static readonly Type InternalType = 
-#if UNITY_2023_1_OR_NEWER
-        Assembly.Load("UnityEditor.PhysicsModule").GetType("UnityEditor.LayerMatrixGUI", true);
-#else 
-        typeof(UnityEditor.Editor).Assembly.GetType("UnityEditor.LayerMatrixGUI", true);
-#endif
-      
+      private static readonly Type InternalType             = typeof(UnityEditor.Editor).Assembly.GetType("UnityEditor.LayerMatrixGUI", true);
       private static readonly Type InternalGetValueFuncType = InternalType.GetNestedTypeOrThrow(nameof(GetValueFunc), BindingFlags.Public);
       private static readonly Type InternalSetValueFuncType = InternalType.GetNestedTypeOrThrow(nameof(SetValueFunc), BindingFlags.Public);
       
@@ -9071,7 +9081,7 @@ namespace Fusion.Editor {
         FusionEditorGUI.DisplayTypePickerMenu(position, baseType, t => {
           string typeName = string.Empty;
           if (t != null) {
-            typeName = attr?.UseFullAssemblyQualifiedName == false ? SerializableType.GetShortAssemblyQualifiedName(t) : t.AssemblyQualifiedName;
+            typeName = attr?.UseFullAssemblyQualifiedName == false ? t.GetShortAssemblyQualifiedName() : t.AssemblyQualifiedName;
           }
           
           valueProperty.stringValue = typeName;
@@ -10053,7 +10063,7 @@ namespace Fusion.Editor {
 
           if (attribute is DecoratingPropertyAttribute) {
             FusionEditorLog.Warn($"Unable to replace {nameof(DecoratingPropertyAttribute)}-derived attribute: {attribute.GetType().FullName}");
-            attributes.RemoveAt(i--);
+            attributes[i] = null;
           }
         }
       }
@@ -10785,7 +10795,7 @@ namespace Fusion.Editor {
       public const string UrlFusionIntro = "https://doc.photonengine.com/fusion/v2/getting-started/fusion-introduction";
       public const string UrlFusionSDK = "https://doc.photonengine.com/fusion/v2/getting-started/sdk-download";
       public const string UrlCloudDashboard = "https://id.photonengine.com/account/signin?email=";
-      public const string UrlDashboardProfile = "https://dashboard.photonengine.com/Account/Profile";
+      public const string UrlDiscordGeneral = "https://discord.gg/qP6XVe3XWK";
       public const string UrlDashboard = "https://dashboard.photonengine.com/";
       public const string UrlSampleSection = "https://doc.photonengine.com/fusion/v2/current/samples/overview";
       public const string UrlFusion100 = "https://doc.photonengine.com/fusion/v2/tutorials/shared-mode-basics/overview";
@@ -10799,7 +10809,7 @@ namespace Fusion.Editor {
       public const string UrlFusionDocApi = "https://doc-api.photonengine.com/en/fusion/v2/index.html";
       public const string WindowTitle = "Photon Fusion 2 Hub";
       public const string Support = "You can contact the Photon Team using one of the following links. You can also go to Photon Documentation in order to get started.";
-      public const string DiscordText = "Create a Photon account and join the Discord.";
+      public const string DiscordText = "Join the Discord.";
       public const string DiscordHeader = "Community";
       public const string DocumentationText = "Open the documentation.";
       public const string DocumentationHeader = "Documentation";
@@ -11046,7 +11056,6 @@ namespace Fusion.Editor {
   using System;
   using System.IO;
   using UnityEditor;
-  using UnityEditor.Build;
   using UnityEditor.PackageManager;
   using UnityEngine;
 
@@ -11065,7 +11074,7 @@ namespace Fusion.Editor {
       var defines = PlayerSettings.GetScriptingDefineSymbols(UnityEditor.Build.NamedBuildTarget.Server);
 #else
       var group = BuildPipeline.GetBuildTargetGroup(EditorUserBuildSettings.activeBuildTarget);
-      var defines = PlayerSettings.GetScriptingDefineSymbols(NamedBuildTarget.FromBuildTargetGroup(group));
+      var defines = PlayerSettings.GetScriptingDefineSymbolsForGroup(group);
 #endif
 
       // Check for Defines
@@ -11091,7 +11100,7 @@ namespace Fusion.Editor {
 #if UNITY_SERVER
         PlayerSettings.SetScriptingDefineSymbols(UnityEditor.Build.NamedBuildTarget.Server, defines);
 #else
-        PlayerSettings.SetScriptingDefineSymbols(NamedBuildTarget.FromBuildTargetGroup(group), defines);
+        PlayerSettings.SetScriptingDefineSymbolsForGroup(group, defines);
 #endif
       } else {
         FusionEditorLog.LogInstaller($"Installing '{PACKAGE_TO_INSTALL}' package");
@@ -11176,7 +11185,7 @@ namespace Fusion.Editor {
     [MenuItem("GameObject/Fusion/Scene/Setup Multi-Peer AudioListener Handling", false, FusionAssistants.PRIORITY + 1)]
     public static void HandleAudioListeners() {
       int count = 0;
-      foreach (var listener in Object.FindObjectsByType<AudioListener>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)) {
+      foreach (var listener in Object.FindObjectsOfType<AudioListener>()) {
         count++;
         listener.EnsureComponentHasVisibilityNode();
       }
@@ -11187,7 +11196,7 @@ namespace Fusion.Editor {
     [MenuItem("GameObject/Fusion/Scene/Setup Multi-Peer Lights Handling", false, FusionAssistants.PRIORITY + 1)]
     public static void HandleLights() {
       int count = 0;
-      foreach (var listener in Object.FindObjectsByType<Light>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)) {
+      foreach (var listener in Object.FindObjectsOfType<Light>()) {
         count++;
         listener.EnsureComponentHasVisibilityNode();
       }
@@ -11260,10 +11269,6 @@ namespace Fusion.Editor {
     }
 
     private static void RefreshDependencyHash() {
-      if (EditorApplication.isCompiling || EditorApplication.isUpdating) {
-        return;
-      }
-      
       var configPath = NetworkProjectConfigUtilities.GetGlobalConfigPath();
       if (string.IsNullOrEmpty(configPath)) {
         return;
@@ -13379,9 +13384,7 @@ namespace Fusion.Editor {
     }
 
     [MenuItem("Tools/Fusion/Network Project Config", priority = 200)]
-    [MenuItem("Assets/Create/Fusion/Network Project Config", priority = 0)]
     static void PingNetworkProjectConfigAsset() {
-      FusionGlobalScriptableObjectUtils.EnsureAssetExists<NetworkProjectConfigAsset>();
       NetworkProjectConfigUtilities.PingGlobalConfigAsset(true);
     }
 
@@ -13538,7 +13541,7 @@ namespace Fusion.Editor {
     static List<NetworkRunner> reusableRunnerList = new List<NetworkRunner>();
 
     public static NetworkRunner[] FindActiveRunners() {
-      var runners = Object.FindObjectsByType<NetworkRunner>(FindObjectsInactive.Exclude, FindObjectsSortMode.InstanceID);
+      var runners = Object.FindObjectsOfType<NetworkRunner>();
       reusableRunnerList.Clear();
       for (int i = 0; i < runners.Length; ++i) {
         if (runners[i].IsRunning)
@@ -13551,7 +13554,7 @@ namespace Fusion.Editor {
     }
 
     public static void FindActiveRunners(List<NetworkRunner> nonalloc) {
-      var runners = Object.FindObjectsByType<NetworkRunner>(FindObjectsInactive.Exclude, FindObjectsSortMode.InstanceID);
+      var runners = Object.FindObjectsOfType<NetworkRunner>();
       nonalloc.Clear();
       for (int i = 0; i < runners.Length; ++i) {
         if (runners[i].IsRunning)
@@ -13562,6 +13565,82 @@ namespace Fusion.Editor {
   }
 }
 
+
+
+#endregion
+
+
+#region Assets/Photon/Fusion/Editor/VSAttribution.cs
+
+﻿namespace Fusion.Editor
+{
+  using System;
+  using UnityEngine.Analytics;
+  using UnityEditor;
+
+  public static class VSAttribution
+	{
+		const int k_VersionId = 4;
+		const int k_MaxEventsPerHour = 10;
+		const int k_MaxNumberOfElements = 1000;
+
+		const string k_VendorKey = "<PARTNER KEY>";
+		const string k_EventName = "FUSION_SETUP";
+
+		static bool RegisterEvent()
+		{
+			AnalyticsResult result = EditorAnalytics.RegisterEventWithLimit(k_EventName, k_MaxEventsPerHour,
+				k_MaxNumberOfElements, k_VendorKey, k_VersionId);
+
+			var isResultOk = result == AnalyticsResult.Ok;
+			return isResultOk;
+		}
+
+		[Serializable]
+		struct VSAttributionData
+		{
+			public string actionName;
+			public string partnerName;
+			public string customerUid;
+			public string extra;
+		}
+
+		/// <summary>
+		/// Registers and attempts to send a Verified Solutions Attribution event.
+		/// </summary>
+		/// <param name="actionName">Name of the action, identifying a place this event was called from.</param>
+		/// <param name="partnerName">Identifiable Verified Solutions Partner's name.</param>
+		/// <param name="customerUid">Unique identifier of the customer using Partner's Verified Solution.</param>
+		public static AnalyticsResult SendAttributionEvent(string customerUid, string actionName = k_EventName, string partnerName = k_VendorKey)
+		{
+			try
+			{
+				// Are Editor Analytics enabled ? (Preferences)
+				if (!EditorAnalytics.enabled)
+					return AnalyticsResult.AnalyticsDisabled;
+
+				if (!RegisterEvent())
+					return AnalyticsResult.InvalidData;
+
+				// Create an expected data object
+				var eventData = new VSAttributionData
+				{
+					actionName = actionName,
+					partnerName = partnerName,
+					customerUid = customerUid,
+					extra = "{}"
+				};
+
+				return EditorAnalytics.SendEventWithLimit(k_EventName, eventData, k_VersionId);
+			}
+			catch
+			{
+				// Fail silently
+				return AnalyticsResult.AnalyticsDisabled;
+			}
+		}
+	}
+}
 
 
 #endregion

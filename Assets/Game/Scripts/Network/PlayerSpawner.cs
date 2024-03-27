@@ -74,10 +74,10 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
             titanObj = runner.Spawn(titanPrefab, new Vector3(-3.43f, -7.96f, -8.71f), Quaternion.identity, player);
             titanLeftHandObj = runner.Spawn(titanLeftHand, Vector3.zero, Quaternion.identity, player);
             titanRightHandObj = runner.Spawn(titanRightHand, Vector3.zero, Quaternion.identity, player);
-            titanLeftHandObj.GetComponent<HandPresencePhysics>().titan = titanObj.transform;
-            titanLeftHandObj.GetComponent<HandPresencePhysics>().FindTitanHand();
-            titanRightHandObj.GetComponent<HandPresencePhysics>().titan = titanObj.transform;
-            titanRightHandObj.GetComponent<HandPresencePhysics>().FindTitanHand();
+            //titanLeftHandObj.GetComponent<HandPresencePhysics>().titan = titanObj.transform;
+            //titanLeftHandObj.GetComponent<HandPresencePhysics>().FindTitanHand();
+            //titanRightHandObj.GetComponent<HandPresencePhysics>().titan = titanObj.transform;
+            //titanRightHandObj.GetComponent<HandPresencePhysics>().FindTitanHand();
         }
         playerSpawned = true;
         forestSpawner.SpawnTrees(runner);

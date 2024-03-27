@@ -17,7 +17,7 @@ public class ForestSpawner : NetworkBehaviour
 
     public void SpawnTrees(NetworkRunner runner)
     {
-        if (HasStateAuthority && !treesSpawned)
+        if (!treesSpawned)
         {
             treesSpawned = true;
             int rows = (int) Mathf.Ceil(Mathf.Sqrt(numTrees));

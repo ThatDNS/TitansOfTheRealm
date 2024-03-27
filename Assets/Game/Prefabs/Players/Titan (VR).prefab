@@ -267,6 +267,7 @@ GameObject:
   - component: {fileID: 129611788177425141}
   - component: {fileID: 2270563093437140744}
   - component: {fileID: 4881379640718861060}
+  - component: {fileID: 2541580992391794483}
   m_Layer: 6
   m_Name: Titan (VR)
   m_TagString: Untagged
@@ -497,6 +498,7 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 4881379640718861060}
+  - {fileID: 2541580992391794483}
 --- !u!114 &4881379640718861060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -513,6 +515,18 @@ MonoBehaviour:
   SyncParent: 0
   _autoAOIOverride: 1
   DisableSharedModeInterpolation: 0
+--- !u!114 &2541580992391794483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2185334265275326129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbb8dd146771f28419d53e12a7454404, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2380894517057298127
 GameObject:
   m_ObjectHideFlags: 0
