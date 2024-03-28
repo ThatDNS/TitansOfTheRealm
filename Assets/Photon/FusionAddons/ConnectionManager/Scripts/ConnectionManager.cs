@@ -52,6 +52,10 @@ namespace Fusion.Addons.ConnectionManagerAddon
         public NetworkObject titanPrefab;
         public NetworkObject warriorPrefab;
 
+        // Hardware rigs (used to choose which object to spawn)
+        public GameObject vrHardwareRig = null;
+        public GameObject pcHardwareRig = null;
+
         [Header("Event")]
         public UnityEvent onWillConnect = new UnityEvent();
 
@@ -76,6 +80,12 @@ namespace Fusion.Addons.ConnectionManagerAddon
 
         private async void Start()
         {
+            // Check hardware rigs
+            if (pcHardwareRig.activeInHierarchy && vrHardwareRig.activeInHierarchy)
+                Debug.LogError("Both hardware rigs are active in the scene. Only one must be active.");
+            else if (!pcHardwareRig.activeInHierarchy && !vrHardwareRig.activeInHierarchy)
+                Debug.LogError("Both hardware rigs are inactive in the scene. One must be active.");
+
             // Launch the connection at start
             if (connectOnStart) await Connect();
         }
@@ -190,7 +200,16 @@ namespace Fusion.Addons.ConnectionManagerAddon
             {
                 Debug.Log($"OnPlayerJoined. PlayerId: {player.PlayerId}");
 
-                NetworkObject prefabToSpawn = (player.PlayerId == 1) ? titanPrefab : warriorPrefab;
+                NetworkObject prefabToSpawn = null;
+                if (player.PlayerId == 1)
+                {
+                    prefabToSpawn = (vrHardwareRig.activeInHierarchy) ? titanPrefab : warriorPrefab;
+                }
+                else
+                {
+                    prefabToSpawn = (vrHardwareRig.activeInHierarchy) ? warriorPrefab : titanPrefab;
+                }
+
                 // We make sure to give the input authority to the connecting player for their user's object
                 NetworkObject networkPlayerObject = runner.Spawn(prefabToSpawn, position: prefabToSpawn.transform.position, rotation: transform.rotation, inputAuthority: player, (runner, obj) => {
                 });
