@@ -32,8 +32,8 @@ namespace Fusion.Addons.ConnectionManagerAddon
 
         [Header("Room configuration")]
         public GameMode gameMode = GameMode.Shared;
+        public bool isConnected = false;
         public string roomName = "SampleFusion";
-        public bool connectOnStart = true;
         [Tooltip("Set it to 0 to use the DefaultPlayers value, from the Global NetworkProjectConfig (simulation section)")]
         public int playerCount = 0;
 
@@ -78,7 +78,7 @@ namespace Fusion.Addons.ConnectionManagerAddon
             runner.ProvideInput = true;
         }
 
-        private async void Start()
+        private void Start()
         {
             // Check hardware rigs
             if (pcHardwareRig.activeInHierarchy && vrHardwareRig.activeInHierarchy)
@@ -86,8 +86,7 @@ namespace Fusion.Addons.ConnectionManagerAddon
             else if (!pcHardwareRig.activeInHierarchy && !vrHardwareRig.activeInHierarchy)
                 Debug.LogError("Both hardware rigs are inactive in the scene. One must be active.");
 
-            // Launch the connection at start
-            if (connectOnStart) await Connect();
+            isConnected = false;
         }
 
         Dictionary<string, SessionProperty> AllConnectionSessionProperties
@@ -168,6 +167,7 @@ namespace Fusion.Addons.ConnectionManagerAddon
             }
 
             await runner.StartGame(args);
+            isConnected = true;
 
             string prop = "";
             if (runner.SessionInfo.Properties != null && runner.SessionInfo.Properties.Count > 0)
