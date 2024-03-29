@@ -127,8 +127,8 @@ MonoBehaviour:
   ImmuneToDamage: 0
   DestroyOnDeath: 1
   DelayBeforeDestruction: 0
-  DisableModelOnDeath: 1
-  DisableCollisionsOnDeath: 1
+  DisableModelOnDeath: 0
+  DisableCollisionsOnDeath: 0
   DisableChildCollisionsOnDeath: 0
   Bar: {fileID: 7742104890316176970}
 --- !u!1 &1757523047836906242
@@ -143,7 +143,7 @@ GameObject:
   - component: {fileID: 2978654877406876063}
   - component: {fileID: 2257449468840317716}
   - component: {fileID: 4838209867233409391}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -236,7 +236,7 @@ GameObject:
   - component: {fileID: 4948399921282748371}
   - component: {fileID: 3273424708389051677}
   - component: {fileID: 7742104890316176970}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -371,7 +371,7 @@ GameObject:
   - component: {fileID: 846093582944177905}
   - component: {fileID: 8028685090674710477}
   - component: {fileID: 4544178122937200504}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
