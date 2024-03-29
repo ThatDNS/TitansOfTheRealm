@@ -1,5 +1,108 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &659616866576255100
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9056743874230279555}
+  - component: {fileID: 8109632621557406873}
+  m_Layer: 0
+  m_Name: Pursuit
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9056743874230279555
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 659616866576255100}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3960502571009765048}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8109632621557406873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 659616866576255100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b70d387116213a44a9280cc8b0ce9ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weight: 5
+  target: {x: 0, y: 0, z: 0}
+  warrior: {fileID: 0}
+  steeringAgent: {fileID: 0}
+  useMouseInput: 1
+--- !u!1 &2676634367705741025
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 112304235125359911}
+  - component: {fileID: 6253122379144527211}
+  m_Layer: 0
+  m_Name: AvoidObstacle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &112304235125359911
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2676634367705741025}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3960502571009765048}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6253122379144527211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2676634367705741025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae9a3853a505d3b42a809778595abe89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weight: 1
+  target: {x: 0, y: 0, z: 0}
+  warrior: {fileID: 0}
+  steeringAgent: {fileID: 0}
+  useMouseInput: 1
+  feelers: []
+  LayerMask:
+    serializedVersion: 2
+    m_Bits: 4096
+  avoidWeight: 11
 --- !u!1 &4684764314424209356
 GameObject:
   m_ObjectHideFlags: 0
@@ -44,13 +147,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72b4a73f6d0fc4641aa1cbd412879e01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weight: 1
+  weight: 10
   target: {x: 0, y: 0, z: 0}
+  warrior: {fileID: 0}
   steeringAgent: {fileID: 0}
-  useMouseInput: 1
-  wanderDistance: 2
-  wanderRadius: 1
-  wanderJitter: 20
+  useMouseInput: 0
+  wanderDistance: 5
+  wanderRadius: 5
+  wanderJitter: 5
 --- !u!1 &5406266511174853845
 GameObject:
   m_ObjectHideFlags: 0
@@ -62,6 +166,7 @@ GameObject:
   - component: {fileID: 3960502571009765048}
   - component: {fileID: 3576340467244429337}
   - component: {fileID: 7764631705884875659}
+  - component: {fileID: 1848109451426556218}
   m_Layer: 0
   m_Name: Animal
   m_TagString: Untagged
@@ -84,6 +189,8 @@ Transform:
   m_Children:
   - {fileID: 7242064315107461784}
   - {fileID: 1528870062158513344}
+  - {fileID: 9056743874230279555}
+  - {fileID: 112304235125359911}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3576340467244429337
@@ -112,13 +219,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   summingMethod: 0
+  useRootMotion: 0
+  useGravity: 0
   mass: 1
-  maxSpeed: 0
+  maxSpeed: 5
   maxForce: 10
   reachedGoal: 0
   velocity: {x: 0, y: 0, z: 0}
   angularDampeningTime: 5
   deadZone: 10
+--- !u!143 &1848109451426556218
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5406266511174853845}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 0.5
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1001 &1475398570064292709
 PrefabInstance:
   m_ObjectHideFlags: 0

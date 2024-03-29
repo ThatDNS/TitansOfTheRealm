@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class OffsetPursuitSteeringBehaviour : ArriveSteeringBehaviour
 {
-    public SteeringAgent pursuitObject;
+    public Character pursuitObject;
     public Vector3 offset;
 
     override public Vector3 CalculateForce()
@@ -14,9 +14,9 @@ public class OffsetPursuitSteeringBehaviour : ArriveSteeringBehaviour
             Vector3 worldSpaceOffset=pursuitObject.transform.rotation*offset+pursuitObject.transform.position;
 
             Vector3 offsetPosition=worldSpaceOffset-steeringAgent.transform.position;
-            float lookAheadTime=offsetPosition.magnitude/(steeringAgent.maxSpeed+pursuitObject.velocity.magnitude);
+            float lookAheadTime=offsetPosition.magnitude/(steeringAgent.maxSpeed+pursuitObject.speed);
 
-            target= worldSpaceOffset+pursuitObject.velocity*lookAheadTime;
+            target= worldSpaceOffset+ pursuitObject.transform.forward*pursuitObject.speed * lookAheadTime;
 
             return base.CalculateArriveForce();
         }

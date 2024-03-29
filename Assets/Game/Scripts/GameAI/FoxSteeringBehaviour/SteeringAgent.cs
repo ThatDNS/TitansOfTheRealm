@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SteeringAgent : MonoBehaviour
@@ -12,6 +13,13 @@ public class SteeringAgent : MonoBehaviour
     };
 
     public SummingMethod summingMethod = SummingMethod.WeightedAverage;
+
+    public bool useRootMotion = true;
+    public bool useGravity = true;
+
+    private Animator animator;
+    private CharacterController characterController;
+
 
     public float mass = 1.0f;
     public float maxSpeed = 1.0f;
@@ -27,10 +35,16 @@ public class SteeringAgent : MonoBehaviour
 
     void Start()
     {
-        steeringBehaviours.AddRange(GetComponentsInChildren<SteeringBehaviourBase>());
-        foreach(SteeringBehaviourBase behaviour in steeringBehaviours)
+        animator = GetComponent<Animator>();
+        if (animator == null)
         {
-            behaviour.steeringAgent=this;
+            useRootMotion = false;
+        }
+        characterController = GetComponent<CharacterController>();
+        steeringBehaviours.AddRange(GetComponentsInChildren<SteeringBehaviourBase>());
+        foreach (SteeringBehaviourBase behaviour in steeringBehaviours)
+        {
+            behaviour.steeringAgent = this;
         }
     }
 
@@ -39,22 +53,45 @@ public class SteeringAgent : MonoBehaviour
     {
 
 
-        Vector3 steeringForce=CalculateSteeringForce();
-
-        Vector3 accerleration = steeringForce / mass;
-
-        velocity = velocity + (accerleration * Time.deltaTime);
-
-        velocity = Vector3.ClampMagnitude(velocity,maxSpeed);
-
-        transform.position += (velocity * Time.deltaTime);
+        Vector3 steeringForce = CalculateSteeringForce();
 
         if (reachedGoal == true)
         {
             velocity = Vector3.zero;
+            if (animator != null)
+                animator.SetFloat("Speed", 0);
         }
         else
         {
+            Vector3 accerleration = steeringForce / mass;
+
+            velocity = velocity + (accerleration * Time.deltaTime);
+
+            velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
+
+            float speed = velocity.magnitude;
+            if (animator != null)
+            {
+                animator.SetFloat("Speed", speed);
+            }
+
+            if (useRootMotion == false)
+            {
+                if (characterController != null)
+                {
+                    characterController.Move(velocity * Time.deltaTime);
+                }
+                else
+                {
+                    transform.position += (velocity * Time.deltaTime);
+                }
+
+                if (useGravity == true)
+                {
+                    characterController.Move(Physics.gravity * Time.deltaTime);
+                }
+            }
+
             if (velocity.magnitude > 0.0f)
             {
                 velocity.y = 0;
@@ -77,9 +114,9 @@ public class SteeringAgent : MonoBehaviour
     private Vector3 CalculateSteeringForce()
     {
         Vector3 totalForce = Vector3.zero;
-        foreach(SteeringBehaviourBase behaviour in steeringBehaviours)
+        foreach (SteeringBehaviourBase behaviour in steeringBehaviours)
         {
-            if(behaviour.enabled) 
+            if (behaviour.enabled)
             {
                 switch (summingMethod)
                 {
@@ -89,7 +126,7 @@ public class SteeringAgent : MonoBehaviour
                         break;
                     case SummingMethod.Prioritized:
                         Vector3 steeringForce = (behaviour.CalculateForce() * behaviour.weight);
-                        if(!AccumulateForce(ref totalForce, steeringForce))
+                        if (!AccumulateForce(ref totalForce, steeringForce))
                         {
                             return totalForce;
                         }
@@ -102,7 +139,7 @@ public class SteeringAgent : MonoBehaviour
         return totalForce;
     }
 
-    bool AccumulateForce(ref Vector3 RunningTot,Vector3 ForceToAdd)
+    bool AccumulateForce(ref Vector3 RunningTot, Vector3 ForceToAdd)
     {
         float MagnitudeSoFar = RunningTot.magnitude;
 
@@ -113,9 +150,9 @@ public class SteeringAgent : MonoBehaviour
             return false;
         }
 
-        float MagnitudeToAdd=ForceToAdd.magnitude;
+        float MagnitudeToAdd = ForceToAdd.magnitude;
 
-        if(MagnitudeToAdd < MagnitudeRemaining)
+        if (MagnitudeToAdd < MagnitudeRemaining)
         {
             RunningTot = RunningTot + ForceToAdd;
         }
@@ -125,5 +162,26 @@ public class SteeringAgent : MonoBehaviour
         }
 
         return true;
+    }
+
+    private void OnAnimatorMove()
+    {
+        if (Time.deltaTime != 0.0f && useRootMotion == true)
+        {
+            Vector3 animatonVelocity = animator.deltaPosition / Time.deltaTime;
+            if (characterController != null)
+            {
+                characterController.Move((transform.forward * animatonVelocity.magnitude) * Time.deltaTime);
+            }
+            else
+            {
+                transform.position += (transform.forward * animatonVelocity.magnitude) * Time.deltaTime;
+            }
+
+            if (useGravity == true)
+            {
+                characterController.Move(Physics.gravity * Time.deltaTime);
+            }
+        }
     }
 }
