@@ -67,6 +67,8 @@ public class Health : MonoBehaviour
     protected Collider _collider3D;
     protected bool _initialized = false;
 
+    [SerializeField] private HealthBar Bar;
+
 
     #region Initialization
     protected void Awake()
@@ -166,6 +168,10 @@ public class Health : MonoBehaviour
     public  void SetHealth(float newValue)
     {
         CurrentHealth = newValue;
+        if(Bar!=null)
+        {
+            Bar.UpdateHealthBar(CurrentHealth / MaximumHealth);
+        }
     }
 
     /// <summary>
