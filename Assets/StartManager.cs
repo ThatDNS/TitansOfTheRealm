@@ -15,19 +15,19 @@ public class StartManager : MonoBehaviour
 
     private void Start()
     {
-        if (vrHardwareRig.activeInHierarchy)
-        {
+        //if (vrHardwareRig.activeInHierarchy)
+        //{
 
-        }
-        else if (pcHardwareRig.activeInHierarchy)
-        {
+        //}
+        //else if (pcHardwareRig.activeInHierarchy)
+        //{
 
-        }
+        //}
     }
 
-    public async void JoinTheNetwork()
-    {
-        await connectionManager.Connect();
-        gameStarted = true;
-    }
+    //public async void JoinTheNetwork()
+    //{
+    //    await connectionManager.Connect();
+    //    gameStarted = true;
+    //}
 }
