@@ -167,6 +167,7 @@ GameObject:
   - component: {fileID: 3576340467244429337}
   - component: {fileID: 7764631705884875659}
   - component: {fileID: 1848109451426556218}
+  - component: {fileID: 2310185529326940897}
   m_Layer: 0
   m_Name: Animal
   m_TagString: Untagged
@@ -254,6 +255,29 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &2310185529326940897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5406266511174853845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 193a161e14a80ec40935388c5f373e75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  Owner: {fileID: 5406266511174853845}
+  MinDamageCaused: 1
+  MaxDamageCaused: 2
+  DamageTakenEveryTime: 0
+  DamageTakenNonDamageable: 0
+  DamageTakenHealth: {fileID: 0}
+  DamageTakenDamageable: 0
+  DamageTakenInvincibilityDuration: 0.5
 --- !u!1001 &1475398570064292709
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -276,6 +300,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ScaleInLightmap
       value: 1.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8140625974582468994, guid: 632fa387df577a24f83f9b928bf8d865,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8140625974582469116, guid: 632fa387df577a24f83f9b928bf8d865,
         type: 3}
