@@ -158,7 +158,7 @@ namespace Fusion.Addons.ConnectionManagerAddon
         {
             var args = new StartGameArgs()
             {
-                GameMode = GameMode.Shared,
+                GameMode = gameMode,//GameMode.Shared,
                 SessionName = roomName,
                 Scene = CurrentSceneInfo(),
                 PlayerCount = 2,
@@ -259,11 +259,11 @@ namespace Fusion.Addons.ConnectionManagerAddon
                 NetworkObject prefabToSpawn = null;
                 if (player.PlayerId == 1)
                 {
-                    prefabToSpawn = (vrHardwareRig.activeInHierarchy) ? titanPrefab : warriorPrefab;
+                    prefabToSpawn = (vrHardwareRig.activeInHierarchy) ? warriorPrefab : titanPrefab;
                 }
                 else
                 {
-                    prefabToSpawn = (vrHardwareRig.activeInHierarchy) ? warriorPrefab : titanPrefab;
+                    prefabToSpawn = (vrHardwareRig.activeInHierarchy) ? titanPrefab : warriorPrefab;
                 }
 
                 // We make sure to give the input authority to the connecting player for their user's object
