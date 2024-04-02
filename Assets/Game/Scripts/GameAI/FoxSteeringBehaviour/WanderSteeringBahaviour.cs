@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 public class WanderSteeringBahaviour : SeekSteeringBehaviour
@@ -38,5 +40,8 @@ public class WanderSteeringBahaviour : SeekSteeringBehaviour
         DebugExtension.DrawCircle(circle, Vector3.up, Color.red,wanderRadius);
         Debug.DrawLine(transform.position, circle, Color.red);
         Debug.DrawLine(transform.position, target, Color.blue);
+
+
     }
+
 }

@@ -7,7 +7,7 @@ public abstract class SteeringBehaviourBase : MonoBehaviour
 {
     public float weight = 1.0f;
     public Vector3 target = Vector3.zero;
-
+    public Character warrior;
     public abstract Vector3 CalculateForce();
     
 
@@ -20,15 +20,19 @@ public abstract class SteeringBehaviourBase : MonoBehaviour
     protected void CheckMouseInput()
     {
         mouseClicked = false;
-        if(Input.GetMouseButtonDown(0)&&useMouseInput) 
-        { 
-            Ray ray=Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if(Physics.Raycast(ray, out hit,100)) 
-            {
-                target=hit.point;
-                mouseClicked = true;
-            }
+        if (Input.GetMouseButtonDown(0) && useMouseInput)
+        {
+            //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            //RaycastHit hit;
+            //if (Physics.Raycast(ray, out hit, 100))
+            //{
+            //    target = hit.point;
+            //    mouseClicked = true;
+            //}
+
+            target= warrior.transform.position;
+            target.y= 0;
+            mouseClicked = true;
         }
     }
 

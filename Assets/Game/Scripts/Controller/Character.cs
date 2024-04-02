@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 
-public class Character : MonoBehaviour
+public class Character : MonoBehaviour,IPlayerVisitor
 {
     public float speed = 5.0f;
     public float jumpForce = 7.0f;
@@ -17,6 +17,7 @@ public class Character : MonoBehaviour
     private PlayerInputActions playerInputActions;
     private Rigidbody rb;
     private Vector2 moveInput;
+    [SerializeField] private Health HP;
 
     public Canvas MainCanvas;
     public enum CharacterTypes { Warrior, Titan}
@@ -30,6 +31,7 @@ public class Character : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        HP = GetComponent<Health>();
         handleWeapon = GetComponent<CharacterHandleWeapon>();
 
         playerInputActions = new PlayerInputActions();
@@ -90,11 +92,28 @@ public class Character : MonoBehaviour
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
     }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent<ICollectible>(out ICollectible collectible))
+        {
+            collectible.Accept(this);
+        }
+    }
     private void Shoot()
     {
         if (handleWeapon.CurrentWeapon == null) return;
         handleWeapon.ShootStart();
     }
 
-
+    public void Visit(CureCollectible cure)
+    {
+        if (HP == null) return;
+        HP.ReceiveHealth(cure.cureAmount);
+        
+    }
+    public IPlayerVisitor GetVisitor()
+    {
+        return this;
+    }
 }
