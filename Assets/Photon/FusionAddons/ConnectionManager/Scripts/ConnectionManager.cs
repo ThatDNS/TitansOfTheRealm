@@ -85,10 +85,10 @@ namespace Fusion.Addons.ConnectionManagerAddon
         private void Start()
         {
             // Check hardware rigs
-            if (pcHardwareRig.activeInHierarchy && vrHardwareRig.activeInHierarchy)
-                Debug.LogError("Both hardware rigs are active in the scene. Only one must be active.");
-            else if (!pcHardwareRig.activeInHierarchy && !vrHardwareRig.activeInHierarchy)
-                Debug.LogError("Both hardware rigs are inactive in the scene. One must be active.");
+            //if (pcHardwareRig.activeInHierarchy && vrHardwareRig.activeInHierarchy)
+            //    Debug.LogError("Both hardware rigs are active in the scene. Only one must be active.");
+            //else if (!pcHardwareRig.activeInHierarchy && !vrHardwareRig.activeInHierarchy)
+            //    Debug.LogError("Both hardware rigs are inactive in the scene. One must be active.");
 
             isConnected = false;
             ConnectToLobby();
@@ -234,11 +234,11 @@ namespace Fusion.Addons.ConnectionManagerAddon
                 NetworkObject prefabToSpawn = null;
                 if (player.PlayerId == 1)
                 {
-                    prefabToSpawn = (vrHardwareRig.activeInHierarchy) ? titanPrefab : warriorPrefab;
+                    prefabToSpawn = warriorPrefab;
                 }
                 else
                 {
-                    prefabToSpawn = (vrHardwareRig.activeInHierarchy) ? warriorPrefab : titanPrefab;
+                    prefabToSpawn = titanPrefab;
                 }
 
                 // Spawn the user prefab for the local user
@@ -259,11 +259,11 @@ namespace Fusion.Addons.ConnectionManagerAddon
                 NetworkObject prefabToSpawn = null;
                 if (player.PlayerId == 1)
                 {
-                    prefabToSpawn = (vrHardwareRig.activeInHierarchy) ? warriorPrefab : titanPrefab;
+                    prefabToSpawn = warriorPrefab;
                 }
                 else
                 {
-                    prefabToSpawn = (vrHardwareRig.activeInHierarchy) ? titanPrefab : warriorPrefab;
+                    prefabToSpawn = titanPrefab;
                 }
 
                 // We make sure to give the input authority to the connecting player for their user's object

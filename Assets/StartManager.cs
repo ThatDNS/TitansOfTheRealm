@@ -6,28 +6,22 @@ using UnityEngine;
 
 public class StartManager : MonoBehaviour
 {
+    [SerializeField] GameObject pcLobbyCanvas;
+    [SerializeField] GameObject vrLobbyCanvas;
+    [SerializeField] GameObject temporaryVRRig;
     [SerializeField] GameObject vrHardwareRig;
-    [SerializeField] GameObject pcHardwareRig;
     [SerializeField] ConnectionManager connectionManager;
-    [SerializeField] GameObject pcJoinCanvas;
 
-    public bool gameStarted = false;
-
-    private void Start()
+    private void Update()
     {
-        //if (vrHardwareRig.activeInHierarchy)
-        //{
-
-        //}
-        //else if (pcHardwareRig.activeInHierarchy)
-        //{
-
-        //}
+        if (connectionManager.isConnected && pcLobbyCanvas.activeInHierarchy)
+            pcLobbyCanvas.SetActive(false);
     }
 
-    //public async void JoinTheNetwork()
-    //{
-    //    await connectionManager.Connect();
-    //    gameStarted = true;
-    //}
+    public void ReadyForVR()
+    {
+        vrLobbyCanvas.SetActive(false);
+        temporaryVRRig.SetActive(false);
+        vrHardwareRig.SetActive(true);
+    }
 }
