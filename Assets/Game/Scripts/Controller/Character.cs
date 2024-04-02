@@ -65,7 +65,7 @@ public class Character : MonoBehaviour,IPlayerVisitor
 
     private void FixedUpdate()
     {
-        if (!connectionManager.isConnected)
+        if (connectionManager != null && !connectionManager.isConnected)
             return;
 
         isGrounded = IsGrounded();
@@ -87,7 +87,7 @@ public class Character : MonoBehaviour,IPlayerVisitor
     private void Jump()
     {
         // Check if the warrior is grounded before allowing them to jump
-        if (isGrounded & connectionManager.isConnected)
+        if (isGrounded && (connectionManager == null || connectionManager.isConnected))
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
