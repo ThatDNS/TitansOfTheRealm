@@ -48,7 +48,7 @@ public class WeaponAim : MonoBehaviour
         _weapon = GetComponent<Weapon>();
         _mainCamera = Camera.main;
 
-        _targetCanvas= _weapon.Owner.GetComponent<Character>().MainCanvas;
+        _targetCanvas = _weapon.Owner.GetComponent<Character>().MainCanvas;
 
         InitializeReticle();
 
