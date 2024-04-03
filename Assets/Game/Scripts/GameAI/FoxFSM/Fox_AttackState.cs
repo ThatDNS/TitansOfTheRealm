@@ -8,7 +8,10 @@ public class Fox_AttackState : Fox_BaseState
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
         agent.maxSpeed = 10;
-        stateTimer = ChangeStateTime+10f;
+        stateTimer = ChangeStateTime;
+        animator.SetFloat("Speed", 1.0f);
+        attackability.enabled = true;
+
     }
 
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -19,7 +22,7 @@ public class Fox_AttackState : Fox_BaseState
 
         if(stateTimer < 0)
         {
-            fsm.ChangeState(idleState);
+            fsm.ChangeState(wanderState);
         }
     }
 }

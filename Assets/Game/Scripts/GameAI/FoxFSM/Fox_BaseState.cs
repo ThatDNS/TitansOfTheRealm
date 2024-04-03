@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class Fox_BaseState : FSMBaseState<FSM>
 {
-    static public readonly int idleState = Animator.StringToHash("Idle");
 
     static public readonly int wanderState = Animator.StringToHash("Wander");
     static public readonly int attackState = Animator.StringToHash("Attack");
@@ -14,14 +13,10 @@ public class Fox_BaseState : FSMBaseState<FSM>
     public SteeringAgent agent;
     protected Transform transform;
     protected Animator foxAnimator;
-
+    protected DamageOnTouch attackability;
     protected Character warrior;
 
-    public float sightDistance = 10.0f;
-    public float fov = 70.0f;
     private float distance;
-
-    protected bool canSee = false;
 
     public float ChangeStateTime;
     protected float stateTimer;
@@ -33,7 +28,7 @@ public class Fox_BaseState : FSMBaseState<FSM>
         agent=owner.GetComponent<SteeringAgent>();
         Debug.Assert(agent != null);
         foxAnimator = owner.GetComponentInChildren<Animator>();
-
+        attackability=owner.GetComponent<DamageOnTouch>();
         transform=owner.transform;
         ChangeStateTime = 5f;
         warrior = FindFirstObjectByType<Character>();
@@ -47,7 +42,7 @@ public class Fox_BaseState : FSMBaseState<FSM>
         distance=Vector3.Distance(transform.position, warrior.transform.position);
 
         
-        if (distance > 10) { return false; } 
+        if (distance > 2.0f) { return false; } 
 
         return true;
 

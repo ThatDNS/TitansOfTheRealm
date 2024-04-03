@@ -28,7 +28,7 @@ public class SteeringAgent : MonoBehaviour
 
     public Vector3 velocity = Vector3.zero;
 
-    private List<SteeringBehaviourBase> steeringBehaviours = new List<SteeringBehaviourBase>();
+    public List<SteeringBehaviourBase> steeringBehaviours = new List<SteeringBehaviourBase>();
 
     public float angularDampeningTime = 5.0f;
     public float deadZone = 10.0f;

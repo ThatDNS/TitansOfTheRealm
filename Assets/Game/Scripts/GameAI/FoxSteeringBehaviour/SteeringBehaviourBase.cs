@@ -20,7 +20,7 @@ public abstract class SteeringBehaviourBase : MonoBehaviour
     protected void CheckMouseInput()
     {
         mouseClicked = false;
-        if (Input.GetMouseButtonDown(0) && useMouseInput)
+        if (Input.GetKeyDown(KeyCode.Q) && useMouseInput)
         {
             //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             //RaycastHit hit;
@@ -29,10 +29,26 @@ public abstract class SteeringBehaviourBase : MonoBehaviour
             //    target = hit.point;
             //    mouseClicked = true;
             //}
-
-            target= warrior.transform.position;
+            target = warrior.transform.position;
             target.y= 0;
             mouseClicked = true;
+
+            foreach(SteeringBehaviourBase s in steeringAgent.steeringBehaviours)
+            {
+                if (s is WanderSteeringBahaviour)
+                {
+                    s.weight = 0f;
+                }
+                else if (s is SeekSteeringBehaviour)
+                {
+                    s.weight = 1.0f;
+                }
+                else if (s is FleeSteeringBehaviour)
+                {
+                    s.weight = 0f;
+                }
+            }
+            
         }
     }
 
