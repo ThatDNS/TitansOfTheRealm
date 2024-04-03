@@ -9,6 +9,24 @@ public class SeekSteeringBehaviour : SteeringBehaviourBase
     public override Vector3 CalculateForce()
     {
         CheckMouseInput();
+        if((transform.position -target).magnitude<0.1f)
+        {
+            foreach (SteeringBehaviourBase s in steeringAgent.steeringBehaviours)
+            {
+                if (s is WanderSteeringBahaviour)
+                {
+                    s.weight = 1.0f;
+                }
+                else if (s is SeekSteeringBehaviour)
+                {
+                    s.weight = 0f;
+                }
+                else if(s is FleeSteeringBehaviour)
+                {
+                    s.weight = 10.0f;
+                }
+            }
+        }
         return CalculateSeekForce();
     }
 

@@ -27,6 +27,8 @@ public class Character : MonoBehaviour,IPlayerVisitor
 
     public ConnectionManager connectionManager;
 
+
+
     #region Monobehaviour
     void Awake()
     {
@@ -43,6 +45,7 @@ public class Character : MonoBehaviour,IPlayerVisitor
 
         playerInputActions.Player.Jump.performed += ctx => Jump();
         playerInputActions.Player.Shoot.performed += ctx => Shoot();
+
 
 
     }
@@ -62,6 +65,8 @@ public class Character : MonoBehaviour,IPlayerVisitor
     {
         playerInputActions.Disable();
     }
+
+
 
     private void FixedUpdate()
     {

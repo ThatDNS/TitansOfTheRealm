@@ -10,14 +10,10 @@ public class FleeSteeringBehaviour : SteeringBehaviourBase
     public float fleeDistance = 5.0f;
     private bool showGizmoArrows = true;
     public override Vector3 CalculateForce()
-    {   
+    {
         if (enemyTarget != null)
         {
             target = enemyTarget.position;
-        }
-        else
-        {
-            CheckMouseInput();
         }
 
         float distance = (transform.position - target).magnitude;
