@@ -1,8 +1,11 @@
+using Fusion;
+using Fusion.Addons.ConnectionManagerAddon;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using static Unity.Collections.Unicode;
 
 /// <summary>
 /// Manages the loading, instantiation, and unloading of Addressable assets.
@@ -13,7 +16,12 @@ public class AssetManager : Singleton<AssetManager>
     /// Stores references to loaded prefab assets.
     /// </summary>
     private Dictionary<string, AsyncOperationHandle<GameObject>> _handles = new();
+    private ConnectionManager connectionManager = null;
 
+    private void Start()
+    {
+        connectionManager = FindObjectOfType<ConnectionManager>();
+    }
     /// <summary>
     /// Loads a prefab asynchronously and executes a callback upon completion.
     /// </summary>
@@ -45,22 +53,34 @@ public class AssetManager : Singleton<AssetManager>
     /// <param name="rot">The rotation for the instantiated prefab.</param>
     /// <param name="onInst">Optional callback to execute after instantiation.</param>
     public void Inst(AssetReference prefab, Vector3 pos, 
-                     Quaternion rot, Action<GameObject> onInst = null)
+                     Quaternion rot, Action<NetworkObject> onInst = null)
     {
+        if (connectionManager == null)
+            connectionManager = FindObjectOfType<ConnectionManager>();
+
         Load(prefab.AssetGUID, (loadedPrefab) =>
         {
-            GameObject inst = Instantiate(loadedPrefab, pos, rot);
-            onInst?.Invoke(inst);
+            if (connectionManager != null && connectionManager.runner.IsServer)
+            {
+                NetworkObject inst = connectionManager.runner.Spawn(loadedPrefab, pos, rot);
+                onInst?.Invoke(inst);
+            }
         });
     }
 
     public void Inst(string prefName, Vector3 pos,
-                 Quaternion rot, Action<GameObject> onInst = null)
+                 Quaternion rot, Action<NetworkObject> onInst = null)
     {
+        if (connectionManager == null)
+            connectionManager = FindObjectOfType<ConnectionManager>();
+
         Load(prefName, (loadedPrefab) =>
         {
-            GameObject inst = Instantiate(loadedPrefab, pos, rot);
-            onInst?.Invoke(inst);
+            if (connectionManager != null && connectionManager.runner.IsServer)
+            {
+                NetworkObject inst = connectionManager.runner.Spawn(loadedPrefab, pos, rot);
+                onInst?.Invoke(inst);
+            }
         });
     }
 

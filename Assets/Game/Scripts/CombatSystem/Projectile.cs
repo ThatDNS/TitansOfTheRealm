@@ -1,8 +1,10 @@
+using Fusion;
+using Fusion.Addons.ConnectionManagerAddon;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class Projectile : NetworkBehaviour
 {
     public enum MovementVectors { Forward, Right, Up }
 
@@ -33,6 +35,7 @@ public class Projectile : MonoBehaviour
     protected DamageOnTouch _damageOnTouch;
 
     public Weapon SourceWeapon { get { return _weapon; } }
+    ConnectionManager connectionManager;
 
     /// <summary>
     /// On awake, we store the initial speed of the object 
@@ -75,7 +78,12 @@ public class Projectile : MonoBehaviour
     {
         Speed = _initialSpeed;
         transform.localScale = _initialLocalScale;
-        _shouldMove = true;
+
+        if (connectionManager == null)
+            connectionManager = FindObjectOfType<ConnectionManager>();
+        // Only allow the server to move the projectile
+        // Client will copy the movement
+        _shouldMove = connectionManager.runner.IsServer;
 
 
         if (_collider != null)
@@ -110,13 +118,14 @@ public class Projectile : MonoBehaviour
         Speed += Acceleration * Time.deltaTime;
     }
 
+
     /// <summary>
     /// Sets the projectile's direction.
     /// </summary>
     /// <param name="newDirection">New direction.</param>
     /// <param name="newRotation">New rotation.</param>
     /// <param name="spawnerIsFacingRight">If set to <c>true</c> spawner is facing right.</param>
-    public virtual void SetDirection(Vector3 newDirection, Quaternion newRotation, bool spawnerIsFacingRight = true)
+    public void SetDirection(Vector3 newDirection, Quaternion newRotation, bool spawnerIsFacingRight = true)
     {
         Direction = newDirection;       
         transform.rotation = newRotation;
