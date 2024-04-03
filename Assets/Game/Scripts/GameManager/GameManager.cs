@@ -14,6 +14,11 @@ public class GameManager : Singleton<GameManager>
 
     private DateTime _sessionStartTime;
     private DateTime _sessionEndTime;
+
+    private TimeSpan TotalPlayTime { get; set; }
+    private DateTime startTime;
+    private int treeNum;
+
     private GameSessionManager _sessionManager;
 
     private Stack<IState<GameManager>> stateHistory = new Stack<IState<GameManager>>();
@@ -63,6 +68,7 @@ public class GameManager : Singleton<GameManager>
         TimeSpan timeDifference = _sessionEndTime.Subtract(_sessionStartTime);
         // Potential place to log session duration or handle other end-of-session logic
     }
+
 
     #endregion
 
@@ -140,6 +146,7 @@ public class GameManager : Singleton<GameManager>
         }
         Debug.Log($"Current State Stack: {stackHistory}");
     }
+
 
     #endregion
 
@@ -351,4 +358,27 @@ public class GameManager : Singleton<GameManager>
     /*
     Additional commented-out methods or logic can be placed here for reference or future use.
     */
+    public void StartTrackingTime()
+    {
+        startTime = DateTime.UtcNow;
+    }
+
+    public void EndTrackingTime()
+    {
+        TotalPlayTime = DateTime.UtcNow - startTime;
+    }
+
+    public TimeSpan GetPlayTime()
+    {
+        return TotalPlayTime;
+    }
+
+    public void setTreeNum(int newNum)
+    {
+        treeNum += newNum;
+    }
+    public int getTreeNum()
+    {
+        return treeNum;
+    }
 }
