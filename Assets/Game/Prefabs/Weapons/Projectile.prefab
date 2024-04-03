@@ -95,8 +95,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   Owner: {fileID: 0}
-  MinDamageCaused: 10
-  MaxDamageCaused: 10
+  MinDamageCaused: 30
+  MaxDamageCaused: 30
   DamageTakenEveryTime: 10
   DamageTakenNonDamageable: 10
   DamageTakenHealth: {fileID: 5845065679682595645}
