@@ -1,9 +1,11 @@
+using Fusion;
+using Fusion.Addons.ConnectionManagerAddon;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Health : MonoBehaviour
+public class Health : NetworkBehaviour
 {
     [Tooltip("the model to disable (if set so)")]
     public GameObject Model;
@@ -67,6 +69,9 @@ public class Health : MonoBehaviour
 
     protected Collider _collider3D;
     protected bool _initialized = false;
+
+    ConnectionManager connectionManager = null;
+    NetworkObject networkObject = null;
 
     [SerializeField] private HealthBar Bar;
 
@@ -218,6 +223,7 @@ public class Health : MonoBehaviour
     /// <param name="invincibilityDuration">The duration of the short invincibility following the hit.</param>
     public virtual void Damage(float damage, GameObject instigator, float flickerDuration, float invincibilityDuration)
     {
+        Debug.Log(gameObject + " took " + damage + " damage.");
         if (!CanTakeDamageThisFrame())
         {
             return;
@@ -262,6 +268,11 @@ public class Health : MonoBehaviour
     /// </summary>
     public void Kill()
     {
+        Debug.Log("In kill function");
+        if (connectionManager == null)
+            connectionManager = FindObjectOfType<ConnectionManager>();
+
+        Debug.Log("Got " + connectionManager + " & " + networkObject);
         if (ImmuneToDamage)
         {
             return;
@@ -270,7 +281,6 @@ public class Health : MonoBehaviour
         // we prevent further damage
         DamageDisabled();
 
-        if(DestroyOnDeath) Destroy(gameObject);
         // we make it ignore the collisions from now on
         if (DisableCollisionsOnDeath)
         {
@@ -295,7 +305,9 @@ public class Health : MonoBehaviour
             Model.gameObject.SetActive(false);
         }
 
-        SceneManager.LoadScene("End");
+        //SceneManager.LoadScene("End");
+
+        if (DestroyOnDeath && (networkObject != null)) connectionManager.runner.Despawn(networkObject);
     }
     /// <summary>
     /// Revive this object.
@@ -355,5 +367,8 @@ public class Health : MonoBehaviour
         Invulnerable = false;
     }
 
-
+    public void SetNetworkObject(NetworkObject obj)
+    {
+        networkObject = obj;
+    }
 }
