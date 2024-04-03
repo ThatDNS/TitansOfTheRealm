@@ -212,10 +212,9 @@ public class Weapon : MonoBehaviour
 
     }
 
-    private void InitializeNextProjectile(GameObject nextGameObject)
+    private void InitializeNextProjectile(NetworkObject nextGameObject)
     {
-        Projectile projectile = nextGameObject.GetComponent<Projectile>();
-        if (projectile != null)
+        if (nextGameObject.TryGetComponent<Projectile>(out var projectile))
         {
             projectile.SetWeapon(this);
             if (Owner != null)
@@ -226,6 +225,7 @@ public class Weapon : MonoBehaviour
         // we activate the object
         nextGameObject.gameObject.SetActive(true);
 
+        Debug.Log("YO PROJECTILEE: " + projectile);
         if (projectile != null)
         {
             projectile.SetDirection(transform.forward, transform.rotation, true);

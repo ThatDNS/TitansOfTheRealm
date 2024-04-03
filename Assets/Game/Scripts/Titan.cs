@@ -10,7 +10,7 @@ public class Titan : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(SimulateDamage());
+        //StartCoroutine(SimulateDamage());
     }
 
     IEnumerator SimulateDamage()
