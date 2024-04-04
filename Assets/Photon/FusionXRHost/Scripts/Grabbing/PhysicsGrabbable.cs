@@ -18,6 +18,8 @@ namespace Fusion.XR.Host.Grabbing
         public override Vector3 AngularVelocity => rb.angularVelocity;
         public bool IsGrabbed => currentGrabber != null;
 
+        private bool everGrabbed = false;
+
         #region Follow configuration        
         [Header("Follow configuration")]
         [Range(0, 1)]
@@ -97,6 +99,12 @@ namespace Fusion.XR.Host.Grabbing
                 if (IsGrabbed) Follow(followedTransform: currentGrabber.transform, Time.fixedDeltaTime, isColliding: isCollidingOffline);
             }
             isCollidingOffline = false;
+
+            if (!everGrabbed && IsGrabbed)
+            {
+                everGrabbed = true;
+                GameManager.Instance.updateTreeNum(1);
+            }
         }
 
         private void OnCollisionStay(Collision collision)

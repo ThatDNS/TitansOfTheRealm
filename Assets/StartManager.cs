@@ -12,6 +12,16 @@ public class StartManager : MonoBehaviour
     [SerializeField] GameObject vrHardwareRig;
     [SerializeField] ConnectionManager connectionManager;
 
+    [SerializeField] GameSettlement gameOverCanvas;
+
+    public bool isGameOver = false;
+
+    private void Start()
+    {
+        isGameOver = false;
+        gameOverCanvas.gameObject.SetActive(false);
+    }
+
     private void Update()
     {
         if (connectionManager.isConnected && pcLobbyCanvas.activeInHierarchy)
@@ -23,5 +33,11 @@ public class StartManager : MonoBehaviour
         vrLobbyCanvas.SetActive(false);
         temporaryVRRig.SetActive(false);
         vrHardwareRig.SetActive(true);
+    }
+
+    public void ShowVRDeathCanvas()
+    {
+        gameOverCanvas.gameObject.SetActive(isGameOver);
+        gameOverCanvas.UpdateMessage("PC");
     }
 }

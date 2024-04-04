@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Health : NetworkBehaviour
+public class Health : MonoBehaviour
 {
     [Tooltip("the model to disable (if set so)")]
     public GameObject Model;
@@ -271,15 +271,24 @@ public class Health : NetworkBehaviour
         Debug.Log("In kill function");
         if (connectionManager == null)
             connectionManager = FindObjectOfType<ConnectionManager>();
-
+        if (networkObject == null)
+            networkObject = GetComponent<NetworkObject>();
         Debug.Log("Got " + connectionManager + " & " + networkObject);
-        if (ImmuneToDamage)
+        if (ImmuneToDamage || !connectionManager.runner.IsServer)
         {
             return;
         }
+
         SetHealth(0);
         // we prevent further damage
         DamageDisabled();
+
+        // Don't kill players
+        if (gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            Debug.Log("Player health got reduced to zero");
+            return;
+        }
 
         // we make it ignore the collisions from now on
         if (DisableCollisionsOnDeath)

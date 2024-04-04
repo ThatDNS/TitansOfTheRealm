@@ -60,6 +60,7 @@ public class GameManager : Singleton<GameManager>
         InitializeSessionManager();
         _sessionStartTime = DateTime.Now;
         AudioManager.Instance.PlayMusic("OpenMusic");
+        treeNum = 0;
     }
 
     private void OnApplicationQuit()
@@ -373,7 +374,7 @@ public class GameManager : Singleton<GameManager>
         return TotalPlayTime;
     }
 
-    public void setTreeNum(int newNum)
+    public void updateTreeNum(int newNum)
     {
         treeNum += newNum;
     }
