@@ -1,3 +1,5 @@
+using Fusion;
+using Fusion.Addons.ConnectionManagerAddon;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -67,6 +69,9 @@ public class Health : MonoBehaviour
 
     protected Collider _collider3D;
     protected bool _initialized = false;
+
+    ConnectionManager connectionManager = null;
+    NetworkObject networkObject = null;
 
     [SerializeField] private HealthBar Bar;
 
@@ -218,6 +223,7 @@ public class Health : MonoBehaviour
     /// <param name="invincibilityDuration">The duration of the short invincibility following the hit.</param>
     public virtual void Damage(float damage, GameObject instigator, float flickerDuration, float invincibilityDuration)
     {
+        Debug.Log(gameObject + " took " + damage + " damage.");
         if (!CanTakeDamageThisFrame())
         {
             return;
@@ -262,15 +268,28 @@ public class Health : MonoBehaviour
     /// </summary>
     public void Kill()
     {
-        if (ImmuneToDamage)
+        Debug.Log("In kill function");
+        if (connectionManager == null)
+            connectionManager = FindObjectOfType<ConnectionManager>();
+        if (networkObject == null)
+            networkObject = GetComponent<NetworkObject>();
+        Debug.Log("Got " + connectionManager + " & " + networkObject);
+        if (ImmuneToDamage || !connectionManager.runner.IsServer)
         {
             return;
         }
+
         SetHealth(0);
         // we prevent further damage
         DamageDisabled();
 
-        if(DestroyOnDeath) Destroy(gameObject);
+        // Don't kill players
+        if (gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            Debug.Log("Player health got reduced to zero");
+            return;
+        }
+
         // we make it ignore the collisions from now on
         if (DisableCollisionsOnDeath)
         {
@@ -295,7 +314,9 @@ public class Health : MonoBehaviour
             Model.gameObject.SetActive(false);
         }
 
-        SceneManager.LoadScene("End");
+        //SceneManager.LoadScene("End");
+
+        if (DestroyOnDeath && (networkObject != null)) connectionManager.runner.Despawn(networkObject);
     }
     /// <summary>
     /// Revive this object.
@@ -355,5 +376,8 @@ public class Health : MonoBehaviour
         Invulnerable = false;
     }
 
-
+    public void SetNetworkObject(NetworkObject obj)
+    {
+        networkObject = obj;
+    }
 }

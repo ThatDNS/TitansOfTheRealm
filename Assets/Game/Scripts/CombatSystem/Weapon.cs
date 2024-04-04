@@ -222,10 +222,14 @@ public class Weapon : MonoBehaviour
                 projectile.SetOwner(Owner.gameObject);
             }
         }
+        if (nextGameObject.TryGetComponent<Health>(out var health))
+        {
+            health.SetNetworkObject(nextGameObject);
+        }
+
         // we activate the object
         nextGameObject.gameObject.SetActive(true);
 
-        Debug.Log("YO PROJECTILEE: " + projectile);
         if (projectile != null)
         {
             projectile.SetDirection(transform.forward, transform.rotation, true);

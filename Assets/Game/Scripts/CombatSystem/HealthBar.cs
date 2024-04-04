@@ -11,4 +11,9 @@ public class HealthBar : MonoBehaviour
     {
         Bar.fillAmount = newValue;
     }
+
+    public float GetHealthFillAmount()
+    {
+        return Bar.fillAmount;
+    }
 }

@@ -95,8 +95,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   Owner: {fileID: 0}
-  MinDamageCaused: 30
-  MaxDamageCaused: 30
+  MinDamageCaused: 10
+  MaxDamageCaused: 10
   DamageTakenEveryTime: 10
   DamageTakenNonDamageable: 10
   DamageTakenHealth: {fileID: 5845065679682595645}
@@ -150,8 +150,8 @@ MonoBehaviour:
   ImmuneToDamage: 0
   DestroyOnDeath: 1
   DelayBeforeDestruction: 0
-  DisableModelOnDeath: 1
-  DisableCollisionsOnDeath: 1
+  DisableModelOnDeath: 0
+  DisableCollisionsOnDeath: 0
   DisableChildCollisionsOnDeath: 0
   Bar: {fileID: 0}
 --- !u!114 &9127280805957590907

@@ -7,27 +7,21 @@ public class Titan : MonoBehaviour
 {
     public float titanhealth = 100.0f;
     [SerializeField] HealthBar healthBar;
+    [SerializeField] StartManager startManager;
 
     private void Start()
     {
-        //StartCoroutine(SimulateDamage());
+        GameManager.Instance.StartTrackingTime();
     }
 
-    IEnumerator SimulateDamage()
+    private void Update()
     {
-        while (true)
+        if (healthBar.GetHealthFillAmount() == 0.0f && !startManager.isGameOver)
         {
-            yield return new WaitForSeconds(1.0f);
-            TakeDamage(5.0f);
+            startManager.isGameOver = true;
+            GameManager.Instance.EndTrackingTime();
+            startManager.ShowVRDeathCanvas();
         }
     }
 
-    public void TakeDamage(float damage)
-    {
-        titanhealth -= damage;
-        healthBar.UpdateHealthBar(titanhealth / 100.0f);
-
-        if (titanhealth < 0)
-            Debug.Log("GAME OVER");
-    }
 }

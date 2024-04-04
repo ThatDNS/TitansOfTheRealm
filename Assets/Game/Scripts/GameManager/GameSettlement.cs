@@ -12,8 +12,12 @@ public class GameSettlement : MonoBehaviour
 
     private void Start()
     {
-        tmpWon.text = "Won: ";
-        PlayTime.text = $"Play Time: ,{ GameManager.Instance.GetPlayTime()}";
-        numberofTree.text = $"You destory { GameManager.Instance.getTreeNum()} trees, ";
+    }
+
+    public void UpdateMessage(string winner)
+    {
+        tmpWon.text = "Won: " + winner;
+        PlayTime.text = $"Play Time: ,{GameManager.Instance.GetPlayTime()}";
+        numberofTree.text = $"You destory {GameManager.Instance.getTreeNum()} trees, ";
     }
 }

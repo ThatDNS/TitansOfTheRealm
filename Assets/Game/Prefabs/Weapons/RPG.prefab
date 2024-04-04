@@ -63,7 +63,7 @@ MonoBehaviour:
   DelayBeforeUse: 0.2
   _delayBetweenUsesCounter: 0
   TimeBetweenUses: 1.5
-  _MaxAmmo: 6
+  _MaxAmmo: 15
 --- !u!114 &1489042252336512792
 MonoBehaviour:
   m_ObjectHideFlags: 0
