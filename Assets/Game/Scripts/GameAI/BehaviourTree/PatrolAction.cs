@@ -10,6 +10,7 @@ using UnityEngine;
 
 public class PatrolAction : MoveToGoalAction
 {
+    public SharedFloat reloadTime;
     public SharedGameObjectList waypoints;
     public bool loop = true;
     private int index = 0;
@@ -27,7 +28,7 @@ public class PatrolAction : MoveToGoalAction
     public override TaskStatus OnUpdate()
     {
         TaskStatus baseStatus = base.OnUpdate();
-
+        reloadTime.Value -= Time.deltaTime;
         if (baseStatus != TaskStatus.Running && index != waypoints.Value.Count)
         {
             index++;

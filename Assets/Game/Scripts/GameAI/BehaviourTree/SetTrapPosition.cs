@@ -16,19 +16,16 @@ public class SetTrapPosition : Action
     public override void OnStart()
     {
  
-        trapPosition = GetRandomPlacementPosition();
+        GetRandomPlacementPosition();
        
     }
 
-    private Vector3 GetRandomPlacementPosition()
+    private void GetRandomPlacementPosition()
     {
         Vector3 randomPoint = Random.insideUnitSphere * placementRadius.Value;
         randomPoint.y = 0; // Assuming you're placing the trap on a flat surface.
-        Vector3 placementPosition = transform.position + randomPoint;
+        trapPosition.Value = transform.position + randomPoint;
 
-        Debug.Log("Placement Position: " + placementPosition);
-
-        return placementPosition;
     }
 
     public override TaskStatus OnUpdate()
