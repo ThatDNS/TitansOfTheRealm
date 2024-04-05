@@ -1,0 +1,173 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &4456391323658026322
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -6057140222963153312, guid: 57eaed6d23e5c2745bebd2b06aaeb0ee,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 43479fef6fb211141bdb293cd20a3d64, type: 2}
+    - target: {fileID: -4216859302048453862, guid: 57eaed6d23e5c2745bebd2b06aaeb0ee,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 57eaed6d23e5c2745bebd2b06aaeb0ee,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 57eaed6d23e5c2745bebd2b06aaeb0ee,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 57eaed6d23e5c2745bebd2b06aaeb0ee,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 57eaed6d23e5c2745bebd2b06aaeb0ee,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 57eaed6d23e5c2745bebd2b06aaeb0ee,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 57eaed6d23e5c2745bebd2b06aaeb0ee,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 57eaed6d23e5c2745bebd2b06aaeb0ee,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 57eaed6d23e5c2745bebd2b06aaeb0ee,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 57eaed6d23e5c2745bebd2b06aaeb0ee,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 57eaed6d23e5c2745bebd2b06aaeb0ee,
+        type: 3}
+      propertyPath: m_Name
+      value: ybot@T-Pose
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: -927199367670048503, guid: 57eaed6d23e5c2745bebd2b06aaeb0ee,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1534933715761887766}
+    - targetCorrespondingSourceObject: {fileID: -927199367670048503, guid: 57eaed6d23e5c2745bebd2b06aaeb0ee,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8084191484380572894}
+    - targetCorrespondingSourceObject: {fileID: -927199367670048503, guid: 57eaed6d23e5c2745bebd2b06aaeb0ee,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5115033760569688985}
+  m_SourcePrefab: {fileID: 100100000, guid: 57eaed6d23e5c2745bebd2b06aaeb0ee, type: 3}
+--- !u!1 &5690761410876515419 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 57eaed6d23e5c2745bebd2b06aaeb0ee,
+    type: 3}
+  m_PrefabInstance: {fileID: 4456391323658026322}
+  m_PrefabAsset: {fileID: 0}
+--- !u!195 &1534933715761887766
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5690761410876515419}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &8084191484380572894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5690761410876515419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd54861b89df8484488d493d8e1ec80c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5115033760569688985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5690761410876515419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d7b55c7ecdb49a4a89fa5e6f9022861, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startWhenEnabled: 1
+  asynchronousLoad: 0
+  pauseWhenDisabled: 0
+  restartWhenComplete: 0
+  logTaskChanges: 0
+  group: 0
+  resetValuesOnRestart: 0
+  externalBehavior: {fileID: 0}
+  mBehaviorSource:
+    behaviorName: Behavior
+    behaviorDescription: 
+    mTaskData:
+      types: []
+      parentIndex: 
+      startIndex: 
+      variableStartIndex: 
+      JSONSerialization: '{"EntryTask":{"Type":"BehaviorDesigner.Runtime.Tasks.EntryTask","NodeData":{"Offset":"(109.424881,61.4476624)"},"ID":0,"Name":"Entry","Instant":true},"RootTask":{"Type":"BehaviorDesigner.Runtime.Tasks.Repeater","NodeData":{"Offset":"(1.80584526,126.209579)"},"ID":1,"Name":"Repeater","Instant":true,"SharedIntcount":{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":null,"Int32mValue":0},"SharedBoolrepeatForever":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"SharedBoolendOnFailure":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Selector","NodeData":{"Offset":"(5.238077,135.238052)"},"ID":2,"Name":"Selector","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"PatrolAction","NodeData":{"Offset":"(-210.504181,160.939224)"},"ID":3,"Name":"Patrol","Instant":true,"SharedGameObjectListwaypoints":{"Type":"BehaviorDesigner.Runtime.SharedGameObjectList","Name":null,"List`1mValue":[0,1,2]},"Booleanloop":true,"SingleangularDampeningTime":5,"SingledeadZone":10,"BooleanuseAgentStoppingDistance":true,"SingleactionStoppingDistance":2},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(103.36174,158.573547)"},"ID":4,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(1.75048256,123.38665)"},"ID":5,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"SetTrapPosition","NodeData":{"Offset":"(-120,173.5135)"},"ID":6,"Name":"SetTrapAction","Instant":true,"SharedFloatplacementRadius":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":5},"SharedVector3trapPosition":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":"TrapPosition","IsShared":true,"Vector3mValue":"(0,0,0)"}},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityNavMeshAgent.SetIsStopped","NodeData":{"Offset":"(-3.5135107,166.4865)"},"ID":7,"Name":"Set
+        Is Stopped","Instant":true,"SharedGameObjecttargetGameObject":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null},"SharedBoolisStopped":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false}},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject.Instantiate","NodeData":{"Offset":"(130,180)"},"ID":8,"Name":"Instantiate","Instant":true,"SharedGameObjecttargetGameObject":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Trap","IsShared":true,"GameObjectmValue":3},"SharedVector3position":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":"TrapPosition","IsShared":true,"Vector3mValue":"(0,0,0)"},"SharedQuaternionrotation":{"Type":"BehaviorDesigner.Runtime.SharedQuaternion","Name":null,"QuaternionmValue":"(0,0,0,1)"},"SharedGameObjectstoreResult":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"IsShared":true}},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(287.5674,172.161926)"},"ID":9,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"ReloadTime","IsShared":true,"SinglemValue":5},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1}}]}]}]}]},"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":"TrapPosition","IsShared":true,"Vector3mValue":"(0,0,0)"},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"ReloadTime","IsShared":true,"SinglemValue":5},{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Trap","IsShared":true,"GameObjectmValue":4}]}'
+      fieldSerializationData:
+        typeName: []
+        fieldNameHash: 
+        startIndex: 
+        dataPosition: 
+        unityObjects:
+        - {fileID: 0}
+        - {fileID: 0}
+        - {fileID: 0}
+        - {fileID: 6315776093795138606, guid: d9453c409ac759f46b96b0e2311636ff, type: 3}
+        - {fileID: 6315776093795138606, guid: d9453c409ac759f46b96b0e2311636ff, type: 3}
+        byteData: 
+        byteDataArray: 
+      Version: 1.7.8
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
