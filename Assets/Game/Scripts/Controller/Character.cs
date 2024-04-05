@@ -87,6 +87,7 @@ public class Character : MonoBehaviour,IPlayerVisitor
             return true; // Grounded
         }
         return false; // Not grounded
+
     }
 
     private void Jump()
