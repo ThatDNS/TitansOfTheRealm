@@ -19,7 +19,7 @@ public class CharacterHandleWeapon : MonoBehaviour
     public Transform ProjectileSpawn;
 
     /// an animator to update when the weapon is used
-    public virtual Animator CharacterAnimator { get; set; }
+    public Animator CharacterAnimator;
 
     protected Character _character;
 
@@ -28,18 +28,17 @@ public class CharacterHandleWeapon : MonoBehaviour
     private void Awake()
     {
         _character=gameObject.GetComponent<Character>();
-
-   
+        CharacterAnimator=GetComponentInChildren<Animator>();
     }
     public virtual void ChangeWeapon(Weapon newWeapon)
     {
-        // if the character already has a weapon, we make it stop shooting
         if (CurrentWeapon != null)
         {
             CurrentWeapon.TurnWeaponOff();
 
             ShootStop();
             Destroy(CurrentWeapon.gameObject);
+            CharacterAnimator.SetBool("HandleWeapon", false);
 
         }
         if (newWeapon != null)
@@ -74,6 +73,7 @@ public class CharacterHandleWeapon : MonoBehaviour
         // we turn off the gun's emitters.
         CurrentWeapon.Initialization();
         _weaponAim=CurrentWeapon.GetComponent<WeaponAim>();
+        CharacterAnimator.SetBool("HandleWeapon",true);
 
     }
 
