@@ -11086,6 +11086,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 4175485872608894013, guid: 574ac43b7da63e6478aa6bc559494885,
+        type: 3}
+      propertyPath: m_MaterialTemplate
+      value: 
+      objectReference: {fileID: 2100000, guid: df351bb22c100ed4691c57732dfe3265, type: 2}
     - target: {fileID: 5126780005544670637, guid: 574ac43b7da63e6478aa6bc559494885,
         type: 3}
       propertyPath: SortKey
