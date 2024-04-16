@@ -76,7 +76,7 @@ public class Character : MonoBehaviour,IPlayerVisitor
         if (direction != Vector3.zero)
         {
             Quaternion newRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * 5.0f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * 3.0f);
         }
 
 
