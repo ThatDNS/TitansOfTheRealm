@@ -4253,11 +4253,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3215262358786639012}
+  - component: {fileID: 7013836093211164053}
   - component: {fileID: 7118864866993204006}
   - component: {fileID: 6842822990740168770}
   - component: {fileID: 8020188679165002632}
   - component: {fileID: 1124665092297903856}
-  - component: {fileID: 3389139832039186382}
   m_Layer: 6
   m_Name: Player_Warrior
   m_TagString: Player
@@ -4282,6 +4282,29 @@ Transform:
   - {fileID: 8254225519625382745}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &7013836093211164053
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8180242273762366895}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1.9308275
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.9580839, z: 0}
 --- !u!54 &7118864866993204006
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4307,7 +4330,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 116
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &6842822990740168770
 MonoBehaviour:
@@ -4324,6 +4347,11 @@ MonoBehaviour:
   speed: 5
   jumpForce: 7
   isGrounded: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 1280
+  groundCheckPoint: {fileID: 6793846010179068113}
+  groundCheckDistance: 0.5
   HP: {fileID: 0}
   MainCanvas: {fileID: 0}
   CharacterType: 0
@@ -4343,6 +4371,7 @@ MonoBehaviour:
   CurrentWeapon: {fileID: 0}
   WeaponAttachment: {fileID: 6794083463812762919}
   ProjectileSpawn: {fileID: 3215262358786639012}
+  CharacterAnimator: {fileID: 0}
 --- !u!114 &1124665092297903856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4368,32 +4397,6 @@ MonoBehaviour:
   DisableCollisionsOnDeath: 1
   DisableChildCollisionsOnDeath: 0
   Bar: {fileID: 9129208986042102485}
---- !u!143 &3389139832039186382
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8180242273762366895}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 2
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1001 &4465259717208284973
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4444,6 +4447,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4902997410791552, guid: e28d36fed7b8a2745a9791fe5267d829, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 64873052028158084, guid: e28d36fed7b8a2745a9791fe5267d829,
+        type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -4569,6 +4577,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4454598679312742237, guid: 3d6fd0f628ec8b64793061688eeecf73,
+        type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -88,8 +88,8 @@ namespace Fusion.XR.Host.Rig
                 if (leftHand != null) leftHand.transform.rotation = hardwareRig.leftHand.transform.rotation;
                 if (rightHand != null) rightHand.transform.position = hardwareRig.rightHand.transform.position;
                 if (rightHand != null) rightHand.transform.rotation = hardwareRig.rightHand.transform.rotation;
-                if (headset != null) headset.transform.position = hardwareRig.headset.transform.position;
-                if (headset != null) headset.transform.rotation = hardwareRig.headset.transform.rotation;
+                if (headset != null) headset.transform.position = (hardwareRig.headset != null) ? hardwareRig.headset.transform.position : hardwareRig.transform.position;
+                if (headset != null) headset.transform.rotation = (hardwareRig.headset != null) ? hardwareRig.headset.transform.rotation : hardwareRig.transform.rotation;
             }
         }
     }
