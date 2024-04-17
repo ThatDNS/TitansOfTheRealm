@@ -3683,6 +3683,8 @@ GameObject:
   - component: {fileID: 8180862907209703244}
   - component: {fileID: 723865573501668385}
   - component: {fileID: 6202459906304391389}
+  - component: {fileID: 5803737011094888297}
+  - component: {fileID: 9020323532918841293}
   m_Layer: 0
   m_Name: TrapPlacer 1
   m_TagString: Untagged
@@ -3832,6 +3834,42 @@ MonoBehaviour:
       Version: 1.7.8
   gizmoViewMode: 2
   showBehaviorDesignerGizmo: 1
+--- !u!114 &5803737011094888297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8582891522257472918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 4068369826
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 9020323532918841293}
+--- !u!114 &9020323532918841293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8582891522257472918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 506319458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Animator: {fileID: 6282856209212536290}
+  TotalWords: 2
+  ApplyTiming: 2
+  SyncSettings: 79
+  StateHashes: 00000000325a708301e955b4a52d95de4eee1d23
+  TriggerHashes: 00000000c97cdcb5
 --- !u!1 &8584935841132428936
 GameObject:
   m_ObjectHideFlags: 0
