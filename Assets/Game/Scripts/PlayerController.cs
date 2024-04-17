@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// Class created to control the player movement, animation, and attack.
 /// </summary>
-public class PlayerController : MonoBehaviour
+public class PController : MonoBehaviour
 {
     // Fields for player components and settings
     [SerializeField] private Transform weapon;
@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     private float turnSpeed = 10f;
     private int IsWalking = Animator.StringToHash("isWalking");
     public bool isWalking = false;
-    private IAgentState<PlayerController> currentState;
+    private IAgentState<PController> currentState;
 
     /// <summary>
     /// Cache the main components in local variables during Awake.
@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// Transition to a new state.
     /// </summary>
-    public void TransitionToState(IAgentState<PlayerController> newState)
+    public void TransitionToState(IAgentState<PController> newState)
     {
         currentState.ExitState(this);
         currentState = newState;

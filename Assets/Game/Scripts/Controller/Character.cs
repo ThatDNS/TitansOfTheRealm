@@ -9,11 +9,8 @@ public class Character : MonoBehaviour,IPlayerVisitor
     public float speed = 5.0f;
     public float jumpForce = 7.0f;
 
-    public LayerMask groundLayer;
-    public Transform groundCheckPoint;
-    public float groundCheckDistance = 0.2f;
     public bool isGrounded;
-
+    private CharacterController controller;
     private PlayerInputActions playerInputActions;
     private Rigidbody rb;
     private Vector2 moveInput;
@@ -26,14 +23,14 @@ public class Character : MonoBehaviour,IPlayerVisitor
     private CharacterHandleWeapon handleWeapon;
 
     public ConnectionManager connectionManager;
-
-
-
+    private Animator animator;
     #region Monobehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
         HP = GetComponent<Health>();
+        animator=GetComponentInChildren<Animator>();
+        controller = GetComponent<CharacterController>();
         handleWeapon = GetComponent<CharacterHandleWeapon>();
 
         playerInputActions = new PlayerInputActions();
@@ -45,16 +42,12 @@ public class Character : MonoBehaviour,IPlayerVisitor
 
         playerInputActions.Player.Jump.performed += ctx => Jump();
         playerInputActions.Player.Shoot.performed += ctx => Shoot();
-
-
-
     }
 
     public PlayerInputActions GetInput()
     {
         return playerInputActions;
     }
-
 
     private void OnEnable()
     {
@@ -74,20 +67,24 @@ public class Character : MonoBehaviour,IPlayerVisitor
             return;
 
         isGrounded = IsGrounded();
-        Vector3 movement = new Vector3(moveInput.x, 0.0f, moveInput.y) * speed;
-        rb.MovePosition(rb.position + transform.TransformDirection(movement) * Time.fixedDeltaTime);
+        Vector3 movement = new Vector3(moveInput.x, 0.0f, moveInput.y);
+        Vector3 direction = transform.TransformDirection(movement);
+
+        controller.Move(direction * Time.deltaTime * speed);
+        animator.SetFloat("Speed", moveInput.magnitude);
+
+        if (direction != Vector3.zero)
+        {
+            Quaternion newRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * 3.0f);
+        }
+
+
     }
     #endregion
     private bool IsGrounded()
     {
-        // Cast a ray downwards from the groundCheckPoint
-        RaycastHit hit;
-        if (Physics.Raycast(groundCheckPoint.position, -Vector3.up, out hit, groundCheckDistance, groundLayer))
-        {
-            return true; // Grounded
-        }
-        return false; // Not grounded
-
+        return controller.isGrounded;
     }
 
     private void Jump()
