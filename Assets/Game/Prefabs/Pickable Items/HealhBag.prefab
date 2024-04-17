@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 560322753044909953}
   - component: {fileID: 6878839735842655415}
   - component: {fileID: 3841414585707769826}
+  - component: {fileID: 4869879662265291462}
   m_Layer: 0
   m_Name: HealhBag
   m_TagString: Untagged
@@ -100,6 +101,23 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 0.44272673, z: 1}
   m_Center: {x: 0, y: 0.27863663, z: 0}
+--- !u!114 &4869879662265291462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7146204432816926207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 3701240497
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours: []
 --- !u!1001 &3816375407595783713
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -152,8 +170,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 64554883476177600, guid: 4a304209bbfe02249bd92db44aa22f94, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2066919575619465974}
   - component: {fileID: 517573456508843837}
+  - component: {fileID: 3245495113385222424}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Untagged
@@ -46,6 +47,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FSMController: {fileID: 9100000, guid: dd56a7b89e7acf74ea582a198ea08e26, type: 2}
+--- !u!114 &3245495113385222424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 852316149155832296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 860562938
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours: []
 --- !u!1001 &4984478534433672301
 PrefabInstance:
   m_ObjectHideFlags: 0
