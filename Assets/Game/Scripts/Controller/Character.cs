@@ -10,7 +10,11 @@ public class Character : MonoBehaviour,IPlayerVisitor
     public float jumpForce = 7.0f;
 
     public bool isGrounded;
-    private CharacterController controller;
+
+    public LayerMask groundLayer;
+    public Transform groundCheckPoint;
+    public float groundCheckDistance = 0.2f;
+
     private PlayerInputActions playerInputActions;
     private Rigidbody rb;
     private Vector2 moveInput;
@@ -30,7 +34,6 @@ public class Character : MonoBehaviour,IPlayerVisitor
         rb = GetComponent<Rigidbody>();
         HP = GetComponent<Health>();
         animator=GetComponentInChildren<Animator>();
-        controller = GetComponent<CharacterController>();
         handleWeapon = GetComponent<CharacterHandleWeapon>();
 
         playerInputActions = new PlayerInputActions();
@@ -59,19 +62,23 @@ public class Character : MonoBehaviour,IPlayerVisitor
         playerInputActions.Disable();
     }
 
-
-
-    private void FixedUpdate()
+    private void Update()
     {
         if (connectionManager != null && !connectionManager.isConnected)
             return;
 
+
         isGrounded = IsGrounded();
+    }
+
+    private void FixedUpdate()
+    {
+
         Vector3 movement = new Vector3(moveInput.x, 0.0f, moveInput.y);
         Vector3 direction = transform.TransformDirection(movement);
 
-        controller.Move(direction * Time.deltaTime * speed);
-        animator.SetFloat("Speed", moveInput.magnitude);
+        transform.position+=direction * Time.fixedDeltaTime * speed;
+        //animator.SetFloat("Speed", moveInput.magnitude);
 
         if (direction != Vector3.zero)
         {
@@ -84,7 +91,12 @@ public class Character : MonoBehaviour,IPlayerVisitor
     #endregion
     private bool IsGrounded()
     {
-        return controller.isGrounded;
+        RaycastHit hit;
+        if (Physics.Raycast(groundCheckPoint.position, -Vector3.up, out hit, groundCheckDistance, groundLayer))
+        {
+            return true;
+        }
+        return false;
     }
 
     private void Jump()
@@ -118,5 +130,12 @@ public class Character : MonoBehaviour,IPlayerVisitor
     public IPlayerVisitor GetVisitor()
     {
         return this;
+    }
+
+    public void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(groundCheckPoint.position, -Vector3.up * groundCheckDistance);
+
     }
 }
