@@ -3471,7 +3471,7 @@ MonoBehaviour:
     type: 3}
   trapPlacerPrefab: {fileID: 5803737011094888297, guid: d80584ba5cc5b9d42b05acc9fafaf49f,
     type: 3}
-  animalPrefab: {fileID: 743835881275315561, guid: e6da15943579b094c8c314f3bde1784d,
+  animalPrefab: {fileID: 743835881275315561, guid: 3712d3a5662dd534b9e2a85d70f68715,
     type: 3}
   onWillConnect:
     m_PersistentCalls:
@@ -13353,6 +13353,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PC HardwareRig
+      objectReference: {fileID: 0}
+    - target: {fileID: 1934946884598894365, guid: 0e17301e90d3b18478901e728be0cdd1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6976350802675173949, guid: 0e17301e90d3b18478901e728be0cdd1,
         type: 3}
