@@ -3471,6 +3471,8 @@ MonoBehaviour:
     type: 3}
   trapPlacerPrefab: {fileID: 5803737011094888297, guid: d80584ba5cc5b9d42b05acc9fafaf49f,
     type: 3}
+  animalPrefab: {fileID: 743835881275315561, guid: e6da15943579b094c8c314f3bde1784d,
+    type: 3}
   onWillConnect:
     m_PersistentCalls:
       m_Calls: []

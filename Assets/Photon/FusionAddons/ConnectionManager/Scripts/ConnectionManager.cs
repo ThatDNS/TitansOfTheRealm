@@ -60,9 +60,11 @@ namespace Fusion.Addons.ConnectionManagerAddon
         [Header("AI Prefabs")]
         public NetworkObject healthSpawnerPrefab;
         public NetworkObject trapPlacerPrefab;
+        public NetworkObject animalPrefab;
 
         private NetworkObject healthSpawnedObj = null;
         private NetworkObject trapPlacerObj = null;
+        private NetworkObject animalObj = null;
 
         [Header("Event")]
         public UnityEvent onWillConnect = new UnityEvent();
@@ -286,15 +288,21 @@ namespace Fusion.Addons.ConnectionManagerAddon
                     Debug.Log("Trap placer AI SPAWNED");
                     trapPlacerObj = runner.Spawn(trapPlacerPrefab, position: trapPlacerPrefab.transform.position, rotation: transform.rotation, player, (runner, obj) => {
                     });
-                    //SteeringAgent sAgent = trapPlacerObj.GetComponent<SteeringAgent>();
-                    //if (sAgent != null)
-                    //    sAgent.runner = runner;
                 }
                 if (healthSpawnedObj == null)
                 {
                     Debug.Log("Health Spawner AI SPAWNED");
                     healthSpawnedObj = runner.Spawn(healthSpawnerPrefab, position: healthSpawnerPrefab.transform.position, rotation: transform.rotation, player, (runner, obj) => {
                     });
+                }
+                if (animalObj == null)
+                {
+                    Debug.Log("Animal AI SPAWNED");
+                    animalObj = runner.Spawn(animalPrefab, position: animalPrefab.transform.position, rotation: transform.rotation, player, (runner, obj) => {
+                    });
+                    SteeringAgent sAgent = animalObj.GetComponent<SteeringAgent>();
+                    if (sAgent != null)
+                        sAgent.runner = runner;
                 }
             }
         }

@@ -98,7 +98,7 @@ public class SteeringAgent : NetworkBehaviour
                 else
                 {
                     Vector3 deltaPosition = velocity * Runner.DeltaTime;
-                    transform.position += velocity;
+                    transform.position += deltaPosition;
                     //_rigidbody.MovePosition(transform.position + deltaPosition);
                     Debug.Log(transform.position + " with change " + deltaPosition);
                 }
