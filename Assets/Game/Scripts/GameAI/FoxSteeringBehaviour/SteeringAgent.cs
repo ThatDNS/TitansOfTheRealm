@@ -21,7 +21,6 @@ public class SteeringAgent : NetworkBehaviour
 
     private Animator animator;
     private CharacterController characterController;
-    private NetworkCharacterController networkCharacterController;
     private Rigidbody _rigidbody;
 
     public float mass = 1.0f;
@@ -46,8 +45,8 @@ public class SteeringAgent : NetworkBehaviour
         }
         characterController = GetComponent<CharacterController>();
         _rigidbody = GetComponent<Rigidbody>();
-        //networkCharacterController = GetComponent<NetworkCharacterController>();
         steeringBehaviours.AddRange(GetComponentsInChildren<SteeringBehaviourBase>());
+
         foreach (SteeringBehaviourBase behaviour in steeringBehaviours)
         {
             behaviour.steeringAgent = this;
@@ -93,20 +92,20 @@ public class SteeringAgent : NetworkBehaviour
             {
                 if (characterController != null)
                 {
-                    //characterController.Move(velocity * Time.deltaTime);
+                    characterController.Move(velocity * Time.deltaTime);
                     //networkCharacterController.Move(velocity * Time.deltaTime);
                 }
                 else
                 {
                     Vector3 deltaPosition = velocity * Runner.DeltaTime;
-                    //transform.position += velocity;
-                    _rigidbody.MovePosition(transform.position + deltaPosition);
+                    transform.position += velocity;
+                    //_rigidbody.MovePosition(transform.position + deltaPosition);
                     Debug.Log(transform.position + " with change " + deltaPosition);
                 }
 
                 if (useGravity == true && characterController != null)
                 {
-                    //characterController.Move(Physics.gravity * Time.deltaTime);
+                    characterController.Move(Physics.gravity * Time.deltaTime);
                     //networkCharacterController.Move(Physics.gravity * Time.deltaTime);
                 }
             }
@@ -115,7 +114,7 @@ public class SteeringAgent : NetworkBehaviour
             {
                 velocity.y = 0;
                 float angle = Vector3.Angle(transform.forward, velocity);
-
+                Debug.Log("Rotating with angle " + angle);
                 if (Mathf.Abs(angle) <= deadZone)
                 {
                     transform.LookAt(transform.position + velocity);

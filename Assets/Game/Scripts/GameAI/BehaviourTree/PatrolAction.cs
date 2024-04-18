@@ -1,5 +1,6 @@
 using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
+using BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,10 +15,22 @@ public class PatrolAction : MoveToGoalAction
     public SharedGameObjectList waypoints;
     public bool loop = true;
     private int index = 0;
+    private bool ranFirstTime = true;
 
     public override void OnStart()
     {
         base.OnStart();
+        if (ranFirstTime)
+        {
+            ranFirstTime = false;
+            waypoints.Value.Clear();
+            GameObject[] waypointsGO = GameObject.FindGameObjectsWithTag("TrapPlacerWaypoint");
+            foreach (GameObject obj in waypointsGO)
+            {
+                waypoints.Value.Add(obj);
+            }
+            Debug.Log("Trap placer found " + waypoints.Value.Count + " waypoints!");
+        }
         if (index < waypoints.Value.Count)
         {
             agent.isStopped = false;
