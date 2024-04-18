@@ -38,7 +38,10 @@ public class CharacterHandleWeapon : MonoBehaviour
 
             ShootStop();
             Destroy(CurrentWeapon.gameObject);
-            CharacterAnimator.SetBool("HandleWeapon", false);
+            if (CharacterAnimator != null)
+            {
+                CharacterAnimator.SetBool("HandleWeapon", false);
+            }
 
         }
         if (newWeapon != null)
@@ -73,7 +76,8 @@ public class CharacterHandleWeapon : MonoBehaviour
         // we turn off the gun's emitters.
         CurrentWeapon.Initialization();
         _weaponAim=CurrentWeapon.GetComponent<WeaponAim>();
-        CharacterAnimator.SetBool("HandleWeapon",true);
+        if (CharacterAnimator != null)
+            CharacterAnimator.SetBool("HandleWeapon",true);
 
     }
 
