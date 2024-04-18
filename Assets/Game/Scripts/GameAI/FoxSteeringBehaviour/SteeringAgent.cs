@@ -1,10 +1,12 @@
+using Fusion;
+using Fusion.Addons.ConnectionManagerAddon;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class SteeringAgent : MonoBehaviour
+public class SteeringAgent : NetworkBehaviour
 {
     public enum SummingMethod
     {
@@ -19,7 +21,8 @@ public class SteeringAgent : MonoBehaviour
 
     private Animator animator;
     private CharacterController characterController;
-
+    private NetworkCharacterController networkCharacterController;
+    private Rigidbody _rigidbody;
 
     public float mass = 1.0f;
     public float maxSpeed = 1.0f;
@@ -32,6 +35,7 @@ public class SteeringAgent : MonoBehaviour
 
     public float angularDampeningTime = 5.0f;
     public float deadZone = 10.0f;
+    public NetworkRunner runner;
 
     void Start()
     {
@@ -41,18 +45,28 @@ public class SteeringAgent : MonoBehaviour
             useRootMotion = false;
         }
         characterController = GetComponent<CharacterController>();
+        _rigidbody = GetComponent<Rigidbody>();
+        //networkCharacterController = GetComponent<NetworkCharacterController>();
         steeringBehaviours.AddRange(GetComponentsInChildren<SteeringBehaviourBase>());
         foreach (SteeringBehaviourBase behaviour in steeringBehaviours)
         {
             behaviour.steeringAgent = this;
         }
+
+        if (runner == null)
+        {
+            Debug.Log("Steering agent AI could not get the runner!!");
+            runner = FindObjectOfType<NetworkRunner>();
+        }
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-
-
+        //networkCharacterController.Move(Vector3.forward * Time.deltaTime);
+        if (!runner.IsServer)
+            return;
+        //transform.position += velocity;
         Vector3 steeringForce = CalculateSteeringForce();
 
         if (reachedGoal == true)
@@ -70,25 +84,30 @@ public class SteeringAgent : MonoBehaviour
             velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
 
             float speed = velocity.magnitude;
-            if (animator != null)
-            {
-                animator.SetFloat("Speed", speed);
-            }
+            //if (animator != null)
+            //{
+            //    animator.SetFloat("Speed", speed);
+            //}
 
             if (useRootMotion == false)
             {
                 if (characterController != null)
                 {
-                    characterController.Move(velocity * Time.deltaTime);
+                    //characterController.Move(velocity * Time.deltaTime);
+                    //networkCharacterController.Move(velocity * Time.deltaTime);
                 }
                 else
                 {
-                    transform.position += (velocity * Time.deltaTime);
+                    Vector3 deltaPosition = velocity * Runner.DeltaTime;
+                    //transform.position += velocity;
+                    _rigidbody.MovePosition(transform.position + deltaPosition);
+                    Debug.Log(transform.position + " with change " + deltaPosition);
                 }
 
-                if (useGravity == true)
+                if (useGravity == true && characterController != null)
                 {
-                    characterController.Move(Physics.gravity * Time.deltaTime);
+                    //characterController.Move(Physics.gravity * Time.deltaTime);
+                    //networkCharacterController.Move(Physics.gravity * Time.deltaTime);
                 }
             }
 

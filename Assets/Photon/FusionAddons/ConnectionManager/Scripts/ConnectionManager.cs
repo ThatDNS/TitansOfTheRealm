@@ -57,6 +57,11 @@ namespace Fusion.Addons.ConnectionManagerAddon
         public GameObject vrHardwareRig = null;
         public GameObject pcHardwareRig = null;
 
+        [Header("AI Prefabs")]
+        public NetworkObject healthSpawnerPrefab;
+
+        private NetworkObject healthSpawnedObj = null;
+
         [Header("Event")]
         public UnityEvent onWillConnect = new UnityEvent();
 
@@ -246,6 +251,17 @@ namespace Fusion.Addons.ConnectionManagerAddon
                 });
                 // Keep track of the player avatars so we can remove it when they disconnect
                 _spawnedUsers.Add(player, networkPlayerObject);
+
+                // Spawn AI objects
+                if (healthSpawnedObj == null)
+                {
+                    Debug.Log("ANIMAL AI SPAWNED");
+                    healthSpawnedObj = runner.Spawn(healthSpawnerPrefab, position: healthSpawnerPrefab.transform.position, rotation: transform.rotation, player, (runner, obj) => {
+                    });
+                    SteeringAgent sAgent = healthSpawnedObj.GetComponent<SteeringAgent>();
+                    if (sAgent != null)
+                        sAgent.runner = runner;
+                }
             }
         }
 
@@ -272,6 +288,17 @@ namespace Fusion.Addons.ConnectionManagerAddon
 
                 // Keep track of the player avatars so we can remove it when they disconnect
                 _spawnedUsers.Add(player, networkPlayerObject);
+
+                // Spawn AI objects
+                if (healthSpawnedObj == null)
+                {
+                    Debug.Log("ANIMAL AI SPAWNED");
+                    healthSpawnedObj = runner.Spawn(healthSpawnerPrefab, position: healthSpawnerPrefab.transform.position, rotation: transform.rotation, player, (runner, obj) => {
+                    });
+                    SteeringAgent sAgent = healthSpawnedObj.GetComponent<SteeringAgent>();
+                    if (sAgent != null)
+                        sAgent.runner = runner;
+                }
             }
         }
 

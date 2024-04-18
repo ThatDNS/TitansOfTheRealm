@@ -998,7 +998,6 @@ GameObject:
   - component: {fileID: 7355837218839555854}
   - component: {fileID: 628810701322792869}
   - component: {fileID: 2081430250224372293}
-  - component: {fileID: 2809951039017894632}
   m_Layer: 0
   m_Name: TrapPlacer 1 1
   m_TagString: Untagged
@@ -1187,20 +1186,6 @@ MonoBehaviour:
   SyncSettings: 79
   StateHashes: 00000000325a708301e955b4a52d95de4eee1d23
   TriggerHashes: 00000000c97cdcb5
---- !u!114 &2809951039017894632
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2455724687306754404}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: 567c2e9b0429a714ea13540174d2e93b
 --- !u!1 &2486789594919487098
 GameObject:
   m_ObjectHideFlags: 0
